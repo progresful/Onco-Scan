@@ -425,3 +425,12 @@ h2{letter-spacing:-.035em;line-height:1.02;font-size:clamp(38px,4.6vw,72px)}
 
 /* ---- flow pass: entrances never depend on opacity ---- */
 @keyframes simIn{from{transform:translateY(-12px)}}
+
+/* ---- step 1 tile: a real lesion photo behind the camera frame ---- */
+.vis-cam{background-size:135%;background-position:50% 42%}
+.vis-cam::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,33,31,.28) 0%,rgba(6,33,31,0) 30%,rgba(6,33,31,0) 55%,rgba(6,33,31,.92) 86%)}
+.vis-cam .vf-ring{background:transparent;border:2px dashed #fff;width:62%;box-shadow:0 0 0 1px rgba(6,33,31,.35)}
+.vis-cam .vf-tip{color:#fff;font-weight:600;background:rgba(6,33,31,.7);padding:5px 12px;border-radius:99px;bottom:10px}
+.vis-cam .vf>i{filter:drop-shadow(0 0 2px rgba(6,33,31,.7))}
+.vis-cam .vf-count{color:#fff}
+.vis-cam .vf-shutter{box-shadow:0 0 0 4px rgba(6,33,31,.9),0 0 0 6px #fff}
