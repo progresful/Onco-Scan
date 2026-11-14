@@ -17,7 +17,7 @@ Updated 15 November 2026 to match the live site.
 | No network | Run `node server.mjs` locally and use `http://localhost:4173` |
 | Chat misreads a sentence | Use the answer buttons under each question |
 | No time for the full loop | Home page step buttons: "See doctors and times" opens an example suspicious result; `/patient/?demo=done` opens a finished case |
-| Everything fails | Play `video/v2/video.mp4` |
+| Everything fails | Play `video/v3/video.mp4` |
 
 ## Priority split
 | Must work | Must prove | Optional |

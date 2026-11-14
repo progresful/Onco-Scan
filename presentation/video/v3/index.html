@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OncoScan — story video v3 (frames are rendered from this page; the voice sets the timing)</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#03110F;--deep:#06211F;--ink:#0B2A2E;--ink2:#23444A;--teal:#0A7C72;--lime:#B6F0C8;--paper:#F6F3EC}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.sc{position:absolute;inset:0;overflow:hidden;visibility:hidden;background:var(--night)}
+.bg{position:absolute;inset:-8%;background-size:cover;background-position:center}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,17,15,.9),rgba(3,17,15,.6) 42%,rgba(3,17,15,.05) 80%)}
+.pad{position:absolute;inset:0;padding:90px 110px 170px;display:flex;flex-direction:column;justify-content:flex-end}
+.pad.mid{justify-content:center}
+h1{font-size:150px;font-weight:800;letter-spacing:-.05em;line-height:.95}
+h2{font-size:104px;font-weight:800;letter-spacing:-.045em;line-height:1}
+em{font-style:normal;color:var(--lime)}
+.sub{font-size:46px;font-weight:600;line-height:1.2;margin-top:22px;color:#D5E6E2}
+.tag{align-self:flex-start;display:inline-block;font-size:30px;font-weight:800;padding:12px 24px;border-radius:99px;background:var(--lime);color:var(--night);margin-bottom:30px}
+.note{position:absolute;right:56px;top:44px;font-size:22px;font-weight:600;color:rgba(255,255,255,.75);z-index:3}
+.big{font-size:360px;font-weight:800;letter-spacing:-.06em;line-height:.85;color:var(--lime);font-variant-numeric:tabular-nums}
+.big small{font-size:.34em;margin-left:.05em;letter-spacing:-.02em}
+#cap{position:absolute;left:50%;bottom:54px;transform:translateX(-50%);z-index:99;max-width:1500px;text-align:center;font-size:38px;font-weight:700;line-height:1.25;padding:14px 30px;border-radius:18px;background:#03110F;color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.14);white-space:nowrap}
+#cap:empty{display:none}
+.card{position:absolute;right:140px;top:250px;width:640px;background:#fff;color:var(--ink);border-radius:34px;padding:44px 48px;box-shadow:0 60px 120px -40px rgba(0,0,0,.8)}
+.card .k{font-size:28px;color:#566769;font-weight:600}.card .v{font-size:100px;font-weight:800;letter-spacing:-.045em;line-height:1.05;margin:6px 0 18px}
+.card .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card .seg i{height:12px;border-radius:6px;background:#DDD9D1}
+.card .st{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:700;margin-top:22px;color:var(--ink2)}.card .st i{width:18px;height:18px;border-radius:50%;background:#9AA8A6}
+.logo{position:absolute;left:110px;top:70px;height:64px}
+.clock{font-size:440px;font-weight:800;letter-spacing:-.06em;line-height:.9;text-align:center;background:url(../../../landing/assets/lakes-hero.jpg) 50% 45%/130% auto;-webkit-background-clip:text;background-clip:text;color:transparent}
+/* steps */
+.split{position:absolute;inset:0;padding:70px 100px 170px;display:grid;grid-template-columns:640px 1fr;gap:70px;align-items:center}
+.n{font-size:320px;font-weight:800;letter-spacing:-.07em;line-height:.8}
+.paper{background:var(--paper);color:var(--ink)}.paper .n{color:var(--teal)}.paper .sub{color:var(--ink2)}
+/* 1 · chat */
+.chat{height:860px;display:flex;flex-direction:column;justify-content:flex-end;gap:22px;padding:40px 44px;border-radius:40px;background:#fff;box-shadow:0 70px 140px -60px rgba(3,17,15,.55);overflow:hidden;transform-origin:50% 100%}
+.bub{align-self:flex-start;max-width:80%;font-size:38px;font-weight:600;line-height:1.25;padding:24px 32px;border-radius:30px;background:#EFEBE1;color:var(--ink)}
+.bub.me{align-self:flex-end;background:var(--ink);color:#fff;min-height:144px;width:80%}
+.bub.pic{align-self:flex-end;padding:10px;background:var(--ink)}.bub.pic img{display:block;width:270px;height:170px;object-fit:cover;border-radius:22px}
+.bub.ok{background:var(--lime);color:var(--night);font-weight:800}
+.caret{display:inline-block;width:5px;height:44px;background:var(--lime);vertical-align:-8px;margin-left:4px}
+/* 2 · review */
+#rev{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+#rev img{position:absolute;left:96px;top:0;width:1728px;height:1080px}
+#hl{position:absolute;left:1118px;top:536px;width:690px;height:46px;border-radius:10px;background:rgba(182,240,200,.55);box-shadow:0 0 0 3px var(--teal)}
+#cur{position:absolute;left:1500px;top:820px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--night),0 10px 30px rgba(0,0,0,.5)}
+#rip{position:absolute;left:1686px;top:1015px;width:20px;height:20px;margin:-10px;border-radius:50%;box-shadow:0 0 0 6px var(--lime)}
+.hud{position:absolute;left:60px;top:44px;display:flex;gap:14px;z-index:3}
+.hud span{font-size:34px;font-weight:800;padding:14px 26px;border-radius:99px;background:var(--night);color:var(--lime);font-variant-numeric:tabular-nums}
+.hud span+span{background:var(--lime);color:var(--night)}
+.plate{position:absolute;left:60px;bottom:150px;z-index:3;background:var(--night);border-radius:30px;padding:26px 40px 30px;display:flex;align-items:center;gap:30px}
+.plate b{font-size:150px;font-weight:800;letter-spacing:-.06em;line-height:.8;color:var(--lime)}.plate span{font-size:60px;font-weight:800;letter-spacing:-.04em;line-height:1.02}
+#stamp{position:absolute;right:120px;top:330px;z-index:4;font-size:110px;font-weight:800;letter-spacing:-.03em;color:var(--night);background:var(--lime);padding:20px 50px;border-radius:26px;rotate:-7deg;box-shadow:0 40px 90px -30px rgba(0,0,0,.8)}
+#stamp small{display:block;font-size:34px;letter-spacing:0;font-weight:700}
+/* live status */
+.live{display:grid;gap:22px;margin-top:40px}
+.live div{display:flex;align-items:center;gap:26px;font-size:66px;font-weight:800;letter-spacing:-.03em;color:#6F8A85}
+.live i{width:76px;height:76px;border-radius:22px;flex:none;display:grid;place-items:center;box-shadow:inset 0 0 0 4px rgba(255,255,255,.35)}
+.live svg{width:46px;height:46px}.live path{stroke-dasharray:24;stroke-dashoffset:24}
+.tclock{font-size:230px;font-weight:800;letter-spacing:-.05em;line-height:.9;color:var(--lime);font-variant-numeric:tabular-nums}
+/* specialists wall */
+.wall{position:absolute;right:60px;top:-200px;bottom:-200px;width:1080px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.wall .col{display:grid;gap:22px;align-content:start}
+.doc{display:flex;align-items:center;gap:20px;background:#fff;color:var(--ink);border-radius:26px;padding:20px 22px}
+.doc i{flex:none;width:84px;height:84px;border-radius:50%;background:var(--ink) center/cover;color:#fff;display:grid;place-items:center;font-style:normal;font-size:30px;font-weight:800}
+.doc b{display:block;font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}.doc span{font-size:22px;font-weight:600;color:var(--ink2)}
+.doc u{margin-left:auto;text-decoration:none;font-size:18px;font-weight:800;color:var(--teal);white-space:nowrap}
+.wallshade{position:absolute;inset:0;background:linear-gradient(90deg,var(--teal) 36%,rgba(10,124,114,0) 52%),linear-gradient(180deg,var(--teal),rgba(10,124,114,0) 16%,rgba(10,124,114,0) 78%,var(--teal))}
+/* booking */
+.rows{display:grid;gap:22px}
+.rowb{display:grid;grid-template-columns:110px 1fr auto auto;align-items:center;gap:28px;background:#fff;border-radius:32px;padding:26px 30px;box-shadow:0 30px 70px -40px rgba(3,17,15,.5)}
+.rowb i{width:110px;height:110px;border-radius:50%;background:center/cover}
+.rowb b{display:block;font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.rowb span{font-size:30px;font-weight:600;color:var(--ink2)}
+.rowb .km{font-size:54px;font-weight:800;letter-spacing:-.04em;color:var(--teal);text-align:right;line-height:1}.rowb .km small{display:block;font-size:26px;font-weight:700;color:var(--ink2);letter-spacing:0;margin-top:6px}
+.rowb .bt{position:relative;font-size:34px;font-weight:800;background:var(--ink);color:#fff;border-radius:20px;padding:22px 34px;min-width:230px;text-align:center}
+#bk2{position:absolute;inset:0;display:grid;place-items:center;background:var(--teal);border-radius:20px}
+#cur2{position:absolute;left:1500px;top:820px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px var(--night),0 10px 30px rgba(0,0,0,.5);z-index:5}
+/* result */
+#i{background:var(--lime);color:var(--night)}
+#flash{position:absolute;inset:0;background:#fff;z-index:9}
+.res{background:#fff;border-radius:40px;padding:44px 56px;display:flex;align-items:center;gap:36px;margin-top:36px;box-shadow:0 50px 110px -50px rgba(3,17,15,.6);align-self:flex-start}
+.res i{flex:none;width:120px;height:120px;border-radius:34px;background:var(--teal);display:grid;place-items:center}
+.res small{display:block;font-size:30px;font-weight:700;color:var(--ink2)}.res b{font-size:76px;font-weight:800;letter-spacing:-.04em;line-height:1.05}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
+.tiles div{background:var(--night);color:#fff;border-radius:34px;padding:34px 40px}
+.tiles b{display:block;white-space:nowrap;font-size:96px;font-weight:800;letter-spacing:-.05em;line-height:.95;color:var(--lime)}.tiles span{font-size:32px;font-weight:700}
+.end{align-items:center;text-align:center}.end img{height:120px;margin-bottom:50px}
+.url{display:inline-block;margin-top:50px;font-size:46px;font-weight:800;background:var(--lime);color:var(--night);padding:22px 44px;border-radius:26px}
+</style>
+</head>
+<body>
+<section class="sc" id="a1"><div class="bg" style="background-image:url(../../../landing/assets/prob-detect.jpg);background-position:60% 30%"></div><div class="shade"></div><div class="pad"><span class="tag">Anna, 52 · Lapland</span><h1>A dark<br><em>spot.</em></h1></div><span class="note">Illustrative story</span></section>
+<section class="sc" id="a2"><div class="bg" style="background-image:url(../../../landing/assets/clinic.jpg);background-position:50% 60%"></div><div class="shade"></div><div class="pad"><span class="tag">Her GP</span><h1>“I can't say<br><em>for sure.”</em></h1></div></section>
+<section class="sc" id="a3"><div class="bg" style="background-image:url(../../../landing/assets/town.jpg)"></div><div class="shade"></div><div class="pad"><div class="big"><span id="km">0</span><small>km</small></div><h2>to a specialist.</h2></div></section>
+<section class="sc" id="b1"><div class="bg" style="background-image:url(../../../landing/assets/prob-queue.jpg);background-position:30% 50%"></div><div class="shade"></div><div class="pad"><span class="tag">The queue</span><div class="big" style="font-size:320px" id="q">0</div><h2>people waiting.</h2></div><span class="note">Non-urgent specialist care · THL, end of August 2026</span></section>
+<section class="sc" id="b2"><div class="bg" style="background-image:url(../../../landing/assets/prob-book.jpg);background-position:20% 40%"></div><div class="shade"></div><div class="pad"><h1>Weeks pass.<br><em>No answer.</em></h1></div><div class="card" id="scard"><span class="k">Referral sent · 12 March</span><div class="v">Status: ?</div><div class="seg"><i></i><i></i><i></i><i></i></div><div class="st"><i></i>No updates</div></div><span class="note">Illustrative story</span></section>
+<section class="sc" id="c"><img class="logo" src="../../../assets/logo-light.png" alt=""><div class="pad mid" style="align-items:center;text-align:center;padding-bottom:150px"><h2>A specialist's answer in</h2><div class="clock" id="clock">24 hours</div></div></section>
+<section class="sc paper" id="d"><div class="split"><div><div class="n">1</div><h2>Send a photo.</h2><p class="sub">And your story, in a short chat.</p></div>
+  <div class="chat" id="chat"><div class="bub bot">Tell me what's worrying you.</div><div class="bub me"><span id="typed"></span><i class="caret"></i></div><div class="bub pic"><img src="../../../landing/assets/lesion.jpg" alt=""></div><div class="bub ok">✓ That photo looks clear</div><div class="bub bot">Sent. Your 24-hour clock has started.</div></div></div></section>
+<section class="sc" id="e" style="background:var(--deep)"><div id="rev"><img src="../../deck/assets/now-doctor.jpg" alt=""><div id="hl"></div><div id="rip"></div><div id="cur"></div></div>
+  <div class="hud"><span>×8 speed</span><span id="rt">00:00</span></div><div class="plate"><b>2</b><span>A specialist<br>reviews it.</span></div><div id="stamp">Signed<small>Photo · history · warning signs</small></div><span class="note">Demo case · dermatoscopy image</span></section>
+<section class="sc" id="f" style="background:var(--deep)"><div class="pad mid" style="padding-bottom:150px"><span class="tag">Live status</span><div class="tclock" id="tc">T+00:00:00</div>
+  <div class="live" id="live"><div><i></i>Received</div><div><i></i>Sorted by urgency</div><div><i></i>With a specialist</div><div><i></i>Answered</div></div></div></section>
+<section class="sc" id="g" style="background:var(--teal)"><div class="wall" id="wall"></div><div class="wallshade"></div><div class="pad mid" style="padding-bottom:150px;max-width:900px"><span class="tag" style="background:var(--night);color:var(--lime)">One shared queue</span><h2>Any verified<br>specialist<br>can join.</h2></div><span class="note">Example specialists · sign-up is planned</span></section>
+<section class="sc paper" id="h"><div class="split" style="grid-template-columns:560px 1fr"><div><div class="n">3</div><h2>Book the nearest.</h2></div>
+  <div class="rows"><div class="rowb" id="r1"><i style="background-image:url(../../../assets/doctors/d6.jpg)"></i><div><b>Dr Timo Hämäläinen</b><span>Rovaniemi central hospital</span></div><div class="km">0 km<small>Mon 14:20</small></div><div class="bt">Book<span id="bk2">Booked ✓</span></div></div>
+  <div class="rowb"><i style="background-image:url(../../../assets/doctors/d3.jpg)"></i><div><b>Dr Tiina Niemi</b><span>Kemi central hospital</span></div><div class="km">100 km<small>Thu 08:40</small></div><div class="bt">Book</div></div>
+  <div class="rowb"><i style="background-image:url(../../../assets/doctors/d5.jpg)"></i><div><b>Dr Elina Mäkelä</b><span>Oulu university hospital</span></div><div class="km">166 km<small>Tue 10:40</small></div><div class="bt">Book</div></div></div></div><div id="cur2"></div><span class="note" style="color:var(--ink2)">Example specialists</span></section>
+<section class="sc" id="i"><div id="flash"></div><div class="pad mid" style="padding-bottom:190px"><span class="tag" style="background:var(--night);color:var(--lime)">The next day</span><h1 style="font-size:124px">Anna has her answer.</h1>
+  <div class="res"><i><svg viewBox="0 0 24 24" width="76" height="76" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i><div><small>Signed by a specialist</small><b>See a specialist in person.</b></div></div>
+  <div class="tiles"><div><b>24 h</b><span>to the answer</span></div><div><b>0 km</b><span>travelled for it</span></div><div><b>Mon 14:20</b><span>appointment booked</span></div></div></div><span class="note" style="color:var(--ink2)">Illustrative story · 24 hours is our target</span></section>
+<section class="sc" id="j"><div class="pad mid end" style="padding-bottom:150px"><img src="../../../assets/logo-light.png" alt=""><h1 style="font-size:120px">Already in use in Latvia.<br><em>Next: Finland.</em></h1><span class="url">oncoscan.pgf.lv</span></div></section>
+<div id="cap"></div>
+
+<script src="lines.js"></script><script src="timing.js" onerror="0"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+// The voice is the clock: each line's spoken length (timing.js) sets how long its pictures stay.
+const D = window.VO || LINES.map(l => l.split(' ').length / 2.7 + .3), GAP = .32, S = [];
+D.reduce((t, d, i) => (S[i] = t, t + d + GAP), .5);
+const END = S[9] + D[9] + 1.8, at = (i, f = 0) => S[i] - .25 + D[i] * f;
+const CUT = [['a1', 0], ['a2', at(0, .33)], ['a3', at(0, .61)], ['b1', at(1)], ['b2', at(1, .5)], ['c', at(2)], ['d', at(3)], ['e', at(4)], ['f', at(5)], ['g', at(6)], ['h', at(7)], ['i', at(8)], ['j', at(9)]];
+const tl = gsap.timeline({ paused: true }), $ = (s, r = document) => [...r.querySelectorAll(s)], T = {}, LEN = {};
+CUT.forEach(([id, t], k) => { const el = document.getElementById(id), next = CUT[k + 1] ? CUT[k + 1][1] : END; T[id] = t; LEN[id] = next - t; el.style.zIndex = k + 1;
+  tl.set(el, { autoAlpha: 1 }, t).set(el, { autoAlpha: 0 }, next + .5);
+  if (k) tl.fromTo(el, k % 2 ? { clipPath: 'inset(0 0 100% 0)' } : { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .38, ease: 'power4.inOut' }, t);
+  $('.bg', el).forEach(x => tl.fromTo(x, { scale: 1.2 }, { scale: 1.02, duration: next - t + .5, ease: 'power2.out' }, t));
+  $('h1,h2', el).forEach((x, n) => tl.from(x, { y: 90, autoAlpha: 0, duration: .5, ease: 'power4.out' }, t + .16 + n * .1));
+  $('.tag,.sub', el).forEach(x => tl.from(x, { y: 30, autoAlpha: 0, duration: .4, ease: 'power3.out' }, t + .12));
+  $('.n', el).forEach(x => tl.from(x, { scale: 2.4, autoAlpha: 0, duration: .5, ease: 'power4.out' }, t + .1)); });
+const count = (el, to, t, dur, fmt = v => Math.round(v)) => { const o = { v: 0 }; tl.to(o, { v: to, duration: dur, ease: 'power3.out', onUpdate: () => el.textContent = fmt(o.v) }, t); };
+const p2 = n => String(n).padStart(2, '0'), tick = '<svg viewBox="0 0 24 24" fill="none" stroke="#03110F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg>';
+// story + impact
+count(document.getElementById('km'), 500, T.a3 + .15, Math.min(1.6, LEN.a3 * .7)); tl.from('#a3 .big', { scale: 1.6, autoAlpha: 0, duration: .5, ease: 'power4.out' }, T.a3 + .1);
+count(document.getElementById('q'), 126200, T.b1 + .2, Math.min(2, LEN.b1 * .7), v => Math.round(v).toLocaleString('en-US')); tl.from('#q', { scale: 1.5, autoAlpha: 0, duration: .5, ease: 'power4.out' }, T.b1 + .12);
+tl.from('#scard', { y: 160, rotation: 8, autoAlpha: 0, duration: .6, ease: 'back.out(1.8)' }, T.b2 + .5).to('#scard', { x: -12, duration: .07, repeat: 7, yoyo: true, ease: 'none' }, T.b2 + 1.5);
+// promise
+tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }, T.c + .9).fromTo('#clock', { backgroundPosition: '35% 30%' }, { backgroundPosition: '65% 65%', duration: LEN.c, ease: 'none' }, T.c).from('#c .logo', { y: -40, autoAlpha: 0, duration: .5 }, T.c + .2);
+// 1 · chat: bubbles arrive one by one, the message types itself
+{ const t = T.d, L = LEN.d, bubs = $('#chat .bub'), msg = 'A mole on my left forearm has grown. I live in Inari.', o = { n: 0 }, typed = document.getElementById('typed');
+  const when = [.35, .75, .52 * L, .68 * L, .84 * L];
+  bubs.forEach((b, k) => tl.from(b, { autoAlpha: 0, duration: .2 }, t + when[k]).from(b, { scale: .6, y: 40, transformOrigin: k === 1 || k === 2 ? '100% 100%' : '0 100%', duration: .4, ease: 'back.out(2)' }, t + when[k]));
+  tl.to(o, { n: msg.length, duration: .5 * L - 1, ease: 'none', onUpdate: () => typed.textContent = msg.slice(0, Math.round(o.n)) }, t + .9).set('#chat .caret', { autoAlpha: 0 }, t + .5 * L)
+    .from('#chat', { x: 300, rotation: 4, autoAlpha: 0, duration: .6, ease: 'power4.out' }, t + .15).to('#chat', { scale: 1.08, duration: L, ease: 'none' }, t); }
+// 2 · sped-up review: camera pushes into the checklist, then to the decision
+{ const t = T.e, L = LEN.e, o = { s: 0 }, rt = document.getElementById('rt'), rows = 6;
+  tl.fromTo('#rev', { x: 0, y: 0, scale: 1 }, { x: -1536, y: -612, scale: 1.8, duration: .9, ease: 'power3.inOut' }, t + .12 * L)
+    .to('#rev', { x: -2304, y: -1296, scale: 2.2, duration: .8, ease: 'power3.inOut' }, t + .6 * L)
+    .to(o, { s: 42, duration: L * .82, ease: 'none', onUpdate: () => rt.textContent = '00:' + p2(Math.round(o.s)) }, t + .1)
+    .from('#hl', { autoAlpha: 0, duration: .2 }, t + .2 * L).to('#hl', { autoAlpha: 0, duration: .2 }, t + .6 * L)
+    .from('#e .plate', { x: -200, autoAlpha: 0, duration: .5, ease: 'power4.out' }, t + .15).from('#e .hud span', { y: -60, autoAlpha: 0, duration: .4, stagger: .08, ease: 'power3.out' }, t + .2);
+  for (let k = 1; k < rows; k++) tl.to('#hl', { y: k * 47.5, duration: .12, ease: 'power2.inOut' }, t + (.2 + .38 * k / rows) * L);
+  tl.fromTo('#cur', { x: 0, y: 0 }, { x: 186, y: 195, duration: .7, ease: 'power3.inOut' }, t + .62 * L).fromTo('#cur', { autoAlpha: 0 }, { autoAlpha: 1, duration: .15 }, t + .6 * L)
+    .to('#cur', { scale: .7, duration: .1, yoyo: true, repeat: 1 }, t + .62 * L + .72)
+    .fromTo('#rip', { scale: 1, autoAlpha: 0 }, { scale: 9, autoAlpha: 0, duration: .5, ease: 'power2.out', keyframes: [{ autoAlpha: 1, duration: .01 }, { autoAlpha: 0, scale: 9, duration: .5 }] }, t + .62 * L + .75)
+    .from('#stamp', { scale: 3, autoAlpha: 0, duration: .4, ease: 'power4.in' }, t + Math.min(L - .9, .62 * L + 1.05)).to('#stamp', { x: 6, duration: .05, repeat: 5, yoyo: true }, t + Math.min(L - .9, .62 * L + 1.05) + .4); }
+// live status
+{ const t = T.f, L = LEN.f, o = { s: 0 }, tc = document.getElementById('tc');
+  tl.to(o, { s: 8049, duration: L, ease: 'power1.in', onUpdate: () => { const s = Math.round(o.s); tc.textContent = `T+${p2(Math.floor(s / 3600))}:${p2(Math.floor(s / 60) % 60)}:${p2(s % 60)}`; } }, t).from('#tc', { scale: 1.5, autoAlpha: 0, duration: .45, ease: 'power4.out' }, t + .1);
+  $('#live div').forEach((d, k) => { const i = d.querySelector('i'), a = t + .3 + (L - .7) * k / 4; i.innerHTML = tick;
+    tl.from(d, { x: -80, autoAlpha: 0, duration: .3, ease: 'power3.out' }, t + .15 + k * .06).to(d, { color: '#fff', duration: .2 }, a)
+      .to(i, { backgroundColor: '#B6F0C8', boxShadow: 'inset 0 0 0 4px #B6F0C8', duration: .15 }, a).fromTo(i, { scale: 1.5 }, { scale: 1, duration: .3, ease: 'back.out(3)', immediateRender: false }, a).to(i.querySelector('path'), { strokeDashoffset: 0, duration: .25 }, a + .05); }); }
+// specialists wall
+{ const NAMES = ['Aino Laine|Helsinki', 'Mikko Heikkinen|Turku', 'Sanna Korhonen|Tampere', 'Juha Nieminen|Kuopio', 'Elina Mäkelä|Oulu', 'Timo Hämäläinen|Rovaniemi', 'Noora Koskinen|Jyväskylä', 'Antti Järvinen|Joensuu', 'Riikka Lehtonen|Lahti', 'Petri Saarinen|Vaasa', 'Päivi Salminen|Seinäjoki', 'Ville Heinonen|Kajaani', 'Tiina Niemi|Kemi', 'Jari Virtanen|Kokkola', 'Outi Karjalainen|Lappeenranta', 'Markus Lindholm|Mikkeli'];
+  const wall = document.getElementById('wall');
+  for (let c = 0; c < 3; c++) { const col = document.createElement('div'); col.className = 'col';
+    for (let r = 0; r < 14; r++) { const k = (c * 5 + r * 3 + c) % 16, [nm, city] = NAMES[k].split('|'), pic = (k + c + r) % 2 ? ` style="background-image:url(../../../assets/doctors/d${k % 8 + 1}.jpg)">` : '>' + nm.split(' ').map(w => w[0]).join('');
+      col.innerHTML += `<div class="doc"><i${pic}</i><div><b>Dr ${nm}</b><span>${r % 3 ? 'Dermatology' : 'Oral surgery'} · ${city}</span></div><u>✓ Verified</u></div>`; }
+    wall.append(col); tl.fromTo(col, { y: c % 2 ? -640 : 0 }, { y: c % 2 ? -40 : -700 - c * 60, duration: LEN.g + .5, ease: 'power1.out' }, T.g); }
+  tl.from('#wall .doc', { scale: .6, autoAlpha: 0, duration: .35, ease: 'back.out(2)', stagger: { each: .02, from: 'random' } }, T.g + .1); }
+// 3 · booking
+{ const t = T.h, L = LEN.h;
+  tl.from('#h .rowb', { x: 300, autoAlpha: 0, duration: .45, ease: 'power4.out', stagger: .1 }, t + .2)
+    .fromTo('#cur2', { x: 0, y: 0, autoAlpha: 0 }, { x: 205, y: -502, autoAlpha: 1, duration: .8, ease: 'power3.inOut' }, t + .45 * L)
+    .to('#cur2', { scale: .7, duration: .1, yoyo: true, repeat: 1 }, t + .45 * L + .82)
+    .from('#bk2', { autoAlpha: 0, scale: .6, duration: .3, ease: 'back.out(3)' }, t + .45 * L + .9)
+    .to('#r1', { backgroundColor: '#B6F0C8', scale: 1.04, duration: .3, ease: 'back.out(2)' }, t + .45 * L + .9)
+    .to('#h .rowb:not(#r1)', { opacity: .45, duration: .3 }, t + .45 * L + .9); }
+// result
+tl.fromTo('#flash', { autoAlpha: 1 }, { autoAlpha: 0, duration: .5, ease: 'power2.out' }, T.i + .05)
+  .from('#i .res', { x: -200, autoAlpha: 0, scale: .9, duration: .5, ease: 'back.out(1.8)' }, T.i + .5)
+  .from('#i .tiles div', { y: 120, autoAlpha: 0, scale: .8, duration: .45, ease: 'back.out(2)', stagger: .13 }, T.i + .85)
+  .to('#i .tiles b', { scale: 1.08, duration: .25, yoyo: true, repeat: 1, stagger: .13, transformOrigin: '0 50%' }, T.i + 1.6);
+// end
+tl.from('#j img', { scale: .5, autoAlpha: 0, duration: .6, ease: 'back.out(2)' }, T.j + .15).from('#j .url', { y: 40, autoAlpha: 0, duration: .5, ease: 'power3.out' }, T.j + 1.6);
+// captions: the current spoken line, in chunks of up to 8 words
+const cap = document.getElementById('cap'), CH = LINES.map(l => { const w = l.split(' '), out = []; for (let i = 0; i < w.length; i += 8) out.push(w.slice(i, i + 8)); if (out.length > 1 && out[out.length - 1].length < 3) out[out.length - 2].push(...out.pop()); return out; });
+window.DURATION = END; window.STARTS = S;
+window.seek = t => { tl.time(t, false); let text = '';
+  for (let i = 0; i < LINES.length; i++) if (t >= S[i] - .05 && t < S[i] + D[i] + .15) { const f = Math.min(.999, Math.max(0, (t - S[i]) / D[i])), total = LINES[i].split(' ').length; let acc = 0;
+    for (const c of CH[i]) { acc += c.length; if (f * total < acc) { text = c.join(' '); break; } } }
+  cap.textContent = text; };
+window.seek(0);
+</script>
+</body>
+</html>
