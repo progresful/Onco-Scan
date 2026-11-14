@@ -46,7 +46,7 @@ em{font-style:normal;color:var(--lime)}
 .shot{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 70px 140px -50px rgba(0,0,0,.75);height:820px;background:#fff}
 .shot img{display:block;width:100%;transform-origin:50% 0}
 .s8{background:var(--paper);color:var(--ink)}.s8 .n{color:var(--teal)}.s8 .sub{color:var(--ink2)}
-.s9{background:var(--deep)}.s9 .n{color:var(--lime)}
+.s9{background:var(--deep)}.s9 .shot{height:620px}.s9 .n{color:var(--lime)}
 .s10{background:var(--teal)}.s10 .n{color:#fff}.s10 .sub{color:#fff}
 .live{display:grid;gap:16px;margin-top:40px}
 .live div{display:flex;align-items:center;gap:20px;font-size:40px;font-weight:700;color:#8FA9A4}
@@ -152,7 +152,7 @@ tl.to(c, { s: 86400 - 26, duration: 4.2, ease: 'none', onUpdate: () => { const s
     .from(`#${id} .shot`, { x: 260, rotation: 3, autoAlpha: 0, duration: 1, ease: 'power4.out' }, t + .5)
   ; const chip = document.querySelector(`#${id} .chip`); if (chip) tl.from(chip, { scale: 0, duration: .5, ease: 'back.out(2.4)' }, t + 1.6); });
 tl.fromTo('#s8 .shot img', { scale: 1.5, yPercent: -30 }, { scale: 1.5, yPercent: -12, duration: 5, ease: 'power1.inOut' }, CUT.s8 + .8);
-tl.fromTo('#s9 .shot img', { scale: 1.9, xPercent: -22, yPercent: -12 }, { scale: 1.9, xPercent: -22, yPercent: -24, duration: 5.4, ease: 'power1.inOut' }, CUT.s9 + .8);
+tl.fromTo('#s9 .shot img', { scale: 1.75, xPercent: -20, yPercent: -1 }, { scale: 1.75, xPercent: -20, yPercent: -7, duration: 5.4, ease: 'power1.inOut' }, CUT.s9 + .8);
 $('#s9 .live div').forEach((d, k) => { const at = CUT.s9 + 1.6 + k * .95;
   tl.from(d, { x: -60, autoAlpha: 0, duration: .45, ease: 'power3.out' }, CUT.s9 + 1 + k * .12)
     .to(d, { color: '#fff', duration: .3 }, at)
