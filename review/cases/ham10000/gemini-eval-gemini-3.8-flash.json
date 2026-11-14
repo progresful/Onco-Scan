@@ -1,0 +1,855 @@
+{
+ "summary": {
+  "date": "2026-11-14T11:38:13.719Z",
+  "model": "gemini-3.8-flash",
+  "images": 42,
+  "at65": {
+   "threshold": 65,
+   "flagged_cancer": "11/18",
+   "cleared_benign": "11/24",
+   "sensitivity": 0.61,
+   "specificity": 0.46
+  },
+  "at30": {
+   "threshold": 30,
+   "flagged_cancer": "18/18",
+   "cleared_benign": "3/24",
+   "sensitivity": 1,
+   "specificity": 0.13
+  },
+  "byDx": [
+   {
+    "dx": "mel",
+    "label": "melanoma",
+    "n": 6,
+    "scores": "48 58 72 88 90 90",
+    "mean": 74
+   },
+   {
+    "dx": "bcc",
+    "label": "basal cell carcinoma",
+    "n": 6,
+    "scores": "55 75 75 80 90 90",
+    "mean": 78
+   },
+   {
+    "dx": "akiec",
+    "label": "actinic keratosis / early SCC",
+    "n": 6,
+    "scores": "35 48 52 55 68 72",
+    "mean": 55
+   },
+   {
+    "dx": "nv",
+    "label": "benign mole",
+    "n": 6,
+    "scores": "30 38 40 45 58 70",
+    "mean": 47
+   },
+   {
+    "dx": "bkl",
+    "label": "benign keratosis",
+    "n": 6,
+    "scores": "65 65 68 75 75 80",
+    "mean": 71
+   },
+   {
+    "dx": "df",
+    "label": "dermatofibroma",
+    "n": 6,
+    "scores": "25 25 28 60 65 82",
+    "mean": 48
+   },
+   {
+    "dx": "vasc",
+    "label": "vascular lesion",
+    "n": 6,
+    "scores": "35 60 68 75 75 85",
+    "mean": 66
+   }
+  ],
+  "tokens": {
+   "in": 56589,
+   "out": 23678,
+   "perImageIn": 1347,
+   "perImageOut": 564
+  }
+ },
+ "results": [
+  {
+   "image": "ISIC_0027419",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "Asymmetric outline and pigment distribution",
+    "Multiple shades of light brown, dark brown, and pinkish-white",
+    "Irregular and poorly demarcated borders",
+    "Focal darker brown-to-blackish blotch",
+    "Asymmetric pigmentation around hair follicle openings"
+   ],
+   "calm": [
+    "No visible ulceration or bleeding",
+    "Predominantly flat macular appearance"
+   ]
+  },
+  {
+   "image": "ISIC_0026769",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 65,
+   "unclear": false,
+   "signals": [
+    "Asymmetric distribution of pigment",
+    "Multiple shades including tan, dark brown, and greyish hues",
+    "Irregular focal dark spots and clods",
+    "Ill-defined borders merging into surrounding skin"
+   ],
+   "calm": [
+    "No visible ulceration or crusting",
+    "Predominantly macular or flat appearance"
+   ]
+  },
+  {
+   "image": "ISIC_0031633",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 80,
+   "unclear": false,
+   "signals": [
+    "Prominent raised pink nodule with visible microvessels",
+    "Multiple colors including pink, tan, brown, and grey",
+    "Asymmetric pigmented border around the nodule",
+    "Focal crusting or tiny ulcerations"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0029176",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 68,
+   "unclear": false,
+   "signals": [
+    "raised dome-shaped nodule",
+    "focal dark crusting and hyperkeratosis",
+    "surrounding erythematous halo",
+    "heterogeneous surface texture"
+   ],
+   "calm": [
+    "roughly symmetrical round outline",
+    "well-demarcated borders"
+   ]
+  },
+  {
+   "image": "ISIC_0025837",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 65,
+   "unclear": false,
+   "signals": [
+    "asymmetric outline with irregular borders",
+    "multiple colors including pink, brown, and white",
+    "central scale and crusting",
+    "shiny white areas"
+   ],
+   "calm": [
+    "distinct margins from surrounding skin"
+   ]
+  },
+  {
+   "image": "ISIC_0025276",
+   "dx": "bkl",
+   "label": "benign keratosis",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "Prominent raised pink nodule arising within a yellowish plaque",
+    "Multiple distinct colors including pink, yellow, tan, and dark brown",
+    "Focal areas of dark crusting or micro-ulceration",
+    "Asymmetric structure and uneven border",
+    "Visible fine vasculature across the central pink nodule"
+   ],
+   "calm": [
+    "Uniform cobblestone or lobulated architecture in the yellowish area",
+    "Absence of diffuse dark blue or black pigmentation"
+   ]
+  },
+  {
+   "image": "ISIC_0024698",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "consensus",
+   "malignant": false,
+   "score": 70,
+   "unclear": false,
+   "signals": [
+    "Asymmetrical contour and pigment distribution",
+    "Irregular, smudged and notched borders",
+    "Color variegation with light brown, dark brown, and reddish tones"
+   ],
+   "calm": [
+    "Flat macular appearance without obvious nodules",
+    "No overt ulceration or bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0027008",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 82,
+   "unclear": false,
+   "signals": [
+    "Distinct dark blue-grey round structure",
+    "Multiple colours including pink, brown, and blue",
+    "Central ulceration with dark crusting",
+    "Shiny pink and translucent central areas",
+    "Asymmetric internal structure and pigmentation"
+   ],
+   "calm": [
+    "Roughly oval overall configuration"
+   ]
+  },
+  {
+   "image": "ISIC_0028880",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 65,
+   "unclear": false,
+   "signals": [
+    "central erythematous erosion or ulceration",
+    "peripheral collarette of scale and crusting",
+    "asymmetric brown pigmentation along the upper margin",
+    "white scale overlying central pink zone"
+   ],
+   "calm": [
+    "overall roughly circular outline"
+   ]
+  },
+  {
+   "image": "ISIC_0030021",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 28,
+   "unclear": false,
+   "signals": [
+    "Multiple colors including brown, pink, and white",
+    "Central white scar-like area",
+    "Faint linear or branching vascular patterns in the center"
+   ],
+   "calm": [
+    "Overall symmetric round shape",
+    "Regular and well-circumscribed border",
+    "Uniform peripheral pigment network"
+   ]
+  },
+  {
+   "image": "ISIC_0027613",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 25,
+   "unclear": false,
+   "signals": [
+    "central bright pink area",
+    "white shiny linear structures in the center",
+    "two distinct color zones (pink center, brownish periphery)"
+   ],
+   "calm": [
+    "overall round and symmetric shape",
+    "regular peripheral pigment network",
+    "gradual and regular borders"
+   ]
+  },
+  {
+   "image": "ISIC_0029760",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 60,
+   "unclear": false,
+   "signals": [
+    "raised nodular appearance",
+    "prominent pink and white areas",
+    "visible curved and linear reddish vascular structures"
+   ],
+   "calm": [
+    "overall symmetric circular shape",
+    "well-defined smooth border"
+   ]
+  },
+  {
+   "image": "ISIC_0030244",
+   "dx": "df",
+   "label": "dermatofibroma",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 25,
+   "unclear": false,
+   "signals": [
+    "central pale white structureless area",
+    "multiple colors including pink, white, and light brown"
+   ],
+   "calm": [
+    "overall round and symmetric shape",
+    "no ulceration, crusting, or bleeding",
+    "absence of dark black or blue-gray pigmentation"
+   ]
+  },
+  {
+   "image": "ISIC_0024693",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "follow_up",
+   "malignant": false,
+   "score": 30,
+   "unclear": false,
+   "signals": [
+    "ill-defined borders blending into surrounding skin",
+    "faint red vascular dots centrally"
+   ],
+   "calm": [
+    "overall roughly round and symmetric shape",
+    "absence of dark brown, blue, or black pigmentation",
+    "no ulceration, crusting, or bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0025964",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 48,
+   "unclear": false,
+   "signals": [
+    "Variation in pigment with dark brown and black tones",
+    "Irregular notched border",
+    "Mild asymmetry in shape and color distribution"
+   ],
+   "calm": [
+    "Overall cohesive oval configuration",
+    "Absence of ulceration, bleeding, or crusting"
+   ]
+  },
+  {
+   "image": "ISIC_0027190",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 58,
+   "unclear": false,
+   "signals": [
+    "Asymmetry in shape and pigment distribution",
+    "Irregular, poorly defined borders",
+    "Multiple shades of light and dark brown with a pinkish undertone",
+    "Atypical or patchy pigment network"
+   ],
+   "calm": [
+    "Predominantly reticular network pattern",
+    "No ulceration, crusting, or bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0031023",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 90,
+   "unclear": false,
+   "signals": [
+    "Marked asymmetry in shape and structure",
+    "Irregular, notched, and scalloped borders",
+    "Multiple colors including black, dark brown, tan, pink, and blue-grey",
+    "Central whitish to blue-grey areas"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0031177",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 72,
+   "unclear": false,
+   "signals": [
+    "Asymmetry in shape and pigment distribution",
+    "Irregular notched border",
+    "Multiple shades of brown and tan",
+    "Central pale area resembling regression",
+    "Focal darker brown to black granules centrally"
+   ],
+   "calm": [
+    "No visible ulceration or crusting",
+    "No evident raised nodular component"
+   ]
+  },
+  {
+   "image": "ISIC_0026993",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 90,
+   "unclear": false,
+   "signals": [
+    "Marked asymmetry in shape and pigment distribution",
+    "Irregular and notched borders",
+    "Multiple colors including tan, dark brown, and black",
+    "Blue-gray or violaceous central area"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0026120",
+   "dx": "mel",
+   "label": "melanoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 88,
+   "unclear": false,
+   "signals": [
+    "marked asymmetry in shape and color distribution",
+    "irregular, jagged, and poorly defined borders",
+    "multiple colors including light brown, dark brown, pink, and white",
+    "central pink and white area with a blue-white veil",
+    "atypical pigment network and shiny white lines"
+   ],
+   "calm": [
+    "presence of some delicate reticular pigment network at the periphery"
+   ]
+  },
+  {
+   "image": "ISIC_0031197",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 60,
+   "unclear": false,
+   "signals": [
+    "raised erythematous to violaceous nodule",
+    "white linear intersecting lines across surface",
+    "multiple clustered red and purple clods",
+    "focal surface fissuring"
+   ],
+   "calm": [
+    "overall symmetrical rounded shape",
+    "sharply demarcated outer border"
+   ]
+  },
+  {
+   "image": "ISIC_0029486",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "translucent pink-purple raised nodule",
+    "fine branching blood vessels",
+    "focal tiny dark dot or crust centrally",
+    "surrounding erythematous border"
+   ],
+   "calm": [
+    "overall roughly circular shape"
+   ]
+  },
+  {
+   "image": "ISIC_0032076",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 68,
+   "unclear": false,
+   "signals": [
+    "dark purple, blue, and black coloration",
+    "scalloped border",
+    "white superficial scale and shiny lines",
+    "nodular or raised appearance"
+   ],
+   "calm": [
+    "overall rounded configuration",
+    "well-circumscribed margins"
+   ]
+  },
+  {
+   "image": "ISIC_0029404",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 85,
+   "unclear": false,
+   "signals": [
+    "marked asymmetry in shape and internal structures",
+    "irregular, lobulated border",
+    "multiple colors including black, deep red, purple, and blue-gray",
+    "whitish scale and possible surface ulceration",
+    "adjacent second lesion visible at the top"
+   ],
+   "calm": [
+    "distinct and sharp margins around much of the lesion"
+   ]
+  },
+  {
+   "image": "ISIC_0026092",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 35,
+   "unclear": false,
+   "signals": [
+    "multiple colours including bright red, dark purple, and bluish tones",
+    "raised nodular architecture"
+   ],
+   "calm": [
+    "overall rounded and symmetrical shape",
+    "well-demarcated border",
+    "characteristic pattern of multiple vascular lagoons or clods"
+   ]
+  },
+  {
+   "image": "ISIC_0028163",
+   "dx": "vasc",
+   "label": "vascular lesion",
+   "confirmed_by": "histo",
+   "malignant": false,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "Central raw red ulceration",
+    "Raised rolled outer border",
+    "Collarette of peeling scale around edge"
+   ],
+   "calm": [
+    "Symmetric round shape",
+    "Well-circumscribed outer margin"
+   ]
+  },
+  {
+   "image": "ISIC_0028155",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 90,
+   "unclear": false,
+   "signals": [
+    "Central ulceration with hemorrhagic crusting",
+    "Raised rolled translucent border",
+    "Visible branching blood vessels",
+    "Multiple colors including pink, red, brown, and white",
+    "Asymmetric overall structure"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0034093",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 80,
+   "unclear": true,
+   "signals": [
+    "multiple colors including brown, black, grey, and pink",
+    "prominent branching and linear blood vessels",
+    "asymmetric pigment distribution",
+    "dark blue-grey globules and nests",
+    "irregular and poorly defined border"
+   ],
+   "calm": [
+    "no overt ulceration or bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0029230",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 55,
+   "unclear": false,
+   "signals": [
+    "Asymmetrical shape",
+    "Irregular and poorly defined borders",
+    "Color variation with pink, tan, and light brown tones",
+    "Focal central brownish pigmentation"
+   ],
+   "calm": [
+    "No ulceration, bleeding, or crusting",
+    "Flat appearance without raised or rolled borders"
+   ]
+  },
+  {
+   "image": "ISIC_0032384",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "Branching visible blood vessels",
+    "Multiple colours including pink, white, and light brown",
+    "Asymmetric distribution of pigmentation",
+    "Focal surface scaling or fine crusting",
+    "Grey-brown pigmented dots on one side"
+   ],
+   "calm": [
+    "No intense black pigmentation",
+    "Predominantly flat profile"
+   ]
+  },
+  {
+   "image": "ISIC_0024457",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 90,
+   "unclear": false,
+   "signals": [
+    "central ulceration with crusting and dried blood",
+    "prominent branching blood vessels",
+    "pearly pink and white translucent nodule",
+    "irregular surface texture",
+    "raised rolled-appearing edge"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0029193",
+   "dx": "bcc",
+   "label": "basal cell carcinoma",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 75,
+   "unclear": false,
+   "signals": [
+    "Asymmetric structure and varied coloration with pink, white, yellow, and dark brown areas",
+    "Focal crusting and surface erosion",
+    "Shiny pink-white central area",
+    "Ill-defined irregular borders",
+    "Faint linear and irregular blood vessels"
+   ],
+   "calm": []
+  },
+  {
+   "image": "ISIC_0032212",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "follow_up",
+   "malignant": false,
+   "score": 45,
+   "unclear": true,
+   "signals": [
+    "Asymmetrical elongated shape",
+    "Varied shades of light tan and reddish-brown",
+    "Ill-defined, smudged border",
+    "Central darker linear concentration of pigment"
+   ],
+   "calm": [
+    "No visible ulceration or crusting",
+    "No frank blue-black or white areas"
+   ]
+  },
+  {
+   "image": "ISIC_0025775",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "follow_up",
+   "malignant": false,
+   "score": 40,
+   "unclear": false,
+   "signals": [
+    "Variation in color from light brown to dark brown",
+    "Slightly irregular and ill-defined border",
+    "Darker central area with lighter periphery"
+   ],
+   "calm": [
+    "Overall roughly oval outline",
+    "No visible ulceration, crusting, or bleeding",
+    "Absence of nodularity or raised rolled edges"
+   ]
+  },
+  {
+   "image": "ISIC_0029828",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "follow_up",
+   "malignant": false,
+   "score": 58,
+   "unclear": false,
+   "signals": [
+    "Asymmetric shape and pigment distribution",
+    "Irregular and notched border",
+    "Multiple shades of brown",
+    "Focal darker pigmentation"
+   ],
+   "calm": [
+    "No visible ulceration or bleeding",
+    "Absence of distinct blue-grey or white areas"
+   ]
+  },
+  {
+   "image": "ISIC_0031588",
+   "dx": "nv",
+   "label": "benign mole",
+   "confirmed_by": "follow_up",
+   "malignant": false,
+   "score": 38,
+   "unclear": false,
+   "signals": [
+    "Asymmetric shape and color distribution",
+    "Color gradient from darker reddish-brown to lighter tan",
+    "Somewhat irregular and indistinct border"
+   ],
+   "calm": [
+    "No ulceration, crusting, or bleeding",
+    "Absence of blue-grey or white areas",
+    "No focal raised nodular components"
+   ]
+  },
+  {
+   "image": "ISIC_0029417",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 52,
+   "unclear": false,
+   "signals": [
+    "Erythematous background with focal yellowish-brown and white surface scale",
+    "Irregular, lobulated border",
+    "Presence of multiple shades including pink, tan, and white",
+    "Surface cracking and fine crusting"
+   ],
+   "calm": [
+    "Overall rounded configuration",
+    "Absence of dark black or blue pigmentation",
+    "No frank ulceration or active bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0029915",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 55,
+   "unclear": false,
+   "signals": [
+    "Asymmetric shape and color distribution",
+    "Poorly defined irregular border",
+    "Multiple shades including pink, tan, and white scale",
+    "Faint visible fine blood vessels"
+   ],
+   "calm": [
+    "No dark brown or blue-black pigmentation",
+    "No frank ulceration or bleeding"
+   ]
+  },
+  {
+   "image": "ISIC_0029360",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 48,
+   "unclear": false,
+   "signals": [
+    "Central pinkish-erythematous area",
+    "Irregular and ill-defined borders",
+    "Patchy light brown pigmentation",
+    "Fine white surface scaling"
+   ],
+   "calm": [
+    "No frank ulceration or bleeding",
+    "Absence of dark black or deep blue tones"
+   ]
+  },
+  {
+   "image": "ISIC_0029659",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 68,
+   "unclear": true,
+   "signals": [
+    "Asymmetric focal dark purple to slate-grey pigmentation",
+    "Multiple colours including pink, white, brown, and slate-grey",
+    "Disrupted surrounding brownish pigmentation",
+    "Irregular central textural change"
+   ],
+   "calm": [
+    "Preserved follicular pattern in several areas"
+   ]
+  },
+  {
+   "image": "ISIC_0026575",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 72,
+   "unclear": false,
+   "signals": [
+    "Asymmetrical distribution of pigment and structure",
+    "Irregular, notched borders",
+    "Multiple colors including pink, brown, grey, and white",
+    "Central pale or white shiny area"
+   ],
+   "calm": [
+    "No frank bleeding or deep ulceration"
+   ]
+  },
+  {
+   "image": "ISIC_0025178",
+   "dx": "akiec",
+   "label": "actinic keratosis / early SCC",
+   "confirmed_by": "histo",
+   "malignant": true,
+   "score": 35,
+   "unclear": false,
+   "signals": [
+    "Central pink and white clearing",
+    "Uneven distribution of brown pigment",
+    "Multiple shades of light brown and pink"
+   ],
+   "calm": [
+    "Roughly circular outline",
+    "Absence of ulceration, crusting, or bleeding"
+   ]
+  }
+ ]
+}

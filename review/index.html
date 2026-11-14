@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oncoscan Review — case queue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F5F2;--card:#FFFFFF;--ink:#0E1A24;--ink2:#2A3946;--muted:#5B6873;--line:#E2DED5;--signal:#E8743B;--signal-ink:#B4521F;
+--pos:#B3261E;--pos-bg:#FBECEA;--neg:#1F6B45;--neg-bg:#E7F3EC;--uns:#5B6873;--uns-bg:#ECEAE4;
+--fh:'Schibsted Grotesk',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'IBM Plex Mono',ui-monospace,monospace;--ease:cubic-bezier(.2,.7,.1,1)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--fb);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--fm);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+kbd{font:500 11px var(--fm);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:#fff;color:var(--muted)}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:28px;padding:14px 28px;border-bottom:1px solid var(--line);background:var(--bg);flex:none}
+.brand{display:flex;align-items:center;gap:10px;font:700 19px/1 var(--fh);letter-spacing:-.02em}
+.brand i{width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);position:relative;overflow:hidden}
+.brand i::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:2px;background:var(--signal)}
+.brand span{font:500 12px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--line);padding-left:10px}
+.progress{flex:1;display:flex;align-items:center;gap:14px;max-width:420px}
+.progress-bar{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress-bar b{display:block;height:100%;width:0;background:var(--ink);transition:width .5s var(--ease)}
+.kpis{margin-left:auto;display:flex;gap:28px}
+.kpi{text-align:right}
+.kpi b{display:block;font:600 18px/1.2 var(--fh);font-variant-numeric:tabular-nums}
+.demo{font:500 11px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--signal-ink);border:1px solid currentColor;border-radius:99px;padding:4px 10px}
+
+/* layout */
+.stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(260px,1fr) minmax(360px,560px) minmax(280px,1fr);gap:32px;padding:24px 28px 20px;align-items:stretch}
+.rail{display:flex;flex-direction:column;gap:20px;min-height:0;overflow:auto}
+.rail-right{align-items:stretch}
+
+/* left: case facts */
+.case-id{font:700 34px/1 var(--fh);letter-spacing:-.03em}
+.clock{display:flex;align-items:baseline;gap:12px;margin-top:10px}
+.clock b{font:500 22px var(--fm);color:var(--signal-ink);font-variant-numeric:tabular-nums}
+.due{font-size:14px;color:var(--muted)}
+.due.late{color:var(--pos);font-weight:600}
+.facts{border-top:1px solid var(--ink);margin:0;padding:0}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:600;text-align:right}
+.said h3{font:500 12px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.said p{font-size:17px;line-height:1.55;color:var(--ink2)}
+.keys{margin-top:auto;display:grid;gap:8px;font-size:13px;color:var(--muted);padding-top:16px;border-top:1px solid var(--line)}
+.keys span{display:flex;gap:8px;align-items:center}
+
+/* center: card deck */
+.deck-col{display:flex;flex-direction:column;gap:18px;min-height:0}
+.deck{position:relative;flex:1;min-height:0}
+.card{position:absolute;inset:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;touch-action:none;user-select:none;will-change:transform}
+.card.under{transform:scale(.965) translateY(14px);opacity:.6;pointer-events:none}
+.card.anim{transition:transform .42s var(--ease),opacity .42s var(--ease)}
+.card.grab{cursor:grabbing}
+.photo{position:relative;flex:1;min-height:0;background:#ECEAE4;overflow:hidden;cursor:grab}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s var(--ease);-webkit-user-drag:none}
+.photo.zoom{cursor:zoom-out}.photo.zoom img{transform:scale(2.4)}
+.photo.noimg img{display:none}
+.ph{display:none;position:absolute;inset:0;place-content:center;text-align:center;gap:8px;padding:24px;background:repeating-linear-gradient(135deg,#ECEAE4 0 14px,#E6E3DB 14px 28px)}
+.photo.noimg .ph{display:grid}
+.ph b{font:600 17px var(--fh)}
+.ph code{font:500 13px var(--fm);background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+.chips{position:absolute;left:14px;top:14px;display:flex;gap:8px;pointer-events:none}
+.chip{font:500 12px var(--fm);letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.92);border-radius:99px;padding:6px 11px}
+.tools{position:absolute;right:12px;top:12px;display:flex;gap:6px}
+.tool{width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:17px}
+.tool:hover{background:#fff}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px}
+.dots button{width:26px;height:4px;border-radius:4px;border:0;padding:0;background:rgba(255,255,255,.55)}
+.dots button[aria-current=true]{background:#fff}
+.stamp{position:absolute;top:26px;font:800 30px/1 var(--fh);letter-spacing:.02em;text-transform:uppercase;padding:10px 16px;border:4px solid currentColor;border-radius:10px;background:rgba(255,255,255,.9);opacity:0;pointer-events:none}
+.stamp.pos{right:22px;color:var(--pos);transform:rotate(9deg)}
+.stamp.neg{left:22px;color:var(--neg);transform:rotate(-9deg)}
+.stamp.uns{left:50%;top:auto;bottom:40px;color:var(--uns);transform:translateX(-50%)}
+.cap{padding:16px 20px 18px;border-top:1px solid var(--line);flex:none}
+.cap .mono{display:block;margin-bottom:4px}
+.cap p{font-size:15px;color:var(--ink2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* actions */
+.actions{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;flex:none}
+.act{display:flex;align-items:center;justify-content:center;gap:10px;height:60px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font:600 16px var(--fb);transition:background .2s,border-color .2s,transform .15s}
+.act svg{width:20px;height:20px;flex:none}
+.act:active{transform:scale(.98)}
+.act.neg{color:var(--neg)}.act.neg:hover{background:var(--neg-bg);border-color:var(--neg)}
+.act.pos{color:var(--pos)}.act.pos:hover{background:var(--pos-bg);border-color:var(--pos)}
+.act.uns{color:var(--uns);padding:0 18px}.act.uns:hover{background:var(--uns-bg);border-color:var(--uns)}
+.act kbd{margin-left:4px}
+
+/* note sheet */
+.note{position:absolute;inset:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;display:none;flex-direction:column;gap:16px;z-index:5}
+.note.on{display:flex;animation:rise .35s var(--ease)}
+@keyframes rise{from{transform:translateY(14px)}}
+.verdict{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;font:700 15px var(--fh);padding:8px 14px;border-radius:99px}
+.verdict.pos{background:var(--pos-bg);color:var(--pos)}.verdict.neg{background:var(--neg-bg);color:var(--neg)}.verdict.uns{background:var(--uns-bg);color:var(--uns)}
+.note h2{font:700 28px/1.1 var(--fh);letter-spacing:-.02em}
+.tpls{display:grid;gap:8px}
+.tpl{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:15px;line-height:1.4}
+.tpl:hover{border-color:var(--ink)}
+.tpl[aria-pressed=true]{border-color:var(--ink);background:var(--bg)}
+.note textarea{font:400 15px/1.5 var(--fb);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;resize:none;min-height:84px;color:var(--ink)}
+.note textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(232,116,59,.3)}
+.note-foot{margin-top:auto;display:flex;gap:10px;align-items:center}
+.btn{height:52px;padding:0 22px;border-radius:99px;border:0;background:var(--ink);color:#fff;font-weight:600;display:inline-flex;align-items:center;gap:10px}
+.btn:hover{background:#000}
+.btn-quiet{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-quiet:hover{background:#fff;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.second{font-size:13px;color:var(--muted);margin-left:auto;max-width:15em;text-align:right}
+
+/* right: AI */
+.ai{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.ai-head{display:flex;justify-content:space-between;align-items:center}
+.ai-head h2{font:700 18px var(--fh)}
+.reveal{border:1.5px dashed var(--line);border-radius:10px;background:var(--bg);padding:26px 16px;display:grid;gap:8px;justify-items:center;font-weight:600;width:100%}
+.reveal:hover{border-color:var(--ink)}
+.reveal small{font-weight:400;color:var(--muted);font-size:13px}
+.ai-body{display:none;flex-direction:column;gap:16px}
+.ai.open .ai-body{display:flex;animation:rise .35s var(--ease)}
+.ai.open .reveal{display:none}
+.score{display:flex;align-items:baseline;gap:10px}
+.score b{font:700 64px/1 var(--fh);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.score span{font:500 13px var(--fm);color:var(--muted)}
+.band{margin-left:auto;font:600 13px var(--fb);padding:5px 11px;border-radius:99px}
+.band.high{background:var(--pos-bg);color:var(--pos)}.band.med{background:#FCEFE4;color:var(--signal-ink)}.band.low{background:var(--neg-bg);color:var(--neg)}
+.meter{height:6px;border-radius:6px;background:var(--line);position:relative}
+.meter b{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--ink);transition:width .6s var(--ease)}
+.meter i{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--muted);opacity:.5}
+.finds{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.finds li{padding:10px 0 10px 20px;border-bottom:1px solid var(--line);font-size:15px;position:relative;color:var(--ink2)}
+.finds li::before{content:"";position:absolute;left:2px;top:19px;width:8px;height:2px;background:var(--signal)}
+.ai-note{font-size:13px;color:var(--muted)}
+.toggle{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);cursor:pointer}
+.toggle input{accent-color:var(--ink);width:16px;height:16px}
+.log{display:grid;gap:0;font-size:14px}
+.log h3{font:500 12px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.log-row{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.log-row i{width:8px;height:8px;border-radius:50%;flex:none}
+.log-row i.pos{background:var(--pos)}.log-row i.neg{background:var(--neg)}.log-row i.uns{background:var(--uns)}
+.log-row span:last-child{margin-left:auto;color:var(--muted);font:500 12px var(--fm)}
+.log-empty{color:var(--muted);padding:10px 0}
+
+/* done + toast */
+.done{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;gap:18px;padding:36px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.done.on{display:flex;animation:rise .4s var(--ease)}
+.done h2{font:700 44px/1 var(--fh);letter-spacing:-.03em}
+.done-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);margin-top:8px}
+.done-stats div{padding:16px 0;border-bottom:1px solid var(--line)}
+.done-stats b{display:block;font:700 30px var(--fh);font-variant-numeric:tabular-nums}
+.done-stats span{font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120%);background:var(--ink);color:#fff;border-radius:99px;padding:10px 12px 10px 20px;display:flex;gap:14px;align-items:center;font-size:14px;transition:transform .35s var(--ease);z-index:20}
+.toast.on{transform:translate(-50%,0)}
+.toast button{background:#fff;color:var(--ink);border:0;border-radius:99px;padding:7px 14px;font-weight:600;font-size:13px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+@media (max-width:1100px){
+  html,body{height:auto}
+  body{overflow:auto;display:block}
+  .stage{grid-template-columns:1fr;gap:20px;padding:16px}
+  .deck-col{order:-1}
+  .deck{flex:none;height:min(72vh,620px)}
+  .rail{overflow:visible}
+  .keys{display:none}
+  .top{padding:12px 16px;gap:14px}
+  .progress,.kpi:first-child{display:none}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---- v2 skin: regular-weight type, square blocks, pill buttons, deep teal + coral ---- */
+:root{--bg:#FBFAF7;--card:#FFFFFF;--ink:#0B2A2E;--ink2:#23444A;--muted:#566769;--line:#DDD9D1;--vivid:#0A7C72;--pale:#9AD9CC;--signal:#FF8A5B;--signal-ink:#B8481C;
+--pos:#C2331F;--pos-bg:#FBEAE6;--neg:#0A7C72;--neg-bg:#E3F3F0;--uns:#566769;--uns-bg:#EFEDE8;--fh:'Hanken Grotesk',system-ui,sans-serif;--fb:'Hanken Grotesk',system-ui,sans-serif;--fm:'Hanken Grotesk',system-ui,sans-serif}
+.mono,.brand span,.chip,.demo,.said h3,.log h3,.log-row span:last-child,.score span{letter-spacing:0;text-transform:none;font-size:13px;font-weight:400}
+kbd{font-family:var(--fb)}
+.clock b{font-weight:400;letter-spacing:-.01em}
+.brand,.case-id,.note h2,.done h2,.score b,.ai-head h2,.kpi b,.done-stats b,.ph b{font-weight:400;letter-spacing:-.02em}
+.case-id{font-size:44px}.note h2{font-size:32px}.done h2{font-size:48px}
+.top{background:var(--ink);color:#fff;border:0}
+.top .mono,.brand span{color:var(--pale)}.brand span{border-color:rgba(255,255,255,.25)}
+.brand i{border-color:#fff}
+.progress-bar{background:rgba(255,255,255,.2)}.progress-bar b{background:var(--signal)}
+.demo{background:var(--signal);color:var(--ink);border:0;padding:6px 12px}
+.card,.note,.done,.ai,.tpl,.note textarea,.reveal,.stamp,.ph code{border-radius:0}
+.chip{border-radius:0;color:var(--ink)}
+.act{border-radius:99px;font-weight:500;height:56px}
+.btn{background:var(--vivid);font-weight:500}.btn:hover{background:var(--ink)}
+.stamp{font-weight:600}
+.facts{border-top-color:var(--line)}.log h3{border-bottom-color:var(--line)}.done-stats{border-top-color:var(--line)}
+.facts dd,.reveal,.verdict{font-weight:500}
+.meter b{background:var(--vivid)}
+.band.med{background:#FFEDE3}
+.ai-none{display:none;font-size:15px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+.ai.none .ai-none{display:block}.ai.none .reveal,.ai.none .ai-body,.ai.none .toggle{display:none}
+.chip.new{background:var(--signal)}
+/* v3: all-green, no orange */
+:root{--signal:#9AD9CC;--signal-ink:#0A7C72;--pos:#A61E2E;--pos-bg:#F9E9EB}
+:focus-visible{outline-color:#12A594}
+.note textarea:focus{box-shadow:0 0 0 3px rgba(10,124,114,.28)}
+.band.med{background:#EEF1EC;color:var(--ink2)}
+.finds li::before{background:var(--vivid)}
+.due.late{color:var(--ink);font-weight:500}
+.log-row .truth{display:block;font-size:12px;color:var(--muted)}
+.toast{max-width:min(92vw,760px)}
+/* signal check */
+.sig-verdict{display:grid;gap:2px;padding:14px 16px;border-left:4px solid var(--uns);background:var(--uns-bg)}
+.sig-verdict b{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.sig-verdict span{font-size:14px;color:var(--ink2)}
+.sig-verdict.is-warn{background:var(--pos-bg);border-color:var(--pos)}.sig-verdict.is-warn b{color:var(--pos)}
+.sig-verdict.is-clear{background:var(--neg-bg);border-color:var(--neg)}.sig-verdict.is-clear b{color:var(--neg)}
+.sig-h{font-size:13px;font-weight:600;color:var(--muted);margin:4px 0 -8px}
+.finds.warn li::before{background:var(--pos);height:8px;border-radius:50%;top:15px}
+.finds.calm li::before{content:"✓";background:none;color:var(--neg);font-size:13px;font-weight:700;top:8px;left:0;width:auto;height:auto}
+.finds li.none{color:var(--muted);padding-left:0}.finds li.none::before{display:none}
+.ai .score,.ai .meter{display:none}
+.finds[hidden],.sig-h[hidden]{display:none}
+</style>
+<link rel="stylesheet" href="versions.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i aria-hidden="true"></i>Oncoscan <span>Review</span></div>
+  <div class="vsw" role="group" aria-label="Layout version"><span>Layout</span>
+    <button data-v="0" title="Original"><b>0</b></button><button data-v="1" title="Theatre"><b>1</b></button><button data-v="2" title="Split"><b>2</b></button><button data-v="3" title="Chart"><b>3</b></button><button data-v="4" title="Zen"><b>4</b></button><button data-v="5" title="Blocks"><b>5</b></button>
+    <span class="vname" id="vname"></span></div>
+  <div class="progress" aria-hidden="true"><span class="mono" id="prog-text">0 of 0</span><div class="progress-bar"><b id="prog-bar"></b></div></div>
+  <div class="kpis">
+    <div class="kpi"><span class="mono">Avg per case</span><b id="kpi-avg">–</b></div>
+    <div class="kpi"><span class="mono">Earned today</span><b id="kpi-eur">€0</b></div>
+  </div>
+  <span class="demo">Demo data</span>
+</header>
+
+<main class="stage">
+  <aside class="rail" aria-label="Case details">
+    <div>
+      <p class="mono">Case</p>
+      <h1 class="case-id" id="c-id">–</h1>
+      <p class="clock"><b id="c-clock">T+00:00</b><span class="due" id="c-due"></span></p>
+    </div>
+    <dl class="facts">
+      <div><dt>Area</dt><dd id="c-area">–</dd></div>
+      <div><dt>Site</dt><dd id="c-site">–</dd></div>
+      <div><dt>Age band</dt><dd id="c-age">–</dd></div>
+      <div><dt>Photos</dt><dd id="c-photos">–</dd></div>
+    </dl>
+    <div class="said"><h3>Patient's description</h3><p id="c-text"></p></div>
+    <div class="keys" aria-label="Keyboard shortcuts">
+      <span><kbd>←</kbd> No concern</span><span><kbd>→</kbd> Suspicious</span><span><kbd>↑</kbd> Can't tell</span>
+      <span><kbd>Space</kbd> Reveal AI</span><span><kbd>Z</kbd> Zoom</span><span><kbd>U</kbd> Undo last</span>
+    </div>
+  </aside>
+
+  <section class="deck-col" aria-label="Review">
+    <div class="deck" id="deck">
+      <div class="done" id="done">
+        <p class="mono">Queue clear</p>
+        <h2>All cases reviewed.</h2>
+        <p style="color:var(--muted)">Patients are being notified by email now.</p>
+        <div class="done-stats">
+          <div><b id="d-n">0</b><span>cases reviewed</span></div>
+          <div><b id="d-pos">0</b><span>fast-tracked</span></div>
+          <div><b id="d-eur">€0</b><span>earned (demo rate)</span></div>
+        </div>
+        <button class="btn" id="restart" style="align-self:flex-start;margin-top:8px">Restart demo queue</button>
+      </div>
+      <div class="note" id="note" role="dialog" aria-labelledby="note-title">
+        <span class="verdict" id="note-verdict"></span>
+        <h2 id="note-title">Add a note for the patient's clinician.</h2>
+        <div class="tpls" id="tpls"></div>
+        <label class="sr" for="note-text">Note</label>
+        <textarea id="note-text" placeholder="Or write your own…"></textarea>
+        <div class="note-foot">
+          <button class="btn" id="note-ok">Sign &amp; next <kbd style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Enter</kbd></button>
+          <button class="btn btn-quiet" id="note-back">Back <kbd>Esc</kbd></button>
+          <span class="second" id="note-second"></span>
+        </div>
+      </div>
+    </div>
+    <div class="actions" id="actions">
+      <button class="act neg" data-v="neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>No concern <kbd>←</kbd></button>
+      <button class="act uns" data-v="uns" aria-label="Can't tell, needs a better photo">? Can't tell <kbd>↑</kbd></button>
+      <button class="act pos" data-v="pos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Suspicious <kbd>→</kbd></button>
+    </div>
+  </section>
+
+  <aside class="rail rail-right" aria-label="Signal check and session">
+    <div class="ai" id="ai">
+      <div class="ai-head"><h2>Signal check</h2><span class="mono" id="ai-tag">Decision support</span></div>
+      <button class="reveal" id="reveal">Reveal signal check <small>Look first, then compare. <kbd>Space</kbd></small></button>
+      <div class="ai-body">
+        <div class="score"><b id="ai-score">0</b><span>/ 100</span><span class="band" id="ai-band"></span></div>
+        <div class="meter" aria-hidden="true"><b id="ai-meter"></b><i style="left:30%"></i><i style="left:65%"></i></div>
+        <p class="sig-verdict" id="sig-verdict"></p>
+        <h3 class="sig-h">Signals that may indicate cancer</h3>
+        <ul class="finds warn" id="sig-warn"></ul>
+        <h3 class="sig-h" id="sig-calm-h">Signs against cancer</h3>
+        <ul class="finds calm" id="sig-calm"></ul>
+        <p class="ai-note" id="sig-src"></p>
+      </div>
+      <label class="toggle"><input type="checkbox" id="always"> Always show signal check</label>
+    </div>
+    <div class="log"><h3>This session</h3><div id="log"><p class="log-empty">No cases reviewed yet.</p></div></div>
+  </aside>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-text"></span><button id="toast-undo">Undo <kbd style="border:0;background:transparent;color:var(--muted)">U</kbd></button></div>
+
+<script src="cases.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const V = {
+  pos:{label:"Suspicious", stamp:"Suspicious", tpl:["Lesion warrants biopsy. Urgent referral recommended.","Suspicious features. In-person specialist assessment within 2 weeks.","Refer urgently; photograph again at the visit for comparison."]},
+  neg:{label:"No concern", stamp:"No concern", tpl:["Benign appearance. No action needed; return if it changes.","Likely benign. Re-photograph in 3 months to confirm it is stable.","Consistent with a common, harmless finding. Reassure the patient."]},
+  uns:{label:"Can't tell", stamp:"Better photo", tpl:["Image too blurred or dark to assess. Retake in daylight, in focus.","Need a closer photo and one with a ruler or coin for scale.","Cannot assess from a photo. Book an in-person look."]}
+};
+const ICON = {pos:"+", neg:"−", uns:"?"};
+let queue, idx, results, started, photoI, pending, toastT;
+const deck = $("#deck"), note = $("#note"), ai = $("#ai");
+
+const LS="oncoscan_cases", LR="oncoscan_results";
+const jget=(k,d)=>{ try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } };
+const submitted=()=>{ const done=jget(LR,{}); return jget(LS,[]).filter(c=>!done[c.id]).map(c=>({...c, minsAgo: Math.max(0,Math.round((Date.now()-c.createdAt)/60000))})); };
+function init(){ queue = submitted().concat(window.CASES); idx = 0; results = []; $("#done").classList.remove("on"); $("#actions").style.visibility="visible"; render(); }
+
+function fmtClock(m){ const h=Math.floor(m/60), mm=m%60; return `T+${String(h).padStart(2,"0")}:${String(mm).padStart(2,"0")}`; }
+
+function cardEl(c, under){
+  const el = document.createElement("article");
+  el.className = "card" + (under ? " under" : "");
+  el.innerHTML = `
+    <div class="photo"><img alt="${c.area} photo, ${c.site}" draggable="false">
+      <div class="ph"><span class="mono">Image not added yet</span><b>${c.area} · ${c.site}</b><code></code></div>
+      <div class="chips"><span class="chip">${c.id}</span><span class="chip">${c.area}</span>${c.patient ? '<span class="chip new">New from patient</span>' : ""}</div>
+      ${under ? "" : `<div class="tools"><button class="tool" data-zoom aria-label="Zoom" title="Zoom (Z)">⌕</button></div>
+      <div class="dots">${c.images.length>1 ? c.images.map((_,i)=>`<button aria-label="Photo ${i+1}" data-i="${i}"></button>`).join("") : ""}</div>
+      <span class="stamp neg">${V.neg.stamp}</span><span class="stamp pos">${V.pos.stamp}</span><span class="stamp uns">${V.uns.stamp}</span>`}
+    </div>
+    <div class="cap"><span class="mono">${c.site} · ${c.age}</span><p>${c.text}</p></div>`;
+  setPhoto(el, c, 0);
+  return el;
+}
+function setPhoto(el, c, i){
+  const p = el.querySelector(".photo"), img = p.querySelector("img");
+  p.classList.remove("noimg","zoom");
+  img.onerror = () => { p.classList.add("noimg"); p.querySelector("code").textContent = "review/cases/" + c.images[i]; };
+  img.onload = () => { if (i === 0 && !c.q && !el.classList.contains("under")) { c.q = measure(img); if (queue[idx] === c) paint(c); } };
+  img.src = c.images[i].startsWith("data:") ? c.images[i] : "cases/" + c.images[i];
+  el.querySelectorAll(".dots button").forEach((b,j)=>b.setAttribute("aria-current", j===i));
+}
+
+function render(){
+  deck.querySelectorAll(".card").forEach(n=>n.remove());
+  note.classList.remove("on"); $("#done").classList.remove("on"); $("#actions").style.visibility="visible";
+  const n = queue.length;
+  $("#prog-text").textContent = `${Math.min(idx+1,n)} of ${n}`;
+  $("#prog-bar").style.width = (idx/n*100)+"%";
+  stats();
+  if (idx >= n) return finish();
+  const c = queue[idx];
+  if (queue[idx+1]) deck.prepend(cardEl(queue[idx+1], true));
+  const top = cardEl(c, false); deck.append(top); bindCard(top, c);
+  photoI = 0; started = Date.now();
+  $("#c-id").textContent = c.id;
+  $("#c-clock").textContent = fmtClock(c.minsAgo);
+  const left = 1440 - c.minsAgo, due = $("#c-due");
+  due.textContent = left < 0 ? "overdue" : `due in ${Math.floor(left/60)} h ${left%60} min`;
+  due.classList.toggle("late", left < 360);
+  $("#c-area").textContent = c.area; $("#c-site").textContent = c.site; $("#c-age").textContent = c.age;
+  $("#c-photos").textContent = c.images.length + (c.images.length === 1 ? " photo" : " photos"); $("#c-text").textContent = c.text;
+  // signal check
+  ai.classList.toggle("open", $("#always").checked);
+  paint(c);
+  askAI(c);
+}
+
+const esc = t => String(t).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+function paint(c){
+  const a = analyse(c), m = c.gem || c.ai;
+  const v = $("#sig-verdict"); v.className = "sig-verdict is-" + a.level; v.innerHTML = `<b>${esc(a.title)}</b><span>${esc(a.line)}</span>`;
+  const list = (items, none) => items.length ? items.map(f=>`<li>${esc(f.charAt(0).toUpperCase() + f.slice(1))}</li>`).join("") : `<li class="none">${none}</li>`;
+  $("#sig-warn").innerHTML = list(a.signals, "None found.");
+  $("#sig-calm").innerHTML = list(a.calm, "None found.");
+  $("#sig-calm").hidden = $("#sig-calm-h").hidden = !a.calm.length;
+  $("#ai-tag").textContent = c.gemBusy ? "Analysing the photo…" : m ? (c.gem ? "Gemini · description only" : `Score ${m.score} / 100`) : "From the patient's answers";
+  $("#sig-src").textContent = a.source;
+}
+
+// When the server has a Gemini key, the photo itself is analysed. The result replaces the
+// hand-written example (demo cases) or the answers-only check (patient cases).
+let AI = { ai: false, model: null };
+async function askAI(c){
+  if (!AI.ai || c.gem || c.gemBusy || c.gemErr) return;
+  const img = c.images && c.images[0];
+  if (!img || !(img.startsWith("data:") || img.startsWith("ham10000/"))) return;   // cases without a real image keep their example
+  c.gemBusy = true; if (queue[idx] === c) paint(c);
+  try {
+    const r = await fetch("/api/analyse", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: img, area: c.area, site: c.site }) });
+    const j = await r.json(); if (!r.ok) throw new Error(j.error || ("HTTP " + r.status)); c.gem = j;
+  } catch (e) { c.gemErr = String(e.message || e).slice(0, 140); }
+  c.gemBusy = false; if (queue[idx] === c) paint(c);
+}
+
+// Turns a case into a plain verdict plus two lists: what points toward cancer and what points away.
+// Demo cases carry a hand-written example analysis. Patient cases are checked against simple rules on
+// the patient's own answers (ABCDE "evolving" signs for skin, the 3-week rule for mouth lesions).
+// What the patient reported, checked against simple rules (ABCDE "evolving" signs, the 3-week rule for mouth lesions).
+function fromAnswers(c){
+  const q = c.answers || { dur: "", changes: [] }, ch = q.changes || [], signals = [], calm = [];
+  const long = ["More than 6 weeks", "Months or years"].includes(q.dur), mid = q.dur === "2 to 6 weeks";
+  if (c.area === "Mouth" && long) signals.push("Present more than 3 weeks (patient's report)");
+  if (c.area === "Mouth" && mid) signals.push("Present 2 to 6 weeks, may be past 3 weeks (patient's report)");
+  const say = { "it is not healing": "Not healing", "it has grown": "Has grown", "it has changed colour": "Has changed colour", "it bleeds": "Bleeds", "it hurts": "Painful", "it itches": "Itches" };
+  ch.forEach(k => { if (say[k]) signals.push(say[k] + " (patient's report)"); });
+  if (!ch.length) calm.push("No change reported (patient's report)");
+  if (q.dur === "Less than 2 weeks") calm.push("Present less than 2 weeks (patient's report)");
+  if (c.area === "Skin" && long && !ch.includes("it has grown") && !ch.includes("it has changed colour")) calm.push("Long-standing, no growth or colour change (patient's report)");
+  return { signals, calm };
+}
+
+// How each Gemini model's score did on our 42 labelled HAM10000 images (tools/eval.mjs, 14 Nov 2026, score ≥ 65 = flagged).
+const GEM_TEST = {
+  "gemini-3.5-flash-lite": "it flagged 13 of 18 cancers and cleared only 5 of 24 benign lesions",
+  "gemini-3.8-flash": "it flagged 11 of 18 cancers and cleared only 11 of 24 benign lesions"
+};
+
+// Turns a case into a plain verdict plus two lists: what points toward cancer and what points away.
+//  - With a Gemini key: the model DESCRIBES the photo. Its score is not used, because it failed our test.
+//    The verdict comes from the patient's report and the photo-quality check.
+//  - Demo cases without Gemini: a hand-written example analysis.
+//  - Patient cases without Gemini: the patient's report only.
+function analyse(c){
+  const rep = fromAnswers(c), soft = c.q && c.q.warn, failed = c.gemErr ? ` AI analysis failed (${c.gemErr}).` : "";
+  let signals, calm, unclear, source;
+  if (c.gem) {
+    signals = c.gem.signals.concat(rep.signals); calm = c.gem.calm.concat(rep.calm); unclear = soft || c.gem.unclear;
+    source = `Photo described by Google ${c.gem.model}; the photo, area and body site were sent to Google. Its score is not used: on 42 labelled test images ${GEM_TEST[c.gem.model] || "this model has not been tested"}. Treat the photo features as a checklist. You make the call.`;
+    if (unclear) return { level: "unclear", title: "Cannot judge from this photo", line: unclear + " Ask for a better photo.", signals, calm, source };
+    if (rep.signals.length >= 2) return { level: "warn", title: "Warning signs in the patient's report", line: `${rep.signals.length} reported, plus ${c.gem.signals.length} features to check in the photo.`, signals, calm, source };
+    return { level: "some", title: c.gem.signals.length ? "Features to check in the photo" : "Nothing flagged", line: `${c.gem.signals.length} from the model, ${rep.signals.length} from the patient's report. The model cannot rule cancer out.`, signals, calm, source };
+  }
+  if (c.ai) { signals = c.ai.signals; calm = c.ai.calm; unclear = c.ai.unclear || soft;
+    source = "Example analysis written by hand: no model analysed this photo." + failed + " A help to look, not a diagnosis. You make the call."; }
+  else { signals = rep.signals; calm = rep.calm; unclear = soft;
+    source = "From the patient's answers and a sharpness check only. The photo's content is not analysed." + failed + " Judge the image yourself."; }
+  if (unclear) return { level: "unclear", title: "Cannot judge from this photo", line: unclear + " Ask for a better photo.", signals, calm, source };
+  if (!signals.length) return c.ai
+    ? { level: "clear", title: "Clearly not suspicious", line: "No warning signs found. Nothing here points to cancer.", signals, calm, source }
+    : { level: "clear", title: "No warning signs in the answers", line: "Nothing the patient reported points to cancer. Check the photo.", signals, calm, source };
+  const strong = c.ai ? c.ai.score >= 65 : signals.length >= 3;
+  return strong
+    ? { level: "warn", title: "Cancer is possible", line: `${signals.length} warning signs. Needs an in-person look.`, signals, calm, source }
+    : { level: "some", title: "Some warning signs", line: `${signals.length} to weigh against ${calm.length} reassuring.`, signals, calm, source };
+}
+
+// Crude focus and exposure check on the first photo (same method as the patient flow).
+function measure(img){
+  try {
+    const W = 160, H = Math.max(2, Math.round(160 * img.naturalHeight / img.naturalWidth)), cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    const x = cv.getContext("2d"); x.drawImage(img, 0, 0, W, H);
+    const d = x.getImageData(0, 0, W, H).data, g = new Float32Array(W * H); let sum = 0;
+    for (let i = 0; i < W * H; i++) { g[i] = .299 * d[i*4] + .587 * d[i*4+1] + .114 * d[i*4+2]; sum += g[i]; }
+    let v = 0, n = 0; for (let y = 1; y < H - 1; y++) for (let xx = 1; xx < W - 1; xx++) { const i = y * W + xx, l = 4*g[i] - g[i-1] - g[i+1] - g[i-W] - g[i+W]; v += l * l; n++; }
+    const mean = sum / (W * H), sharp = v / n;
+    return { mean, sharp, warn: mean < 45 ? "Photo is too dark." : mean > 240 ? "Photo is overexposed." : sharp < 70 ? "Photo is out of focus. Border and colour cannot be judged." : "" };
+  } catch { return { warn: "" }; }
+}
+
+function bindCard(el, c){
+  const photo = el.querySelector(".photo");
+  let sx, sy, dx=0, dy=0, drag=false, moved=false;
+  const stamps = {pos:el.querySelector(".stamp.pos"), neg:el.querySelector(".stamp.neg"), uns:el.querySelector(".stamp.uns")};
+  el.querySelector("[data-zoom]").addEventListener("click", e => { e.stopPropagation(); toggleZoom(); });
+  el.querySelectorAll(".dots button").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); photoI = +b.dataset.i; setPhoto(el, c, photoI); }));
+  photo.addEventListener("mousemove", e => { if(!photo.classList.contains("zoom")) return; const r = photo.getBoundingClientRect(); photo.querySelector("img").style.transformOrigin = `${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`; });
+  el.addEventListener("pointerdown", e => {
+    if (e.target.closest("button") || photo.classList.contains("zoom")) { if(photo.classList.contains("zoom") && !e.target.closest("button")) toggleZoom(); return; }
+    drag = true; moved = false; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.classList.remove("anim"); el.classList.add("grab");
+  });
+  el.addEventListener("pointermove", e => {
+    if(!drag) return; dx = e.clientX - sx; dy = e.clientY - sy; if (Math.abs(dx)+Math.abs(dy) > 6) moved = true;
+    el.style.transform = `translate(${dx}px,${dy*0.6}px) rotate(${dx*0.04}deg)`;
+    stamps.pos.style.opacity = Math.max(0, Math.min(1, dx/110));
+    stamps.neg.style.opacity = Math.max(0, Math.min(1, -dx/110));
+    stamps.uns.style.opacity = Math.abs(dx) < 60 ? Math.max(0, Math.min(1, -dy/110)) : 0;
+  });
+  const end = () => {
+    if(!drag) return; drag = false; el.classList.remove("grab");
+    if (!moved) { el.style.transform = ""; dx = dy = 0; const r = photo.getBoundingClientRect(); photo.querySelector("img").style.transformOrigin = `${(sx-r.left)/r.width*100}% ${(sy-r.top)/r.height*100}%`; toggleZoom(); return; }
+    const v = dx > 120 ? "pos" : dx < -120 ? "neg" : (dy < -120 && Math.abs(dx) < 60) ? "uns" : null;
+    if (v) decide(v); else { el.classList.add("anim"); el.style.transform = ""; Object.values(stamps).forEach(s=>s.style.opacity=0); }
+    dx = dy = 0;
+  };
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+}
+function top(){ return deck.querySelector(".card:not(.under)"); }
+function toggleZoom(){ const t = top(); if(t) t.querySelector(".photo").classList.toggle("zoom"); }
+
+function decide(v){
+  const el = top(); if(!el || note.classList.contains("on")) return;
+  const c = queue[idx];
+  el.classList.add("anim");
+  el.querySelector(".stamp."+v).style.opacity = 1;
+  el.style.transform = v==="pos" ? "translate(130%,-4%) rotate(18deg)" : v==="neg" ? "translate(-130%,-4%) rotate(-18deg)" : "translate(0,-120%)";
+  el.style.opacity = 0;
+  pending = { c, v, secs: Math.max(1, Math.round((Date.now()-started)/1000)), aiSeen: ai.classList.contains("open") };
+  setTimeout(() => openNote(v, c), 260);
+}
+function openNote(v, c){
+  const nv = $("#note-verdict"); nv.className = "verdict "+v; nv.textContent = `${ICON[v]}  ${V[v].label} · ${c.id}`;
+  $("#tpls").innerHTML = V[v].tpl.map((t,i)=>`<button class="tpl" aria-pressed="${i===0}"><kbd>${i+1}</kbd><span>${t}</span></button>`).join("");
+  $("#note-text").value = "";
+  const gap = v==="pos" ? true : (v==="neg" && (c.gem ? fromAnswers(c).signals.length >= 2 : (c.ai?.score ?? 0) >= 65));
+  $("#note-second").textContent = gap ? (v==="pos" ? "A second specialist confirms every suspicious case." : "Differs from the signal check: goes to a second specialist.") : "";
+  pending.second = gap;
+  note.classList.add("on"); $("#note-ok").focus();
+}
+$("#tpls").addEventListener("click", e => { const b = e.target.closest(".tpl"); if(!b) return; pickTpl([...b.parentNode.children].indexOf(b)); });
+function pickTpl(i){ const all = [...document.querySelectorAll(".tpl")]; if(!all[i]) return; all.forEach((b,j)=>b.setAttribute("aria-pressed", j===i)); $("#note-text").value = ""; }
+function signNote(){
+  if(!pending) return;
+  const typed = $("#note-text").value.trim();
+  pending.note = typed || document.querySelector('.tpl[aria-pressed="true"] span').textContent;
+  results.push(pending); const done = pending; pending = null;
+  if (done.c.patient) { const r = jget(LR,{}); r[done.c.id] = { v: done.v, note: done.note, at: Date.now() }; localStorage.setItem(LR, JSON.stringify(r)); } idx++; render(); log();
+  toast(`${done.c.id} signed: ${V[done.v].label.toLowerCase()}` + (done.c.truth ? ` · Confirmed in the dataset: ${done.c.truth}` : ""));
+}
+function backNote(){ pending = null; render(); }
+$("#note-ok").addEventListener("click", signNote);
+$("#note-back").addEventListener("click", backNote);
+
+function undo(){ if(!results.length || note.classList.contains("on")) return; const u = results.pop(); if (u.c.patient) { const r = jget(LR,{}); delete r[u.c.id]; localStorage.setItem(LR, JSON.stringify(r)); } idx--; $("#done").classList.remove("on"); $("#actions").style.visibility="visible"; render(); log(); hideToast(); }
+function toast(t){ $("#toast-text").textContent = t; $("#toast").classList.add("on"); clearTimeout(toastT); toastT = setTimeout(hideToast, 5000); }
+function hideToast(){ $("#toast").classList.remove("on"); }
+$("#toast-undo").addEventListener("click", undo);
+
+function stats(){
+  const n = results.length;
+  $("#kpi-eur").textContent = "€" + n*window.RATE_EUR;
+  $("#kpi-avg").textContent = n ? Math.round(results.reduce((a,r)=>a+r.secs,0)/n) + " s" : "–";
+}
+function log(){
+  $("#log").innerHTML = results.length ? results.slice().reverse().map(r=>`<div class="log-row"><i class="${r.v}"></i><span>${r.c.id}</span><span>${V[r.v].label}${r.second?" · 2nd review":""}${r.c.truth?`<small class="truth">Dataset: ${r.c.truth}</small>`:""}</span><span>${r.secs}s</span></div>`).join("") : '<p class="log-empty">No cases reviewed yet.</p>';
+}
+function finish(){
+  $("#prog-text").textContent = `${queue.length} of ${queue.length}`; $("#prog-bar").style.width = "100%";
+  $("#d-n").textContent = results.length; $("#d-pos").textContent = results.filter(r=>r.v==="pos").length; $("#d-eur").textContent = "€"+results.length*window.RATE_EUR;
+  $("#done").classList.add("on"); $("#actions").style.visibility = "hidden";
+  ["#c-id","#c-area","#c-site","#c-age","#c-photos"].forEach(s=>$(s).textContent="–"); $("#c-text").textContent=""; $("#c-clock").textContent="T+00:00"; $("#c-due").textContent="";
+}
+
+$("#actions").addEventListener("click", e => { const b = e.target.closest("[data-v]"); if(b) decide(b.dataset.v); });
+function revealAI(){
+  if (ai.classList.contains("open")) return;
+  ai.classList.add("open"); const c = queue[idx]; if (!c || !c.ai) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const el = $("#ai-score"), m = $("#ai-meter"), to = c.ai.score, t0 = performance.now();
+  m.style.transition = "none"; m.style.width = "0%"; m.offsetWidth; m.style.transition = ""; m.style.width = to + "%";
+  const step = t => { const k = Math.min(1, (t - t0) / 700), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(to * e); if (k < 1 && ai.classList.contains("open")) requestAnimationFrame(step); else el.textContent = queue[idx]?.ai?.score ?? to; };
+  requestAnimationFrame(step);
+}
+$("#reveal").addEventListener("click", revealAI);
+// hovering or focusing a verdict button previews it on the photo
+const peek = v => { const t = top(); if (!t) return; t.classList.remove("peek-pos","peek-neg","peek-uns"); if (v && !note.classList.contains("on")) t.classList.add("peek","peek-"+v); };
+document.querySelectorAll(".act").forEach(b => { ["mouseenter","focus"].forEach(e => b.addEventListener(e, () => peek(b.dataset.v))); ["mouseleave","blur"].forEach(e => b.addEventListener(e, () => peek(null))); });
+$("#always").addEventListener("change", e => ai.classList.toggle("open", e.target.checked));
+$("#restart").addEventListener("click", () => { init(); log(); });
+
+document.addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const inNote = note.classList.contains("on"), typing = e.target.tagName === "TEXTAREA";
+  if (inNote) {
+    if (e.key === "Escape") { e.preventDefault(); backNote(); }
+    else if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); signNote(); }
+    else if (!typing && /^[1-3]$/.test(e.key)) pickTpl(+e.key-1);
+    return;
+  }
+  if (e.target.matches?.("input,button") && (e.key === " " || e.key === "Enter")) return;
+  const k = e.key;
+  if (k === "ArrowRight") decide("pos");
+  else if (k === "ArrowLeft") decide("neg");
+  else if (k === "ArrowUp") { e.preventDefault(); decide("uns"); }
+  else if (k === " ") { e.preventDefault(); revealAI(); }
+  else if (k === "z" || k === "Z") toggleZoom();
+  else if (k === "u" || k === "U") undo();
+});
+
+addEventListener("storage", e => {
+  if (e.key !== LS) return;
+  const have = new Set(queue.map(c=>c.id)), fresh = submitted().filter(c=>!have.has(c.id));
+  if (!fresh.length) return;
+  if (note.classList.contains("on")) queue.splice(idx+1, 0, ...fresh);
+  else { queue.splice(idx, 0, ...fresh); render(); toast("New case from a patient: " + fresh[0].id); }
+});
+const vbtns = [...document.querySelectorAll(".vsw button")];
+const setV = v => { if (!vbtns.some(b => b.dataset.v === v)) v = "0"; document.body.dataset.v = v;
+  vbtns.forEach(b => { const on = b.dataset.v === v; b.setAttribute("aria-pressed", on); if (on) $("#vname").textContent = b.title; });
+  document.body.style.setProperty("--vsw-on", getComputedStyle($(".top")).backgroundColor);
+  localStorage.setItem("oncoscan_v", v); history.replaceState(null, "", "?v=" + v); };
+vbtns.forEach(b => b.addEventListener("click", () => { setV(b.dataset.v); b.blur(); }));
+setV(new URLSearchParams(location.search).get("v") || "3");
+init();
+fetch("/api/status").then(r => r.json()).then(j => { AI = j; if (queue[idx]) askAI(queue[idx]); }).catch(() => {});
+})();
+</script>
+</body>
+</html>

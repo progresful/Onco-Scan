@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-14T02:39:29.032Z",
+  "runs": [
+    {
+      "run": 1,
+      "ok": true,
+      "caseId": "FI-7411",
+      "firstInQueue": "FI-7411",
+      "result": "A specialist should see this in person.",
+      "ms": 30504
+    },
+    {
+      "run": 2,
+      "ok": true,
+      "caseId": "FI-1089",
+      "firstInQueue": "FI-1089",
+      "result": "A specialist should see this in person.",
+      "ms": 2307
+    },
+    {
+      "run": 3,
+      "ok": true,
+      "caseId": "FI-2025",
+      "firstInQueue": "FI-2025",
+      "result": "A specialist should see this in person.",
+      "ms": 2282
+    },
+    {
+      "run": 4,
+      "ok": true,
+      "caseId": "FI-1486",
+      "firstInQueue": "FI-1486",
+      "result": "A specialist should see this in person.",
+      "ms": 2318
+    },
+    {
+      "run": 5,
+      "ok": true,
+      "caseId": "FI-4904",
+      "firstInQueue": "FI-4904",
+      "result": "A specialist should see this in person.",
+      "ms": 2300
+    }
+  ],
+  "farKm": "550",
+  "quality": [
+    "Looks clear",
+    "Too dark",
+    "May be blurry"
+  ],
+  "phone": [
+    {
+      "step": 0,
+      "overflowPx": 0
+    },
+    {
+      "step": 1,
+      "overflowPx": 0
+    },
+    {
+      "step": 2,
+      "overflowPx": 0
+    },
+    {
+      "step": 3,
+      "overflowPx": 0
+    },
+    {
+      "step": 4,
+      "overflowPx": 0
+    },
+    {
+      "step": 5,
+      "overflowPx": 0
+    },
+    {
+      "step": "landing",
+      "overflowPx": 0
+    },
+    {
+      "step": "review",
+      "overflowPx": 0
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+[
+ {
+  "lesion_id": "HAM_0000118",
+  "image_id": "ISIC_0027419",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "male",
+  "localization": "scalp"
+ },
+ {
+  "lesion_id": "HAM_0002730",
+  "image_id": "ISIC_0026769",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "male",
+  "localization": "scalp"
+ },
+ {
+  "lesion_id": "HAM_0001466",
+  "image_id": "ISIC_0031633",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "75.0",
+  "sex": "male",
+  "localization": "ear"
+ },
+ {
+  "lesion_id": "HAM_0002761",
+  "image_id": "ISIC_0029176",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "60.0",
+  "sex": "male",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0005132",
+  "image_id": "ISIC_0025837",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "70.0",
+  "sex": "female",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0001396",
+  "image_id": "ISIC_0025276",
+  "dx": "bkl",
+  "dx_type": "histo",
+  "age": "55.0",
+  "sex": "female",
+  "localization": "trunk"
+ },
+ {
+  "lesion_id": "HAM_0001751",
+  "image_id": "ISIC_0024698",
+  "dx": "nv",
+  "dx_type": "consensus",
+  "age": "70.0",
+  "sex": "male",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0005276",
+  "image_id": "ISIC_0027008",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "75.0",
+  "sex": "male",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0004103",
+  "image_id": "ISIC_0028880",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "55.0",
+  "sex": "male",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0001164",
+  "image_id": "ISIC_0030021",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "female",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0005684",
+  "image_id": "ISIC_0027613",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "75.0",
+  "sex": "female",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0004330",
+  "image_id": "ISIC_0029760",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "70.0",
+  "sex": "male",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0007526",
+  "image_id": "ISIC_0030244",
+  "dx": "df",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "male",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0000559",
+  "image_id": "ISIC_0024693",
+  "dx": "nv",
+  "dx_type": "follow_up",
+  "age": "45.0",
+  "sex": "female",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0000871",
+  "image_id": "ISIC_0025964",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "40.0",
+  "sex": "female",
+  "localization": "chest"
+ },
+ {
+  "lesion_id": "HAM_0000040",
+  "image_id": "ISIC_0027190",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "male",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0005678",
+  "image_id": "ISIC_0031023",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "60.0",
+  "sex": "male",
+  "localization": "chest"
+ },
+ {
+  "lesion_id": "HAM_0005191",
+  "image_id": "ISIC_0031177",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "40.0",
+  "sex": "female",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0005186",
+  "image_id": "ISIC_0026993",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "45.0",
+  "sex": "female",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0007310",
+  "image_id": "ISIC_0026120",
+  "dx": "mel",
+  "dx_type": "histo",
+  "age": "55.0",
+  "sex": "male",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0006889",
+  "image_id": "ISIC_0031197",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "20.0",
+  "sex": "male",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0001920",
+  "image_id": "ISIC_0029486",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "55.0",
+  "sex": "male",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0005155",
+  "image_id": "ISIC_0032076",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "85.0",
+  "sex": "male",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0002692",
+  "image_id": "ISIC_0029404",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "10.0",
+  "sex": "male",
+  "localization": "trunk"
+ },
+ {
+  "lesion_id": "HAM_0002914",
+  "image_id": "ISIC_0026092",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "75.0",
+  "sex": "male",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0006617",
+  "image_id": "ISIC_0028163",
+  "dx": "vasc",
+  "dx_type": "histo",
+  "age": "25.0",
+  "sex": "female",
+  "localization": "abdomen"
+ },
+ {
+  "lesion_id": "HAM_0000781",
+  "image_id": "ISIC_0028155",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "male",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0003220",
+  "image_id": "ISIC_0034093",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "female",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0007141",
+  "image_id": "ISIC_0029230",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "male",
+  "localization": "trunk"
+ },
+ {
+  "lesion_id": "HAM_0007009",
+  "image_id": "ISIC_0032384",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "male",
+  "localization": "back"
+ },
+ {
+  "lesion_id": "HAM_0006843",
+  "image_id": "ISIC_0024457",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "85.0",
+  "sex": "male",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0006834",
+  "image_id": "ISIC_0029193",
+  "dx": "bcc",
+  "dx_type": "histo",
+  "age": "85.0",
+  "sex": "male",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0004932",
+  "image_id": "ISIC_0032212",
+  "dx": "nv",
+  "dx_type": "follow_up",
+  "age": "45.0",
+  "sex": "female",
+  "localization": "foot"
+ },
+ {
+  "lesion_id": "HAM_0004516",
+  "image_id": "ISIC_0025775",
+  "dx": "nv",
+  "dx_type": "follow_up",
+  "age": "45.0",
+  "sex": "female",
+  "localization": "neck"
+ },
+ {
+  "lesion_id": "HAM_0006510",
+  "image_id": "ISIC_0029828",
+  "dx": "nv",
+  "dx_type": "follow_up",
+  "age": "55.0",
+  "sex": "female",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0007567",
+  "image_id": "ISIC_0031588",
+  "dx": "nv",
+  "dx_type": "follow_up",
+  "age": "45.0",
+  "sex": "female",
+  "localization": "lower extremity"
+ },
+ {
+  "lesion_id": "HAM_0002644",
+  "image_id": "ISIC_0029417",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "female",
+  "localization": "neck"
+ },
+ {
+  "lesion_id": "HAM_0006002",
+  "image_id": "ISIC_0029915",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "50.0",
+  "sex": "female",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0000549",
+  "image_id": "ISIC_0029360",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "70.0",
+  "sex": "male",
+  "localization": "upper extremity"
+ },
+ {
+  "lesion_id": "HAM_0000673",
+  "image_id": "ISIC_0029659",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "70.0",
+  "sex": "female",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0006875",
+  "image_id": "ISIC_0026575",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "80.0",
+  "sex": "male",
+  "localization": "face"
+ },
+ {
+  "lesion_id": "HAM_0005282",
+  "image_id": "ISIC_0025178",
+  "dx": "akiec",
+  "dx_type": "histo",
+  "age": "65.0",
+  "sex": "male",
+  "localization": "lower extremity"
+ }
+]

@@ -1,0 +1,235 @@
+/* Five alternative layouts for the review screen. Same markup and logic; switch with ?v=1..5 or the header buttons. */
+.vsw{display:flex;align-items:center;gap:4px;margin-left:8px}
+.vsw span{font-size:13px;opacity:.7;margin-right:6px}
+.vsw button{width:30px;height:30px;border-radius:50%;border:1px solid currentColor;background:transparent;color:inherit;font-size:13px;opacity:.6}
+.vsw button:hover{opacity:1}
+.vsw button[aria-pressed=true]{opacity:1;background:currentColor}
+.vsw button[aria-pressed=true] b{color:var(--vsw-on,#0B2A2E);mix-blend-mode:normal}
+.vsw b{font-weight:500}
+.vname{font-size:13px;opacity:.7;margin-left:6px;min-width:7em}
+
+@media (min-width:1101px){
+
+/* ============ 1 · THEATRE — dark radiology viewer, photo edge to edge ============ */
+body[data-v="1"]{background:#050B0B;color:#E9F2F0;--bg:#0A1211;--card:#0D1716;--line:#1F2E2C;--muted:#8FA5A1;--ink2:#C9D8D5;--signal-ink:#7FE0C4;--neg:#7FE0C4;--neg-bg:#0F3A34;--pos:#FF8F9B;--pos-bg:#3A1118;--uns:#A9B8B5;--uns-bg:#1B2625}
+[data-v="1"] .top{background:#050B0B;border-bottom:1px solid var(--line)}
+[data-v="1"] .stage{grid-template-columns:320px 1fr 340px;gap:0;padding:0}
+[data-v="1"] .rail{padding:32px 28px;gap:26px}
+[data-v="1"] .rail:first-child{border-right:1px solid var(--line)}
+[data-v="1"] .rail-right{border-left:1px solid var(--line)}
+[data-v="1"] .deck-col{gap:0}
+[data-v="1"] .card{border:0;background:#000}
+[data-v="1"] .photo{background:#000}
+[data-v="1"] .photo img{object-fit:contain}
+[data-v="1"] .ph{background:repeating-linear-gradient(135deg,#0A1211 0 14px,#0E1918 14px 28px)}
+[data-v="1"] .ph code,[data-v="1"] kbd{background:#0D1716;border-color:var(--line);color:#E9F2F0}
+[data-v="1"] .cap{display:none}
+[data-v="1"] .actions{grid-template-columns:1fr 220px 1fr;gap:0}
+[data-v="1"] .act{height:96px;border-radius:0;border:0;border-top:1px solid var(--line);border-right:1px solid var(--line);background:#0A1211;font-size:21px}
+[data-v="1"] .act:last-child{border-right:0}
+[data-v="1"] .case-id{font-size:56px}
+[data-v="1"] .due.late{color:#fff}
+[data-v="1"] .ai{border:0;padding:0;background:transparent}
+[data-v="1"] .tpl,[data-v="1"] .note textarea{background:#0A1211;color:#E9F2F0}
+[data-v="1"] .tpl:hover,[data-v="1"] .tpl[aria-pressed=true]{border-color:#7FE0C4}
+[data-v="1"] .btn-quiet{color:#E9F2F0}
+[data-v="1"] .btn-quiet:hover{background:#0A1211;box-shadow:inset 0 0 0 1.5px #7FE0C4}
+[data-v="1"] .band.med{background:#1B2625;color:#C9D8D5}
+[data-v="1"] .note,[data-v="1"] .done{border:0}
+[data-v="1"] .keys{border-color:var(--line)}
+
+/* ============ 2 · SPLIT — the whole screen is the decision: green wall left, red wall right ============ */
+body[data-v="2"]{--wall:17vw}
+[data-v="2"] .stage{grid-template-columns:1fr 360px;grid-template-rows:auto 1fr;grid-template-areas:"deck info" "deck ai";gap:20px 32px;padding:24px calc(var(--wall) + 32px)}
+[data-v="2"] .rail:first-child{grid-area:info;overflow:visible}
+[data-v="2"] .rail-right{grid-area:ai}
+[data-v="2"] .deck-col{grid-area:deck}
+[data-v="2"] .keys,[data-v="2"] .log,[data-v="2"] .cap{display:none}
+[data-v="2"] .actions{grid-template-columns:1fr}
+[data-v="2"] .act.neg,[data-v="2"] .act.pos{position:fixed;top:67px;bottom:0;width:var(--wall);height:auto;border-radius:0;border:0;flex-direction:column;gap:18px;font-size:clamp(20px,1.7vw,30px);font-weight:400;letter-spacing:-.01em}
+[data-v="2"] .act.neg{left:0;background:var(--neg-bg)}
+[data-v="2"] .act.pos{right:0;background:var(--pos-bg)}
+[data-v="2"] .act.neg:hover{background:var(--neg);color:#fff}
+[data-v="2"] .act.pos:hover{background:var(--pos);color:#fff}
+[data-v="2"] .act.neg svg,[data-v="2"] .act.pos svg{width:72px;height:72px;stroke-width:1.2}
+[data-v="2"] .act kbd{margin:0}
+[data-v="2"] .act.uns{height:52px;border-style:dashed}
+[data-v="2"] .case-id{font-size:40px}
+[data-v="2"] .said p{font-size:16px}
+
+/* ============ 3 · CHART — photo as a full-height plate, case header as a teal block (same palette as patient flow and landing) ============ */
+body[data-v="3"]{background:#FBFAF7}
+[data-v="3"] .stage{grid-template-columns:1fr 520px;grid-template-rows:auto 1fr;grid-template-areas:"deck info" "deck ai";gap:0;padding:0}
+[data-v="3"] .deck-col{grid-area:deck;gap:0}
+[data-v="3"] .card,[data-v="3"] .note,[data-v="3"] .done{border:0}
+[data-v="3"] .cap,[data-v="3"] .keys,[data-v="3"] .log{display:none}
+[data-v="3"] .rail:first-child{grid-area:info;overflow:visible;gap:24px;padding:40px 48px 36px;background:linear-gradient(180deg,#0A7C72 0%,#086A62 100%);color:#fff}
+[data-v="3"] .rail:first-child .mono,[data-v="3"] .rail:first-child dt,[data-v="3"] .due,[data-v="3"] .said h3{color:var(--pale)}
+[data-v="3"] .case-id{font-size:84px;line-height:.95;letter-spacing:-.04em}
+[data-v="3"] .clock b{color:#fff;font-size:24px}
+[data-v="3"] .due.late{color:#fff}
+[data-v="3"] .facts{display:grid;grid-template-columns:1fr 1fr;column-gap:24px;border-top:1px solid rgba(255,255,255,.3)}
+[data-v="3"] .facts div{flex-direction:column;gap:2px;border-color:rgba(255,255,255,.2);transition:padding-left .25s var(--ease)}
+[data-v="3"] .facts div:hover{padding-left:6px}
+[data-v="3"] .facts dd{text-align:left;font-size:20px;font-weight:400}
+[data-v="3"] .said p{font-size:20px;line-height:1.45;color:#fff;border-left:3px solid var(--pale);padding-left:16px}
+[data-v="3"] .rail-right{grid-area:ai;padding:28px 48px 116px}
+[data-v="3"] .ai{border:0;padding:0;background:transparent}
+[data-v="3"] .actions{position:fixed;right:48px;bottom:24px;width:424px;gap:10px;grid-template-columns:1fr 1fr 1fr}
+[data-v="3"] .act{height:58px;white-space:nowrap;padding:0 10px;border:0}
+[data-v="3"] .act kbd,[data-v="3"] .act svg{display:none}
+[data-v="3"] .act.neg{background:var(--vivid);color:#fff}
+[data-v="3"] .act.neg:hover{background:var(--ink)}
+[data-v="3"] .act.pos{background:var(--pos-bg);color:var(--pos)}
+[data-v="3"] .act.pos:hover{background:var(--pos);color:#fff}
+[data-v="3"] .act.uns{background:#fff;box-shadow:inset 0 0 0 1.5px var(--line)}
+[data-v="3"] .act.uns:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+
+/* ============ 4 · ZEN — nothing but the photo and a dock; case and AI slide in from the edges ============ */
+body[data-v="4"]{background:#fff;--bg:#fff}
+[data-v="4"] .top{background:#fff;color:var(--ink)}
+[data-v="4"] .top .mono,[data-v="4"] .brand span{color:var(--muted)}
+[data-v="4"] .brand span{border-color:var(--line)}
+[data-v="4"] .brand i{border-color:var(--ink)}
+[data-v="4"] .progress-bar{background:var(--line)}
+[data-v="4"] .progress-bar b{background:var(--vivid)}
+[data-v="4"] .demo{background:var(--bg2,#F2F0EC);color:var(--ink)}
+[data-v="4"] .stage{display:block;padding:8px 0 0}
+[data-v="4"] .deck-col{height:100%;width:min(1040px,calc(100vw - 180px));margin:0 auto;gap:16px;padding-bottom:20px}
+[data-v="4"] .card,[data-v="4"] .note,[data-v="4"] .done{border-radius:32px;border:0;box-shadow:0 40px 90px -40px rgba(11,42,46,.45),0 0 0 1px var(--line)}
+[data-v="4"] .cap{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(255,255,255,.95);border:0;border-radius:20px;padding:16px 20px}
+[data-v="4"] .dots{bottom:118px}
+[data-v="4"] .chip,[data-v="4"] .ph code{border-radius:99px}
+[data-v="4"] .actions{display:flex;align-self:center;gap:6px;background:var(--ink);padding:7px;border-radius:99px}
+[data-v="4"] .act{height:54px;padding:0 28px;border:0;background:transparent;color:#fff}
+[data-v="4"] .act.neg{background:var(--neg)}[data-v="4"] .act.pos{background:var(--pos)}
+[data-v="4"] .act:hover{filter:brightness(1.12);background-color:rgba(255,255,255,.12)}
+[data-v="4"] .act.neg:hover{background:var(--neg)}[data-v="4"] .act.pos:hover{background:var(--pos)}
+[data-v="4"] .act kbd{background:transparent;color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.35)}
+[data-v="4"] .rail{position:fixed;top:92px;bottom:24px;width:360px;background:#fff;border-radius:24px;padding:28px 28px 28px;z-index:8;box-shadow:0 30px 70px -30px rgba(11,42,46,.4),0 0 0 1px var(--line);transition:transform .4s var(--ease)}
+[data-v="4"] .rail:first-child{left:0;transform:translateX(calc(-100% + 52px));padding-right:64px}
+[data-v="4"] .rail-right{right:0;transform:translateX(calc(100% - 52px));padding-left:64px}
+[data-v="4"] .rail:first-child:hover,[data-v="4"] .rail:first-child:focus-within{transform:translateX(16px)}
+[data-v="4"] .rail-right:hover,[data-v="4"] .rail-right:focus-within,[data-v="4"] .rail-right:has(.ai.open){transform:translateX(-16px)}
+[data-v="4"] .rail::after{position:absolute;top:28px;writing-mode:vertical-rl;font-size:14px;color:var(--muted);letter-spacing:.02em;transition:opacity .2s}
+[data-v="4"] .rail:first-child::after{content:"Case details";right:18px}
+[data-v="4"] .rail-right::after{content:"AI pre-read · Space";left:18px;transform:rotate(180deg)}
+[data-v="4"] .rail:hover::after,[data-v="4"] .rail:focus-within::after,[data-v="4"] .rail-right:has(.ai.open)::after{opacity:0}
+[data-v="4"] .ai{border:0;padding:0}
+[data-v="4"] .reveal,[data-v="4"] .tpl,[data-v="4"] .note textarea{border-radius:16px}
+
+/* ============ 5 · BLOCKS — loud, hard-edged, impossible to mis-click ============ */
+body[data-v="5"]{background:#D7F0EA;--bg:#D7F0EA;--line:#0B2A2E}
+[data-v="5"] .top{background:#fff;color:var(--ink);border-bottom:3px solid var(--ink)}
+[data-v="5"] .top .mono,[data-v="5"] .brand span{color:var(--ink)}
+[data-v="5"] .brand{font-weight:700}[data-v="5"] .brand i{border-color:var(--ink)}
+[data-v="5"] .progress-bar{background:#D7F0EA;height:10px;border:2px solid var(--ink);border-radius:0}
+[data-v="5"] .progress-bar b{background:var(--ink)}
+[data-v="5"] .demo{background:var(--ink);color:#fff;border-radius:0}
+[data-v="5"] .stage{grid-template-columns:340px 1fr 360px;gap:26px;padding:26px 32px 30px 26px}
+[data-v="5"] .rail:first-child{background:var(--vivid);color:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:26px;overflow:visible}
+[data-v="5"] .rail:first-child .mono,[data-v="5"] .rail:first-child dt,[data-v="5"] .rail:first-child .due,[data-v="5"] .said h3,[data-v="5"] .keys{color:#C9EEE6}
+[data-v="5"] .case-id{font-size:68px;font-weight:700;letter-spacing:-.04em}
+[data-v="5"] .clock b{color:#fff;font-weight:600}
+[data-v="5"] .due.late{color:#fff}
+[data-v="5"] .facts,[data-v="5"] .facts div,[data-v="5"] .keys{border-color:rgba(255,255,255,.4)}
+[data-v="5"] .said p{color:#fff;font-size:18px}
+[data-v="5"] .rail:first-child kbd{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+[data-v="5"] .card,[data-v="5"] .note,[data-v="5"] .done,[data-v="5"] .ai{border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+[data-v="5"] .card.under{box-shadow:none}
+[data-v="5"] .deck-col{gap:30px}
+[data-v="5"] .cap{border-top:3px solid var(--ink)}
+[data-v="5"] .chip{border:2px solid var(--ink);font-weight:600}
+[data-v="5"] .actions{gap:18px}
+[data-v="5"] .act{height:88px;border-radius:0;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);font-size:21px;font-weight:700;transition:transform .08s,box-shadow .08s}
+[data-v="5"] .act.neg{background:var(--vivid);color:#fff}
+[data-v="5"] .act.pos{background:var(--pos);color:#fff}
+[data-v="5"] .act.uns{background:#fff;color:var(--ink)}
+[data-v="5"] .act:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+[data-v="5"] .act:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+[data-v="5"] .act kbd{background:#fff;color:var(--ink);border-color:var(--ink)}
+[data-v="5"] .rail-right{overflow:visible;gap:30px}
+[data-v="5"] .ai-head h2,[data-v="5"] .score b{font-weight:700}
+[data-v="5"] .reveal{border:3px dashed var(--ink);background:#D7F0EA}
+[data-v="5"] .log{background:#fff;border:3px solid var(--ink);padding:16px 18px}
+[data-v="5"] .log h3{color:var(--ink);font-weight:600}
+[data-v="5"] .btn{border-radius:0;border:3px solid var(--ink);background:var(--ink)}
+[data-v="5"] .btn-quiet{background:#fff;box-shadow:none}
+}
+
+/* ---- interaction: verdict preview on hover, animated AI reveal, click-to-zoom ---- */
+.card.peek{transition:transform .3s var(--ease)}
+.card.peek-pos{transform:translateX(18px) rotate(1.4deg)}
+.card.peek-neg{transform:translateX(-18px) rotate(-1.4deg)}
+.card.peek-uns{transform:translateY(-14px)}
+.card.peek-pos .stamp.pos,.card.peek-neg .stamp.neg,.card.peek-uns .stamp.uns{opacity:.95;transition:opacity .2s}
+.photo{cursor:zoom-in}
+.act{transition:background .2s,color .2s,border-color .2s,transform .15s var(--ease),box-shadow .2s}
+.act:hover{transform:translateY(-2px)}
+.ai.open .finds li{animation:rise .4s var(--ease) both}
+.ai.open .finds li:nth-child(1){animation-delay:.15s}.ai.open .finds li:nth-child(2){animation-delay:.25s}
+.ai.open .finds li:nth-child(3){animation-delay:.35s}.ai.open .finds li:nth-child(4){animation-delay:.45s}
+.reveal{transition:border-color .2s,background .2s,transform .15s var(--ease)}
+.reveal:hover{transform:translateY(-2px)}
+.tpl{transition:border-color .2s,background .2s,transform .15s var(--ease)}
+.tpl:hover{transform:translateX(4px)}
+@media (prefers-reduced-motion:reduce){.card.peek-pos,.card.peek-neg,.card.peek-uns,.act:hover,.reveal:hover,.tpl:hover{transform:none}}
+@media (min-width:1101px){
+[data-v="3"] .actions{right:0;bottom:0;width:520px;padding:14px 48px 20px;background:#FBFAF7;border-top:1px solid var(--line);z-index:6}
+[data-v="3"] .rail-right{padding-bottom:120px}
+}
+
+/* ---- flow pass: layout chosen, so the switcher is hidden (still reachable with ?v=0..5); tighter case header so AI findings fit ---- */
+.vsw{display:none}
+@media (min-width:1101px){
+[data-v="3"] .rail:first-child{padding:28px 48px 26px;gap:16px}
+[data-v="3"] .case-id{font-size:60px}
+[data-v="3"] .clock{margin-top:6px}
+[data-v="3"] .facts div{padding:8px 0}
+[data-v="3"] .facts dd{font-size:17px}
+[data-v="3"] .said p{font-size:17px}
+[data-v="3"] .rail-right{padding-top:22px}
+[data-v="3"] .ai{gap:12px}
+[data-v="3"] .score b{font-size:52px}
+[data-v="3"] .finds li{padding:8px 0 8px 20px;font-size:14px}
+[data-v="3"] .finds li::before{top:17px}
+[data-v="3"] .ai-note,[data-v="3"] .toggle{font-size:13px}
+}
+
+@media (min-width:1101px){[data-v="3"] .deck{overflow:hidden}}
+
+@media (max-width:1100px){.act kbd{display:none}.act{font-size:15px;padding:0 10px;white-space:nowrap;gap:6px}.act.uns{padding:0 12px}.vname{display:none}}
+
+/* signal check in the Chart layout */
+@media (min-width:1101px){
+[data-v="3"] .finds.warn li::before{top:13px}[data-v="3"] .finds.calm li::before{top:6px}
+[data-v="3"] .sig-verdict{padding:12px 14px}
+[data-v="3"] .score b{font-size:40px}
+}
+
+/* Chart layout: compact case header so the signal check gets the room */
+@media (min-width:1101px){
+[data-v="3"] .rail:first-child{padding:22px 48px 22px;gap:12px}
+[data-v="3"] .rail:first-child>div:first-child>.mono{display:none}
+[data-v="3"] .case-id{font-size:44px}
+[data-v="3"] .clock{margin-top:2px}[data-v="3"] .clock b{font-size:20px}
+[data-v="3"] .facts{display:flex;flex-wrap:wrap;border:0;gap:2px 0}
+[data-v="3"] .facts div{flex-direction:row;border:0;padding:0}
+[data-v="3"] .facts div:hover{padding-left:0}
+[data-v="3"] .facts dt{display:none}
+[data-v="3"] .facts dd{font-size:16px;font-weight:500}
+[data-v="3"] .facts div+div dd::before{content:"·";margin:0 9px;opacity:.6}
+[data-v="3"] .said h3{display:none}
+[data-v="3"] .said p{font-size:16px;line-height:1.4}
+[data-v="3"] .rail-right{padding:20px 48px 104px}
+[data-v="3"] .ai{gap:10px}
+[data-v="3"] .ai-head h2{font-size:17px;font-weight:700}
+[data-v="3"] .sig-verdict b{font-size:19px}
+[data-v="3"] .finds li{padding:7px 0 7px 20px}
+[data-v="3"] .finds.warn li::before{top:12px}[data-v="3"] .finds.calm li::before{top:5px}
+[data-v="3"] .ai-note{font-size:12px;line-height:1.35}
+[data-v="3"] .toggle{font-size:12px}
+}
+
+/* Chart layout: keep the signed-case message over the photo, clear of the verdict buttons */
+@media (min-width:1101px){[data-v="3"] .toast{left:24px;transform:translate(0,160%)}[data-v="3"] .toast.on{transform:none}}

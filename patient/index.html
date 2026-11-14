@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oncoscan — send a photo, get an answer within 24 hours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBFAF7;--bg2:#F2F0EC;--card:#fff;--ink:#0B2A2E;--ink2:#23444A;--muted:#566769;--line:#DDD9D1;--vivid:#0A7C72;--pale:#9AD9CC;--signal:#FF8A5B;--signal-ink:#B8481C;--bad:#C2331F;--bad-bg:#FBEAE6;--ok-bg:#E3F3F0;--ease:cubic-bezier(.2,.7,.1,1)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.5 'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+h1,h2{font-weight:400;letter-spacing:-.02em;line-height:1.05}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+[hidden]{display:none!important}
+
+.top{background:var(--ink);color:#fff;display:flex;align-items:center;gap:16px;padding:16px clamp(20px,4vw,48px)}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;letter-spacing:-.02em}
+.brand i{width:20px;height:20px;border-radius:50%;border:2px solid #fff;position:relative;overflow:hidden}
+.brand i::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:2px;background:var(--signal)}
+.demo{margin-left:auto;background:var(--signal);color:var(--ink);font-size:13px;padding:6px 12px;border-radius:99px}
+.who{font-size:14px;color:var(--pale)}
+
+.shell{display:grid;grid-template-columns:minmax(320px,.8fr) 1.2fr;min-height:calc(100vh - 58px)}
+.side{background:var(--vivid);color:#fff;padding:clamp(28px,5vw,72px) clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:28px}
+.eyebrow{font-size:14px;color:var(--pale)}
+.side h1{font-size:clamp(34px,3.6vw,56px)}
+.side p.lead{font-size:18px;color:#D5EEEA;max-width:26em}
+.trail{list-style:none;margin:auto 0 0;padding:0;border-top:1px solid rgba(255,255,255,.3)}
+.trail li{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.55);font-size:15px}
+.trail li b{font-weight:400;width:20px;font-variant-numeric:tabular-nums}
+.trail li.now{color:#fff}.trail li.now::after{content:"";margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--signal)}
+.trail li.past{color:var(--pale)}
+
+.main{padding:clamp(28px,5vw,72px) clamp(20px,5vw,80px);display:flex;justify-content:flex-start}
+.step{width:100%;max-width:620px;display:flex;flex-direction:column;gap:24px;animation:rise .4s var(--ease)}
+@keyframes rise{from{transform:translateY(12px)}}
+.step h2{font-size:clamp(28px,2.6vw,40px)}
+.hint{color:var(--muted);font-size:16px}
+.fine{color:var(--muted);font-size:14px}
+
+.field{display:grid;gap:8px}
+.field label,.legend{font-weight:500;font-size:15px}
+.field input,.field select,.field textarea{background:#fff;border:1.5px solid var(--line);padding:14px;border-radius:0;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(255,138,91,.35)}
+.err{color:var(--bad);font-size:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.btn{background:var(--vivid);color:#fff;border:0;border-radius:99px;padding:14px 26px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:background .2s}
+.btn:hover{background:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn-quiet{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-quiet:hover{background:#fff;box-shadow:inset 0 0 0 1.5px var(--ink)}
+
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0}
+.choice span{display:flex;flex-direction:column;gap:6px;border:1.5px solid var(--line);background:#fff;padding:22px;min-height:120px;transition:border-color .2s,background .2s}
+.choice span b{font-weight:400;font-size:24px;letter-spacing:-.01em}
+.choice span small{color:var(--muted);font-size:14px}
+.choice input:checked+span{border-color:var(--vivid);background:var(--ok-bg)}
+.choice input:focus-visible+span{outline:3px solid var(--signal);outline-offset:2px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{position:relative}
+.checks input{position:absolute;opacity:0}
+.checks span{display:block;border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:9px 16px;font-size:15px;cursor:pointer}
+.checks input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.checks input:focus-visible+span{outline:3px solid var(--signal);outline-offset:2px}
+
+.tips{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);font-size:15px}
+.tips li{padding:10px 0 10px 22px;border-bottom:1px solid var(--line);position:relative}
+.tips li::before{content:"";position:absolute;left:2px;top:20px;width:10px;height:2px;background:var(--vivid)}
+.drop{border:1.5px dashed #B9B4A9;background:#fff;padding:28px;display:grid;gap:6px;justify-items:center;text-align:center;cursor:pointer}
+.drop:hover,.drop.over{border-color:var(--vivid);background:var(--ok-bg)}
+.drop b{font-weight:500}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.thumb{position:relative;aspect-ratio:1;background:var(--bg2);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{position:absolute;right:6px;top:6px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(255,255,255,.92);line-height:1}
+.thumb .q{position:absolute;left:0;right:0;bottom:0;font-size:12px;padding:5px 8px;background:var(--ok-bg);color:var(--vivid)}
+.thumb .q.warn{background:var(--bad-bg);color:var(--bad)}
+
+.cover{border:1.5px solid var(--line);background:#fff;padding:22px;display:grid;gap:6px}
+.cover.yes{border-color:var(--vivid);background:var(--ok-bg)}
+.cover b{font-weight:400;font-size:28px;letter-spacing:-.02em}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px}
+.consent input{width:20px;height:20px;margin-top:2px;accent-color:var(--vivid);flex:none}
+
+.clock{font-size:clamp(48px,6vw,88px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.meta{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.meta div{padding:14px 0;border-bottom:1px solid var(--line)}
+.meta span{display:block;font-size:14px;color:var(--muted)}
+.status{list-style:none;margin:0;padding:0}
+.status li{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+.status li i{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;font-style:normal;font-size:11px;color:#fff}
+.status li.done{color:var(--ink)}.status li.done i{background:var(--vivid);border-color:var(--vivid)}
+.status li.live{color:var(--ink)}.status li.live i{border-color:var(--signal);box-shadow:inset 0 0 0 4px var(--signal)}
+.demo-box{border:1.5px dashed #B9B4A9;padding:18px;display:grid;gap:12px;font-size:15px}
+.demo-box b{font-weight:500}
+
+.mail{border:1.5px solid var(--line);background:#fff}
+.mail-head{padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px;color:var(--muted);display:grid;gap:2px}
+.mail-head b{color:var(--ink);font-weight:500;font-size:16px}
+.mail-body{padding:22px 18px;display:grid;gap:14px}
+
+.result{padding:28px;display:grid;gap:10px}
+.result.neg{background:var(--ok-bg)}.result.pos{background:var(--bad-bg)}.result.uns{background:var(--bg2)}
+.result .tag{font-size:14px}
+.result.neg .tag{color:var(--vivid)}.result.pos .tag{color:var(--bad)}.result.uns .tag{color:var(--muted)}
+.result h2{font-size:clamp(30px,3vw,46px)}
+.note{border-left:3px solid var(--vivid);padding:4px 0 4px 18px}
+.note span{display:block;font-size:14px;color:var(--muted);margin-bottom:4px}
+.next{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);counter-reset:n}
+.next li{counter-increment:n;padding:14px 0 14px 40px;border-bottom:1px solid var(--line);position:relative}
+.next li::before{content:counter(n);position:absolute;left:0;top:14px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;display:grid;place-items:center}
+
+@media (max-width:860px){
+  .who{display:none}
+  .shell{grid-template-columns:1fr}
+  .side{padding:24px 20px;gap:12px}
+  .side p.lead,.trail{display:none}
+  .side h1{font-size:30px}
+  .row,.choices{grid-template-columns:1fr}
+  .thumbs{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* v3: all-green, no orange */
+:root{--signal:#9AD9CC;--signal-ink:#0A7C72;--bad:#A61E2E;--bad-bg:#F9E9EB}
+:focus-visible{outline-color:#12A594}
+.choice input:focus-visible+span,.checks input:focus-visible+span{outline-color:#12A594}
+.field input:focus,.field select:focus,.field textarea:focus{box-shadow:0 0 0 3px rgba(10,124,114,.28)}
+.status li.live i{border-color:var(--vivid);box-shadow:inset 0 0 0 4px var(--vivid)}
+.demo{background:var(--pale)}
+.side{background:linear-gradient(180deg,#0A7C72 0%,#086A62 100%)}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="../landing/" style="color:inherit;text-decoration:none"><i aria-hidden="true"></i>Oncoscan</a>
+  <span class="who" id="who"></span>
+  <span class="demo">Demo</span>
+</header>
+
+<div class="shell">
+  <aside class="side">
+    <p class="eyebrow" id="eyebrow">Step 1 of 5</p>
+    <h1 id="side-title">Send a photo. Get a specialist's answer within 24 hours.</h1>
+    <p class="lead" id="side-lead">Worried about a spot on your skin or a sore in your mouth? A cancer specialist looks at your photos and tells you what to do next.</p>
+    <ol class="trail" id="trail">
+      <li><b>1</b>Sign in</li><li><b>2</b>What to check</li><li><b>3</b>Photos</li><li><b>4</b>Your description</li><li><b>5</b>Cover and send</li>
+    </ol>
+  </aside>
+
+  <main class="main">
+    <!-- 0 sign in -->
+    <form class="step" data-step="0" novalidate>
+      <h2>Sign in with your email</h2>
+      <p class="hint">We send you a sign-in link, and later the message that your result is ready. No password needed.</p>
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required><p class="err" id="email-err" hidden>Enter a valid email address.</p></div>
+      <div class="btns"><button class="btn" type="submit">Send sign-in link</button></div>
+      <p class="fine" id="email-sent" hidden>Demo: no email is sent. You are signed in.</p>
+      <p class="fine">Oncoscan does not give a diagnosis. A specialist reviews your photos and tells you whether you need to be seen in person.</p>
+    </form>
+
+    <!-- 1 area -->
+    <form class="step" data-step="1" hidden novalidate>
+      <h2>What would you like checked?</h2>
+      <div class="choices" role="radiogroup" aria-label="Area">
+        <label class="choice"><input type="radio" name="area" value="Skin" required><span><b>Skin</b><small>A mole, spot, patch or lump anywhere on the skin</small></span></label>
+        <label class="choice"><input type="radio" name="area" value="Mouth"><span><b>Mouth</b><small>A sore, patch or lump on the lips, tongue, gums or cheeks</small></span></label>
+      </div>
+      <div class="field"><label for="site">Where on the body is it?</label><input id="site" placeholder="For example: left forearm, lower lip" required></div>
+      <p class="err" data-err role="alert" hidden></p>
+      <div class="btns"><button class="btn" type="submit">Continue</button></div>
+    </form>
+
+    <!-- 2 photos -->
+    <form class="step" data-step="2" hidden novalidate>
+      <h2>Add 1 to 4 photos</h2>
+      <ul class="tips">
+        <li>Use daylight or a bright lamp. No flash glare.</li>
+        <li>One close-up (about 10 cm) and one from further away.</li>
+        <li>Hold still until the picture is sharp.</li>
+        <li>Place a coin or ruler next to it for size, if you can.</li>
+      </ul>
+      <label class="drop" id="drop"><b>Take or choose photos</b><span class="fine">JPG or PNG. Tap to open your camera or gallery.</span><input class="sr" id="files" type="file" accept="image/*" multiple></label>
+      <div class="thumbs" id="thumbs"></div>
+      <p class="err" id="photo-warn" hidden></p>
+      <div class="btns"><button class="btn btn-quiet" type="button" data-back>Back</button><button class="btn" type="submit" id="photos-next" disabled>Continue</button></div>
+    </form>
+
+    <!-- 3 description -->
+    <form class="step" data-step="3" hidden novalidate>
+      <h2>Tell the specialist about it</h2>
+      <div class="row">
+        <div class="field"><label for="dur">How long have you had it?</label><select id="dur" required><option value="">Choose</option><option>Less than 2 weeks</option><option>2 to 6 weeks</option><option>More than 6 weeks</option><option>Months or years</option><option>Not sure</option></select></div>
+        <div class="field"><label for="age">Your age</label><select id="age" required><option value="">Choose</option><option>18–29</option><option>30–39</option><option>40–49</option><option>50–59</option><option>60–69</option><option>70–79</option><option>80+</option></select></div>
+      </div>
+      <div class="field"><span class="legend" id="chg">Have you noticed any of these?</span>
+        <div class="checks" role="group" aria-labelledby="chg">
+          <label><input type="checkbox" value="it has grown"><span>It has grown</span></label>
+          <label><input type="checkbox" value="it has changed colour"><span>Changed colour</span></label>
+          <label><input type="checkbox" value="it bleeds"><span>Bleeds</span></label>
+          <label><input type="checkbox" value="it hurts"><span>Hurts</span></label>
+          <label><input type="checkbox" value="it itches"><span>Itches</span></label>
+          <label><input type="checkbox" value="it is not healing"><span>Not healing</span></label>
+        </div>
+      </div>
+      <div class="field"><label for="desc">In your own words</label><textarea id="desc" rows="4" placeholder="What made you want it checked?" required></textarea></div>
+      <p class="err" data-err role="alert" hidden></p>
+      <div class="btns"><button class="btn btn-quiet" type="button" data-back>Back</button><button class="btn" type="submit">Continue</button></div>
+    </form>
+
+    <!-- 4 coverage -->
+    <form class="step" data-step="4" hidden novalidate>
+      <h2>Check your cover and send</h2>
+      <div class="row">
+        <div class="field"><label for="muni">Home municipality</label><select id="muni" required><option value="">Choose</option><option data-c="1">Rovaniemi</option><option data-c="1">Inari</option><option data-c="1">Sodankylä</option><option data-c="1">Kemi</option><option data-c="1">Kittilä</option><option>Helsinki</option><option>Tampere</option><option>Turku</option><option>Other</option></select></div>
+        <div class="field"><label for="code">Clinic code <span class="fine">(optional)</span></label><input id="code" placeholder="From your GP or dentist" autocomplete="off"></div>
+      </div>
+      <div class="cover" id="cover" aria-live="polite"><span class="fine">Choose your municipality to see what you pay.</span></div>
+      <p class="fine">Demo: the list of covered municipalities and the price are examples. The clinic code DEMO is accepted. No payment is taken.</p>
+      <label class="consent"><input type="checkbox" id="consent" required><span>I agree that my photos and description are shared with a licensed specialist for review and, when AI analysis is switched on, my photos are sent to Google's Gemini service. I understand this is not a diagnosis.</span></label>
+      <div class="btns"><button class="btn btn-quiet" type="button" data-back>Back</button><button class="btn" type="submit" id="send" disabled>Send for review</button></div>
+    </form>
+
+    <!-- 5 submitted -->
+    <section class="step" data-step="5" hidden>
+      <p class="eyebrow" style="color:var(--vivid)">Case <span id="s-id"></span></p>
+      <p class="clock" id="s-clock" aria-label="Time since you sent your case">T+00:00:00</p>
+      <div class="meta"><div><span>Answer by, at the latest</span><b id="s-due" style="font-weight:500"></b></div><div><span>We'll email</span><b id="s-email" style="font-weight:500"></b></div></div>
+      <ol class="status" id="status">
+        <li><i>✓</i>Received</li><li><i>✓</i>Pre-sorted by urgency</li><li><i>✓</i>With a specialist</li><li><i>✓</i>Answered</li>
+      </ol>
+      <div class="demo-box"><b>Demo controls</b>
+        <span>Open the specialist queue in another tab and review this case. The result arrives here.</span>
+        <div class="btns" style="margin:0"><a class="btn" href="../review/" target="_blank" rel="noopener">Open specialist queue</a>
+        <button class="btn btn-quiet" type="button" data-sample="neg">Sample: no concern</button><button class="btn btn-quiet" type="button" data-sample="uns">Sample: better photo</button><button class="btn btn-quiet" type="button" data-sample="pos">Sample: fast-track</button></div>
+      </div>
+      <div class="btns"><button class="btn btn-quiet" type="button" id="restart">Start a new case</button></div>
+    </section>
+
+    <!-- 6 email -->
+    <section class="step" data-step="6" hidden>
+      <h2>You've got mail</h2>
+      <p class="hint">This is the email the patient receives. It carries no medical details, only a link.</p>
+      <div class="mail">
+        <div class="mail-head"><span>From Oncoscan · to <span id="m-to"></span></span><b>Your Oncoscan result is ready</b></div>
+        <div class="mail-body"><p>A specialist has reviewed case <span id="m-id"></span>. Sign in to read the result and your next step.</p><div><button class="btn" type="button" id="open-result">View my result</button></div><p class="fine">For your privacy, results are never shown in email.</p></div>
+      </div>
+      <p class="fine">Demo: no real email is sent.</p>
+    </section>
+
+    <!-- 7 result -->
+    <section class="step" data-step="7" hidden>
+      <div class="result" id="r-box"><span class="tag" id="r-tag"></span><h2 id="r-title"></h2><p id="r-sum"></p></div>
+      <div class="note"><span>Specialist's note</span><p id="r-note"></p></div>
+      <h3 style="font-weight:500;font-size:18px">What to do next</h3>
+      <ol class="next" id="r-next"></ol>
+      <p class="fine">This review is based on photos and is not a diagnosis. If anything changes or you are worried, contact your health centre.</p>
+      <div class="btns"><button class="btn btn-quiet" type="button" id="restart2">Start a new case</button></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const LS = "oncoscan_cases", LR = "oncoscan_results", LM = "oncoscan_my";
+const jget = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch { return d; } };
+const PRICE = 29;
+const SIDE = [
+  ["Step 1 of 5", "Send a photo. Get a specialist's answer within 24 hours.", "Worried about a spot on your skin or a sore in your mouth? A cancer specialist looks at your photos and tells you what to do next."],
+  ["Step 2 of 5", "Skin or mouth?", "This decides which specialist sees your case."],
+  ["Step 3 of 5", "Good photos get good answers.", "A sharp, well-lit photo is the single most useful thing you can send."],
+  ["Step 4 of 5", "A few details help a lot.", "How long it has been there and whether it has changed matter as much as the photo."],
+  ["Step 5 of 5", "Almost there.", "If your wellbeing services county covers Oncoscan, the review costs you nothing."],
+  ["Your case", "Your case is with us.", "You can close this page. We'll email you when the specialist has answered."],
+  ["Your case", "Your result is ready.", ""],
+  ["Your result", "Reviewed by a specialist.", ""]
+];
+const RES = {
+  neg: { tag: "No sign of concern", title: "This looks harmless.", sum: "The specialist saw nothing in your photos that needs treatment or a visit.",
+    next: ["No appointment is needed.", "Take a new photo in 3 months and compare.", "Send a new case if it grows, changes colour, bleeds or does not heal."] },
+  uns: { tag: "We need a better look", title: "The photos weren't clear enough to tell.", sum: "This says nothing about whether it is harmful. The specialist could not judge it from these pictures.",
+    next: ["Retake the photos in daylight, in focus, with a coin for size, and send them again at no extra cost.", "Or book a regular appointment at your health centre or dentist to have it looked at in person."] },
+  pos: { tag: "Needs a closer look, fast-track", title: "A specialist should see this in person.", sum: "This is not a cancer diagnosis. It means the photos show features that need to be examined, and soon.",
+    next: ["Your urgent referral has been sent. You do not need to arrange it yourself.", "Expect a call with an appointment time within a few working days.", "If you have not heard within 5 working days, call your health centre and quote your case number."] }
+};
+let state = { email: "", photos: [] }, cur = 0, tick = null, my = null;
+
+function go(n) {
+  cur = n; $$(".step").forEach(s => s.hidden = +s.dataset.step !== n);
+  const [e, t, l] = SIDE[n]; $("#eyebrow").textContent = e; $("#side-title").textContent = t; $("#side-lead").textContent = l;
+  $("#trail").hidden = n > 4;
+  $$("#trail li").forEach((li, i) => { li.className = i < n ? "past" : i === n ? "now" : ""; });
+  scrollTo(0, 0);
+  const h = document.querySelector(`.step[data-step="${n}"] h2, .step[data-step="${n}"] .clock`); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+}
+function fail(form, el, msg) { const box = form.querySelector("[data-err]"); box.hidden = !msg; box.textContent = msg || ""; if (el) el.focus(); }
+$$("[data-back]").forEach(b => b.addEventListener("click", () => go(cur - 1)));
+
+/* 0 sign in */
+$('[data-step="0"]').addEventListener("submit", e => {
+  e.preventDefault(); const v = $("#email").value.trim(), ok = /^\S+@\S+\.\S+$/.test(v);
+  $("#email-err").hidden = ok; if (!ok) { $("#email").focus(); return; }
+  state.email = v; $("#who").textContent = v; $("#email-sent").hidden = false; setTimeout(() => go(1), 700);
+});
+/* 1 area */
+$('[data-step="1"]').addEventListener("submit", e => {
+  e.preventDefault(); const a = document.querySelector('input[name=area]:checked');
+  if (!a) return fail(e.target, document.querySelector('input[name=area]'), "Choose skin or mouth.");
+  if (!$("#site").value.trim()) return fail(e.target, $("#site"), "Add where on the body it is.");
+  fail(e.target);
+  state.area = a.value; state.site = $("#site").value.trim(); go(2);
+});
+
+/* 2 photos: downscale + quality check (brightness, sharpness) */
+function load(file) {
+  return new Promise(res => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1100 / Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      const s = document.createElement("canvas"), W = 160, H = Math.max(1, Math.round(160 * img.height / img.width)); s.width = W; s.height = H;
+      const x = s.getContext("2d"); x.drawImage(img, 0, 0, W, H);
+      const d = x.getImageData(0, 0, W, H).data, g = new Float32Array(W * H); let sum = 0;
+      for (let i = 0; i < W * H; i++) { g[i] = .299 * d[i * 4] + .587 * d[i * 4 + 1] + .114 * d[i * 4 + 2]; sum += g[i]; }
+      const mean = sum / (W * H); let v = 0, n = 0;
+      for (let yy = 1; yy < H - 1; yy++) for (let xx = 1; xx < W - 1; xx++) { const i = yy * W + xx, l = 4 * g[i] - g[i - 1] - g[i + 1] - g[i - W] - g[i + W]; v += l * l; n++; }
+      const sharp = v / Math.max(1, n);
+      const warn = mean < 45 ? "Too dark" : mean > 238 ? "Too bright" : sharp < 35 ? "May be blurry" : "";
+      URL.revokeObjectURL(url); res({ data: c.toDataURL("image/jpeg", .72), warn });
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); res(null); };
+    img.src = url;
+  });
+}
+async function addFiles(files) {
+  for (const f of [...files]) { if (state.photos.length >= 4 || !f.type.startsWith("image/")) continue; const p = await load(f); if (p) state.photos.push(p); }
+  $("#files").value = ""; drawThumbs();
+}
+function drawThumbs() {
+  $("#thumbs").innerHTML = state.photos.map((p, i) => `<div class="thumb"><img src="${p.data}" alt="Photo ${i + 1}"><button type="button" data-rm="${i}" aria-label="Remove photo ${i + 1}">×</button><span class="q ${p.warn ? "warn" : ""}">${p.warn || "Looks clear"}</span></div>`).join("");
+  $("#photos-next").disabled = !state.photos.length;
+  const bad = state.photos.filter(p => p.warn).length, w = $("#photo-warn");
+  w.hidden = !bad; w.textContent = bad ? `${bad} photo${bad > 1 ? "s" : ""} may be hard to judge. Retake ${bad > 1 ? "them" : "it"} if you can, or continue anyway.` : "";
+  $("#drop").hidden = state.photos.length >= 4;
+}
+$("#files").addEventListener("change", e => addFiles(e.target.files));
+const drop = $("#drop");
+["dragover", "dragenter"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave", "drop"].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+$("#thumbs").addEventListener("click", e => { const b = e.target.closest("[data-rm]"); if (b) { state.photos.splice(+b.dataset.rm, 1); drawThumbs(); } });
+$('[data-step="2"]').addEventListener("submit", e => { e.preventDefault(); if (state.photos.length) go(3); });
+
+/* 3 description */
+$('[data-step="3"]').addEventListener("submit", e => {
+  e.preventDefault();
+  const need = { dur: "Choose how long it has been there.", age: "Choose your age.", desc: "Add a short description." };
+  for (const id in need) if (!$("#" + id).value.trim()) return fail(e.target, $("#" + id), need[id]);
+  fail(e.target);
+  state.dur = $("#dur").value; state.age = $("#age").value;
+  state.changes = $$('.checks input:checked').map(c => c.value); state.desc = $("#desc").value.trim(); go(4);
+});
+
+/* 4 coverage */
+function cover() {
+  const o = $("#muni").selectedOptions[0], code = $("#code").value.trim().toUpperCase() === "DEMO", box = $("#cover");
+  if (!$("#muni").value) { box.className = "cover"; box.innerHTML = '<span class="fine">Choose your municipality to see what you pay.</span>'; state.covered = null; }
+  else if (o.dataset.c || code) { state.covered = true; box.className = "cover yes"; box.innerHTML = `<span class="fine">${code && !o.dataset.c ? "Covered by your clinic" : "Covered by your wellbeing services county"}</span><b>€0</b><span>You pay nothing for this review.</span>`; }
+  else { state.covered = false; box.className = "cover"; box.innerHTML = `<span class="fine">Not covered in ${$("#muni").value === "Other" ? "your municipality" : $("#muni").value} yet</span><b>€${PRICE}</b><span>One review by a specialist. Paid by card when you send.</span>`; }
+  $("#send").disabled = state.covered === null || !$("#consent").checked;
+  $("#send").textContent = state.covered === false ? `Pay €${PRICE} and send (demo)` : "Send for review";
+}
+["#muni", "#code", "#consent"].forEach(s => $(s).addEventListener("input", cover));
+$('[data-step="4"]').addEventListener("submit", e => {
+  e.preventDefault(); if ($("#send").disabled) return;
+  const id = "FI-" + String(Math.floor(1000 + Math.random() * 9000));
+  const extra = [state.dur !== "Not sure" ? "Had it: " + state.dur.toLowerCase() + "." : "", state.changes.length ? "Noticed: " + state.changes.join(", ") + "." : ""].filter(Boolean).join(" ");
+  const c = { id, patient: true, area: state.area, site: state.site, age: state.age, images: state.photos.map(p => p.data), text: (state.desc + " " + extra).trim(), answers: { dur: state.dur, changes: state.changes }, ai: null, createdAt: Date.now() };
+  try { localStorage.setItem(LS, JSON.stringify(jget(LS, []).concat(c))); }
+  catch { alert("These photos are too large to store in this demo. Remove one and try again."); return; }
+  my = { id, email: state.email, createdAt: c.createdAt }; localStorage.setItem(LM, JSON.stringify(my)); showCase();
+});
+
+/* 5 submitted */
+const pad = n => String(n).padStart(2, "0");
+function showCase() {
+  $("#who").textContent = my.email; $("#s-id").textContent = my.id; $("#s-email").textContent = my.email;
+  $("#s-due").textContent = new Date(my.createdAt + 864e5).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" });
+  go(5); clearInterval(tick); const run = () => {
+    const s = Math.floor((Date.now() - my.createdAt) / 1000);
+    $("#s-clock").textContent = `T+${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
+    const stage = s < 2 ? 0 : s < 5 ? 1 : 2;
+    $$("#status li").forEach((li, i) => li.className = i < stage ? "done" : i === stage ? "live" : "");
+    $$("#status li").forEach((li, i) => li.firstChild.textContent = i < stage ? "✓" : "");
+    check();
+  }; run(); tick = setInterval(run, 1000);
+}
+function check() { const r = jget(LR, {})[my?.id]; if (r && cur === 5) arrive(r); }
+function arrive(r) { clearInterval(tick); my.result = r; $("#m-to").textContent = my.email; $("#m-id").textContent = my.id; go(6); }
+addEventListener("storage", e => { if (e.key === LR && my) check(); });
+$$("[data-sample]").forEach(b => b.addEventListener("click", () => {
+  const v = b.dataset.sample, note = { neg: "Benign appearance. No action needed; return if it changes.", uns: "Image too blurred or dark to assess. Retake in daylight, in focus.", pos: "Suspicious features. In-person specialist assessment within 2 weeks." }[v];
+  arrive({ v, note, sample: true });
+}));
+$("#open-result").addEventListener("click", () => {
+  const r = my.result, d = RES[r.v];
+  $("#r-box").className = "result " + r.v; $("#r-tag").textContent = d.tag; $("#r-title").textContent = d.title; $("#r-sum").textContent = d.sum;
+  $("#r-note").textContent = r.note; $("#r-next").innerHTML = d.next.map(t => `<li>${t}</li>`).join(""); go(7);
+});
+function restart() {
+  clearInterval(tick); localStorage.removeItem(LM); my = null; const email = state.email || "";
+  state = { email, photos: [] }; $$("form.step").forEach(f => f.reset()); $("#email").value = email; drawThumbs(); cover(); go(email ? 1 : 0);
+}
+$("#restart").addEventListener("click", restart); $("#restart2").addEventListener("click", restart);
+
+/* resume an open case */
+my = jget(LM, null);
+if (my) { state.email = my.email; showCase(); } else go(0);
+})();
+</script>
+</body>
+</html>
