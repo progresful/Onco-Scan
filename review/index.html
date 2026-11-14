@@ -208,6 +208,10 @@ kbd{font-family:var(--fb)}
 .due.late{color:var(--ink);font-weight:500}
 .log-row .truth{display:block;font-size:12px;color:var(--muted)}
 .toast{max-width:min(92vw,760px)}
+.btn.btn-quiet{background:transparent;color:var(--ink)}.btn.btn-quiet:hover{background:#fff}
+/* signal check: always shown */
+.ai .reveal,.ai .toggle{display:none}
+.ai .ai-body{display:flex}
 /* signal check */
 .sig-verdict{display:grid;gap:2px;padding:14px 16px;border-left:4px solid var(--uns);background:var(--uns-bg)}
 .sig-verdict b{font-size:20px;font-weight:700;letter-spacing:-.01em}
@@ -304,7 +308,7 @@ kbd{font-family:var(--fb)}
         <ul class="finds calm" id="sig-calm"></ul>
         <p class="ai-note" id="sig-src"></p>
       </div>
-      <label class="toggle"><input type="checkbox" id="always"> Always show signal check</label>
+      <label class="toggle"><input type="checkbox" id="always" checked> Always show signal check</label>
     </div>
     <div class="log"><h3>This session</h3><div id="log"><p class="log-empty">No cases reviewed yet.</p></div></div>
   </aside>
@@ -352,13 +356,13 @@ function setPhoto(el, c, i){
   p.classList.remove("noimg","zoom");
   img.onerror = () => { p.classList.add("noimg"); p.querySelector("code").textContent = "review/cases/" + c.images[i]; };
   img.onload = () => { if (i === 0 && !c.q && !el.classList.contains("under")) { c.q = measure(img); if (queue[idx] === c) paint(c); } };
-  img.src = c.images[i].startsWith("data:") ? c.images[i] : "cases/" + c.images[i];
+  img.src = /^(data:|\.\.\/api\/)/.test(c.images[i]) ? c.images[i] : "cases/" + c.images[i];
   el.querySelectorAll(".dots button").forEach((b,j)=>b.setAttribute("aria-current", j===i));
 }
 
 function render(){
   deck.querySelectorAll(".card").forEach(n=>n.remove());
-  note.classList.remove("on"); $("#done").classList.remove("on"); $("#actions").style.visibility="visible";
+  note.classList.remove("on"); document.body.classList.remove("noting"); $("#done").classList.remove("on"); $("#actions").style.visibility="visible";
   const n = queue.length;
   $("#prog-text").textContent = `${Math.min(idx+1,n)} of ${n}`;
   $("#prog-bar").style.width = (idx/n*100)+"%";
@@ -402,7 +406,7 @@ async function askAI(c){
   if (!img || !(img.startsWith("data:") || img.startsWith("ham10000/"))) return;   // cases without a real image keep their example
   c.gemBusy = true; if (queue[idx] === c) paint(c);
   try {
-    const r = await fetch("/api/analyse", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: img, area: c.area, site: c.site }) });
+    const r = await fetch("../api/analyse", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ image: img, area: c.area, site: c.site }) });
     const j = await r.json(); if (!r.ok) throw new Error(j.error || ("HTTP " + r.status)); c.gem = j;
   } catch (e) { c.gemErr = String(e.message || e).slice(0, 140); }
   c.gemBusy = false; if (queue[idx] === c) paint(c);
@@ -506,14 +510,14 @@ function toggleZoom(){ const t = top(); if(t) t.querySelector(".photo").classLis
 function decide(v){
   const el = top(); if(!el || note.classList.contains("on")) return;
   const c = queue[idx];
-  el.classList.add("anim");
+  el.classList.remove("peek-pos","peek-neg","peek-uns"); el.classList.add("anim","peek","peek-"+v); el.style.transform = "";
   el.querySelector(".stamp."+v).style.opacity = 1;
-  el.style.transform = v==="pos" ? "translate(130%,-4%) rotate(18deg)" : v==="neg" ? "translate(-130%,-4%) rotate(-18deg)" : "translate(0,-120%)";
-  el.style.opacity = 0;
   pending = { c, v, secs: Math.max(1, Math.round((Date.now()-started)/1000)), aiSeen: ai.classList.contains("open") };
-  setTimeout(() => openNote(v, c), 260);
+  openNote(v, c);
 }
 function openNote(v, c){
+  note.style.setProperty("--nt", Math.round(document.querySelector(".rail").getBoundingClientRect().bottom) + "px");
+  document.body.classList.add("noting");
   const nv = $("#note-verdict"); nv.className = "verdict "+v; nv.textContent = `${ICON[v]}  ${V[v].label} · ${c.id}`;
   $("#tpls").innerHTML = V[v].tpl.map((t,i)=>`<button class="tpl" aria-pressed="${i===0}"><kbd>${i+1}</kbd><span>${t}</span></button>`).join("");
   $("#note-text").value = "";
@@ -529,14 +533,15 @@ function signNote(){
   const typed = $("#note-text").value.trim();
   pending.note = typed || document.querySelector('.tpl[aria-pressed="true"] span').textContent;
   results.push(pending); const done = pending; pending = null;
-  if (done.c.patient) { const r = jget(LR,{}); r[done.c.id] = { v: done.v, note: done.note, at: Date.now() }; localStorage.setItem(LR, JSON.stringify(r)); } idx++; render(); log();
+  if (done.c.server) post("../api/cases/" + done.c.id + "/verdict", { v: done.v, note: done.note });
+  else if (done.c.patient) { const r = jget(LR,{}); r[done.c.id] = { v: done.v, note: done.note, at: Date.now() }; localStorage.setItem(LR, JSON.stringify(r)); } idx++; render(); log();
   toast(`${done.c.id} signed: ${V[done.v].label.toLowerCase()}` + (done.c.truth ? ` · Confirmed in the dataset: ${done.c.truth}` : ""));
 }
 function backNote(){ pending = null; render(); }
 $("#note-ok").addEventListener("click", signNote);
 $("#note-back").addEventListener("click", backNote);
 
-function undo(){ if(!results.length || note.classList.contains("on")) return; const u = results.pop(); if (u.c.patient) { const r = jget(LR,{}); delete r[u.c.id]; localStorage.setItem(LR, JSON.stringify(r)); } idx--; $("#done").classList.remove("on"); $("#actions").style.visibility="visible"; render(); log(); hideToast(); }
+function undo(){ if(!results.length || note.classList.contains("on")) return; const u = results.pop(); if (u.c.server) post("../api/cases/" + u.c.id + "/verdict", { undo: true }); else if (u.c.patient) { const r = jget(LR,{}); delete r[u.c.id]; localStorage.setItem(LR, JSON.stringify(r)); } idx--; $("#done").classList.remove("on"); $("#actions").style.visibility="visible"; render(); log(); hideToast(); }
 function toast(t){ $("#toast-text").textContent = t; $("#toast").classList.add("on"); clearTimeout(toastT); toastT = setTimeout(hideToast, 5000); }
 function hideToast(){ $("#toast").classList.remove("on"); }
 $("#toast-undo").addEventListener("click", undo);
@@ -568,7 +573,7 @@ function revealAI(){
 }
 $("#reveal").addEventListener("click", revealAI);
 // hovering or focusing a verdict button previews it on the photo
-const peek = v => { const t = top(); if (!t) return; t.classList.remove("peek-pos","peek-neg","peek-uns"); if (v && !note.classList.contains("on")) t.classList.add("peek","peek-"+v); };
+const peek = v => { const t = top(); if (!t || note.classList.contains("on")) return; t.classList.remove("peek-pos","peek-neg","peek-uns"); if (v && !note.classList.contains("on")) t.classList.add("peek","peek-"+v); };
 document.querySelectorAll(".act").forEach(b => { ["mouseenter","focus"].forEach(e => b.addEventListener(e, () => peek(b.dataset.v))); ["mouseleave","blur"].forEach(e => b.addEventListener(e, () => peek(null))); });
 $("#always").addEventListener("change", e => ai.classList.toggle("open", e.target.checked));
 $("#restart").addEventListener("click", () => { init(); log(); });
@@ -607,7 +612,26 @@ const setV = v => { if (!vbtns.some(b => b.dataset.v === v)) v = "0"; document.b
 vbtns.forEach(b => b.addEventListener("click", () => { setV(b.dataset.v); b.blur(); }));
 setV(new URLSearchParams(location.search).get("v") || "3");
 init();
-fetch("/api/status").then(r => r.json()).then(j => { AI = j; if (queue[idx]) askAI(queue[idx]); }).catch(() => {});
+fetch("../api/status").then(r => r.json()).then(j => { AI = j; if (queue[idx]) askAI(queue[idx]); }).catch(() => {});
+
+// Cases stored on the server: photos live there, the photo description is run there, verdicts are saved there.
+function post(url, body){ return fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).catch(() => {}); }
+const signedIds = () => new Set(results.map(r => r.c.id));
+async function pullServer(){
+  let list; try { const r = await fetch("../api/cases"); if (!r.ok) return; list = (await r.json()).cases; } catch { return; }
+  const byId = new Map(queue.map(c => [c.id, c])), done = signedIds(), fresh = [];
+  for (const s of list) {
+    const have = byId.get(s.id);
+    if (have) { if (!have.gem && (s.gem || s.gemErr)) { have.gem = s.gem; have.gemErr = s.gemErr; if (queue[idx] === have) paint(have); } continue; }
+    if (done.has(s.id)) continue;
+    fresh.push({ id: s.id, patient: true, server: true, area: s.area, site: s.site, age: s.age, text: s.text, answers: s.answers, ai: null, gem: s.gem, gemErr: s.gemErr,
+      images: s.images.map(f => `../api/cases/${s.id}/image/${f}`), minsAgo: Math.max(0, Math.round((Date.now() - s.createdAt) / 60000)) });
+  }
+  if (!fresh.length) return;
+  if (note.classList.contains("on")) queue.splice(idx + 1, 0, ...fresh);
+  else { queue.splice(idx, 0, ...fresh); render(); toast("New case from a patient: " + fresh[0].id); }
+}
+pullServer(); setInterval(pullServer, 3000);
 })();
 </script>
 </body>

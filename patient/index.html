@@ -183,7 +183,7 @@ button{cursor:pointer}
 
     <!-- 2 photos -->
     <form class="step" data-step="2" hidden novalidate>
-      <h2>Add 1 to 4 photos</h2>
+      <h2>Add 1 or 2 photos</h2>
       <ul class="tips">
         <li>Use daylight or a bright lamp. No flash glare.</li>
         <li>One close-up (about 10 cm) and one from further away.</li>
@@ -345,7 +345,7 @@ function load(file) {
   });
 }
 async function addFiles(files) {
-  for (const f of [...files]) { if (state.photos.length >= 4 || !f.type.startsWith("image/")) continue; const p = await load(f); if (p) state.photos.push(p); }
+  for (const f of [...files]) { if (state.photos.length >= 2 || !f.type.startsWith("image/")) continue; const p = await load(f); if (p) state.photos.push(p); }
   $("#files").value = ""; drawThumbs();
 }
 function drawThumbs() {
@@ -353,7 +353,7 @@ function drawThumbs() {
   $("#photos-next").disabled = !state.photos.length;
   const bad = state.photos.filter(p => p.warn).length, w = $("#photo-warn");
   w.hidden = !bad; w.textContent = bad ? `${bad} photo${bad > 1 ? "s" : ""} may be hard to judge. Retake ${bad > 1 ? "them" : "it"} if you can, or continue anyway.` : "";
-  $("#drop").hidden = state.photos.length >= 4;
+  $("#drop").hidden = state.photos.length >= 2;
 }
 $("#files").addEventListener("change", e => addFiles(e.target.files));
 const drop = $("#drop");
@@ -383,14 +383,25 @@ function cover() {
   $("#send").textContent = state.covered === false ? `Pay €${PRICE} and send (demo)` : "Send for review";
 }
 ["#muni", "#code", "#consent"].forEach(s => $(s).addEventListener("input", cover));
-$('[data-step="4"]').addEventListener("submit", e => {
+$('[data-step="4"]').addEventListener("submit", async e => {
   e.preventDefault(); if ($("#send").disabled) return;
   const id = "FI-" + String(Math.floor(1000 + Math.random() * 9000));
   const extra = [state.dur !== "Not sure" ? "Had it: " + state.dur.toLowerCase() + "." : "", state.changes.length ? "Noticed: " + state.changes.join(", ") + "." : ""].filter(Boolean).join(" ");
   const c = { id, patient: true, area: state.area, site: state.site, age: state.age, images: state.photos.map(p => p.data), text: (state.desc + " " + extra).trim(), answers: { dur: state.dur, changes: state.changes }, ai: null, createdAt: Date.now() };
-  try { localStorage.setItem(LS, JSON.stringify(jget(LS, []).concat(c))); }
-  catch { alert("These photos are too large to store in this demo. Remove one and try again."); return; }
-  my = { id, email: state.email, createdAt: c.createdAt }; localStorage.setItem(LM, JSON.stringify(my)); showCase();
+  // Send to the server, which saves the photos and the case. If there is no server (static hosting), keep it in this browser.
+  const btn = $("#send"); btn.disabled = true; let saved = null;
+  try {
+    const r = await fetch("../api/cases", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: state.email, area: c.area, site: c.site, age: c.age, text: c.text, answers: c.answers, images: c.images }) });
+    if (r.status === 201) saved = await r.json();
+    else if (r.status === 400 || r.status === 413) { const j = await r.json().catch(() => ({})); alert(j.error || "Could not send. Try again."); btn.disabled = false; return; }
+  } catch {}
+  if (saved) my = { id: saved.id, token: saved.token, email: state.email, createdAt: saved.createdAt, server: true };
+  else {
+    try { localStorage.setItem(LS, JSON.stringify(jget(LS, []).concat(c))); }
+    catch { alert("These photos are too large to store in this browser. Remove one and try again."); btn.disabled = false; return; }
+    my = { id, email: state.email, createdAt: c.createdAt };
+  }
+  localStorage.setItem(LM, JSON.stringify(my)); showCase();
 });
 
 /* 5 submitted */
@@ -407,7 +418,14 @@ function showCase() {
     check();
   }; run(); tick = setInterval(run, 1000);
 }
-function check() { const r = jget(LR, {})[my?.id]; if (r && cur === 5) arrive(r); }
+let asking = false;
+async function check() {
+  if (!my || cur !== 5) return;
+  if (my.server) { if (asking) return; asking = true;
+    try { const r = await fetch("../api/cases/" + my.id, { headers: { "x-case-token": my.token } }); if (r.ok) { const j = await r.json(); if (j.verdict && my && cur === 5) arrive(j.verdict); } } catch {}
+    asking = false; return; }
+  const r = jget(LR, {})[my.id]; if (r) arrive(r);
+}
 function arrive(r) { clearInterval(tick); my.result = r; $("#m-to").textContent = my.email; $("#m-id").textContent = my.id; go(6); }
 addEventListener("storage", e => { if (e.key === LR && my) check(); });
 $$("[data-sample]").forEach(b => b.addEventListener("click", () => {

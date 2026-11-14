@@ -233,3 +233,17 @@ body[data-v="5"]{background:#D7F0EA;--bg:#D7F0EA;--line:#0B2A2E}
 
 /* Chart layout: keep the signed-case message over the photo, clear of the verdict buttons */
 @media (min-width:1101px){[data-v="3"] .toast{left:24px;transform:translate(0,160%)}[data-v="3"] .toast.on{transform:none}}
+
+/* Chart layout: the note opens in the right panel, under the case header; the photo stays visible */
+@media (min-width:1101px){
+[data-v="3"] .note{position:fixed;inset:auto;right:0;top:var(--nt,60px);bottom:0;width:520px;border:0;padding:24px 48px 22px;gap:14px;z-index:9;overflow:auto;background:#FBFAF7}
+[data-v="3"] .note h2{font-size:24px;font-weight:700;letter-spacing:-.02em}
+[data-v="3"] .tpl{padding:11px 12px;font-size:14px}
+[data-v="3"] .note textarea{min-height:72px;font-size:14px}
+[data-v="3"] .note-foot{flex-wrap:wrap;row-gap:10px}
+[data-v="3"] .note .btn{height:48px;padding:0 20px}
+[data-v="3"] .second{margin-left:0;text-align:left;max-width:none;flex-basis:100%;order:-1}
+[data-v="3"] .card.peek-pos,[data-v="3"] .card.peek-neg,[data-v="3"] .card.peek-uns{transform:none}
+[data-v="3"] .stamp{top:auto;bottom:34px;font-size:26px}
+[data-v="3"] .stamp.uns{bottom:34px}
+}

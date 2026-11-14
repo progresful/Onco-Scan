@@ -434,3 +434,29 @@ h2{letter-spacing:-.035em;line-height:1.02;font-size:clamp(38px,4.6vw,72px)}
 .vis-cam .vf>i{filter:drop-shadow(0 0 2px rgba(6,33,31,.7))}
 .vis-cam .vf-count{color:#fff}
 .vis-cam .vf-shutter{box-shadow:0 0 0 4px rgba(6,33,31,.9),0 0 0 6px #fff}
+
+/* ---- demo opening: plain title, short description, two role options ---- */
+.hero{min-height:100svh;align-items:center}
+.hero-content{padding-top:120px;padding-bottom:64px;max-width:min(60vw,1040px)}
+.hero h1{font-size:clamp(40px,4.8vw,84px);line-height:1;letter-spacing:-.035em;max-width:14ch}
+.hero-sub{font-size:clamp(17px,1.3vw,21px);max-width:34em;margin-top:22px}
+.tc{margin-bottom:22px;font-weight:600}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:34px;max-width:780px}
+.role{display:flex;flex-direction:column;gap:8px;padding:24px 24px 22px;background:#fff;color:var(--ink);text-decoration:none;box-shadow:inset 0 0 0 1.5px var(--line),0 24px 50px -30px rgba(6,33,31,.45);transition:transform .25s var(--ease),box-shadow .25s}
+.role:hover,.role:focus-visible{transform:translateY(-4px);box-shadow:inset 0 0 0 2px var(--vivid),0 30px 56px -28px rgba(6,33,31,.55)}
+.role-k{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--vivid)}
+.role-k iconify-icon{font-size:20px}
+.role b{font:700 clamp(26px,2.2vw,34px)/1.05 var(--f-head);letter-spacing:-.03em}
+.role-d{font-size:16px;color:var(--ink2);line-height:1.4}
+.role-go{margin-top:10px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--ink);color:#fff;font-weight:600;font-size:15px;padding:12px 18px;border-radius:99px;transition:background .2s}
+.role:hover .role-go{background:var(--vivid)}
+.role-alt{background:var(--ink);color:#fff;box-shadow:0 24px 50px -30px rgba(6,33,31,.7)}
+.role-alt .role-k{color:var(--pale)}.role-alt .role-d{color:#D5EEEA}
+.role-alt .role-go{background:#fff;color:var(--ink)}.role-alt:hover .role-go{background:var(--pale)}
+.role-alt:hover,.role-alt:focus-visible{box-shadow:inset 0 0 0 2px var(--pale),0 30px 56px -28px rgba(6,33,31,.8)}
+.roles-tip{font-size:14px;color:var(--ink2);margin-top:16px;max-width:44em}
+@media (max-width:1100px){.hero-content{max-width:none}}
+@media (max-width:700px){.roles{grid-template-columns:1fr}.hero{align-items:flex-end}.hero-content{padding-top:110px;padding-bottom:36px}}
+@media (prefers-reduced-motion:reduce){.role:hover,.role:focus-visible{transform:none}}
+
+@media (max-width:960px){.hero-veil{background:linear-gradient(180deg,rgba(251,250,247,.72) 0%,rgba(251,250,247,.9) 30%,rgba(251,250,247,.97) 100%)}}

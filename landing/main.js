@@ -40,8 +40,8 @@ if (motion) {
     .from('.hero-img', { scale: 1.08, duration: 1.8, ease: 'power2.out' }, 0)
     .from('.tc', { y: 16, autoAlpha: 0, duration: .6 }, .1)
     .from(h1Words, { yPercent: 110, duration: .9, stagger: .06 }, .2)
-    .from('.hero-sub', { y: 20, autoAlpha: 0, duration: .7 }, .75)
-    .from('.hero-cta > *', { y: 16, autoAlpha: 0, duration: .6, stagger: .08 }, .9)
+    .from('.hero-sub, .roles-tip', { y: 20, autoAlpha: 0, duration: .7 }, .75)
+    .from('.role', { y: 16, autoAlpha: 0, duration: .6, stagger: .08 }, .9)
     .from('.hero-sim', { x: 24, autoAlpha: 0, duration: .7 }, 2.2);
 
   /* section headings + copy */
@@ -57,7 +57,7 @@ if (motion) {
 }
 
 /* ---------- hero case clock ---------- */
-const clockEl = $('[data-clock]'); const t0 = Date.now();
+const clockEl = $('[data-clock]') || document.createElement('span'); const t0 = Date.now();
 const pad = n => String(n).padStart(2, '0');
 let clockT = reduce ? null : setInterval(() => {
   if (document.hidden) return;

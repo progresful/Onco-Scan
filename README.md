@@ -40,7 +40,7 @@ Then open:
 - http://localhost:4173/patient/ (patient flow)
 - http://localhost:4173/review/ (specialist queue)
 
-Open the patient and specialist pages in two tabs of the **same browser**. A case sent from the patient tab appears first in the specialist queue; the signed verdict returns to the patient tab. Needs Node 18 or newer and no packages.
+A case sent from the patient page is saved on the server (photos and details under `data/cases/`, which is not in git). It appears first in the specialist queue on any device that can reach the server, and the signed verdict returns to the patient. Needs Node 18 or newer and no packages.
 
 ### AI photo description (optional)
 
@@ -69,7 +69,7 @@ A general vision model could not tell cancer from benign lesions on the photo al
 
 | Real | Simulated or not built |
 |---|---|
-| 5-step patient submission with validation | Sign-in: any email works, nothing is sent |
+| 5-step patient submission (1 or 2 photos), saved on the server | Sign-in: any email works, nothing is sent |
 | Photo downscaling and a darkness and blur check | Email delivery: shown as a preview |
 | Case clock and status | County cover list and the €29 price: examples |
 | Specialist queue, swipe or keyboard verdicts, notes, undo | Payment: no charge is made |
@@ -80,7 +80,8 @@ A general vision model could not tell cancer from benign lesions on the photo al
 | | Landing-page "Case flow" panel: a labelled simulation |
 
 ## Limitations
-- Data lives in the browser's `localStorage`, so both roles must use one browser on one computer.
+- No logins yet: anyone who can open the specialist page sees the queue and the photos. A patient's result is protected by a random token kept in their browser.
+- Cases are plain files on the server's disk, with no encryption or backup.
 - For the 5 skin demo cases the image, body area, age band and diagnosis come from the dataset. The patient's words and the hand-written example analysis are ours.
 - Without a Gemini key, the demo cases show that hand-written example analysis.
 - The sharpness check is crude: it also flags some smooth, low-contrast lesions.
