@@ -70,6 +70,38 @@ const listOpen = () => fs.readdirSync(DATA).map(loadCase).filter(c => c && c.sta
   .map(({ token, email, ...c }) => c);                                     // the queue never exposes the patient's token or email
 async function readJson(req, limit) { let raw = '', size = 0; for await (const ch of req) { size += ch.length; if (size > limit) throw Object.assign(new Error('Upload too large'), { status: 413 }); raw += ch; } try { return JSON.parse(raw || '{}'); } catch { throw bad('Bad request'); } }
 
+// ---- chat intake: pull the stated facts out of one free-text message. The model never writes a reply. ----
+const X_DUR = ['Less than 2 weeks', '2 to 6 weeks', 'More than 6 weeks', 'Months or years', 'Not sure'];
+const X_CH = ['it has grown', 'it has changed colour', 'it bleeds', 'it hurts', 'it itches', 'it is not healing'];
+const X_SCHEMA = { type: 'OBJECT', required: ['area', 'site', 'dur', 'changes', 'age', 'municipality'], properties: {
+  area: { type: 'STRING', enum: ['Skin', 'Mouth', 'unknown'] }, site: { type: 'STRING' }, dur: { type: 'STRING', enum: [...X_DUR, 'unknown'] },
+  changes: { type: 'ARRAY', items: { type: 'STRING', enum: X_CH } }, age: { type: 'INTEGER' }, municipality: { type: 'STRING' } } };
+const X_PROMPT = `A patient is describing a skin or mouth lesion. Extract ONLY what the message states. Never guess, never infer, never add medical judgement.
+- area: "Skin" or "Mouth" (lips, tongue, gums, inside of cheeks count as Mouth), else "unknown".
+- site: the body location in a few words of English, e.g. "left forearm", "lower lip". Empty string if not stated.
+- dur: how long it has been present, mapped to one option. "unknown" if not stated.
+- changes: only those the patient reports. Empty list if none are stated.
+- age: the patient's age in years if stated, else 0.
+- municipality: the Finnish municipality where the patient lives if stated, else empty string.
+The message may be in any language. Reply with the JSON only.`;
+const hits = new Map();
+const throttled = ip => { const now = Date.now(), list = (hits.get(ip) || []).filter(t => now - t < 60000); list.push(now); hits.set(ip, list); return list.length > 30; };
+async function extract(text) {
+  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(MODEL)}:generateContent`, {
+    method: 'POST', headers: { 'content-type': 'application/json', 'x-goog-api-key': KEY }, signal: AbortSignal.timeout(8000),
+    body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: X_PROMPT + '\n\nPatient message:\n"""' + text + '"""' }] }], generationConfig: { temperature: 0, responseMimeType: 'application/json', responseSchema: X_SCHEMA } }) });
+  const body = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(body?.error?.message || `Gemini returned ${r.status}`), { status: 502 });
+  const j = JSON.parse(body?.candidates?.[0]?.content?.parts?.map(x => x.text || '').join('') || '{}'), out = {};
+  if (j.area === 'Skin' || j.area === 'Mouth') out.area = j.area;
+  if (typeof j.site === 'string' && j.site.trim()) out.site = j.site.trim().slice(0, 60);
+  if (X_DUR.includes(j.dur)) out.dur = j.dur;
+  const ch = (Array.isArray(j.changes) ? j.changes : []).filter(c => X_CH.includes(c)); if (ch.length) out.changes = [...new Set(ch)];
+  if (Number.isInteger(j.age) && j.age >= 18 && j.age < 120) out.age = j.age;
+  if (typeof j.municipality === 'string' && j.municipality.trim()) out.muni = j.municipality.trim().slice(0, 40);
+  return out;
+}
+
 const cache = new Map();
 async function analyse({ image, area, site }) {
   let mime, data;
@@ -111,6 +143,12 @@ http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   if (REVIEW_PW && doctorOnly(url.pathname, req.method) && !signedIn(req)) { res.writeHead(401, { 'www-authenticate': 'Basic realm="OncoScan doctor panel", charset="UTF-8"', 'content-type': 'text/plain' }); return res.end('Doctor panel: password required'); }
   if (url.pathname === '/api/status') return send(res, 200, { ai: !!KEY, model: KEY ? MODEL : null });
+  if (url.pathname === '/api/extract' && req.method === 'POST') {
+    if (!KEY) return send(res, 503, { error: 'AI assist is off' });
+    if (throttled(req.headers['x-real-ip'] || req.socket.remoteAddress)) return send(res, 429, { error: 'Too many requests' });
+    try { const b = await readJson(req, 4000), text = String(b.text || '').slice(0, 800); if (text.trim().length < 3) return send(res, 200, {}); return send(res, 200, await extract(text)); }
+    catch (e) { console.error('[extract]', e.message); return send(res, e.status || 500, { error: e.message }); }
+  }
   if (url.pathname === '/api/analyse' && req.method === 'POST') {
     if (!KEY) return send(res, 503, { error: 'No GEMINI_API_KEY set' });
     let raw = ''; let size = 0;
@@ -147,6 +185,7 @@ http.createServer(async (req, res) => {
   try {
     if (fs.statSync(file).isDirectory()) { if (!url.pathname.endsWith('/')) { res.writeHead(301, { location: url.pathname + '/' }); return res.end(); } file = path.join(file, 'index.html'); }
     const buf = fs.readFileSync(file);
-    res.writeHead(200, { 'content-type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream', 'cache-control': 'no-store' }); res.end(buf);
+    const ext = path.extname(file).toLowerCase();   // pictures are cached for an hour; pages and scripts are always fresh
+    res.writeHead(200, { 'content-type': MIME[ext] || 'application/octet-stream', 'cache-control': /^\.(jpe?g|png|webp|svg|ico)$/.test(ext) ? 'public, max-age=3600' : 'no-store' }); res.end(buf);
   } catch { res.writeHead(404, { 'content-type': 'text/plain' }); res.end('Not found'); }
 }).listen(PORT, process.env.HOST || undefined, () => console.log(`OncoScan on http://localhost:${PORT}  ·  AI analysis: ${KEY ? 'on (' + MODEL + ')' : 'off (no GEMINI_API_KEY)'}  ·  doctor panel password: ${REVIEW_PW ? 'on' : 'off'}`));

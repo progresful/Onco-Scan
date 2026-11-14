@@ -4,118 +4,228 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OncoScan — Junction 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0B2A2E;--deep:#06211F;--vivid:#0A7C72;--pale:#9AD9CC;--bg:#FBFAF7;--line:#DDD9D1;--muted:#566769}
+:root{--night:#03110F;--deep:#06211F;--ink:#0B2A2E;--ink2:#23444A;--teal:#0A7C72;--lime:#B6F0C8;--pale:#9AD9CC;--paper:#F6F3EC;--line:#D9D4C8;--muted:#566769;--land:#E7E1D3}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#000;overflow:hidden;font-family:'Hanken Grotesk',system-ui,sans-serif}
 .stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;transform:translate(-50%,-50%) scale(var(--k,1))}
-.slide{position:absolute;inset:0;padding:96px 110px;background:var(--bg);color:var(--ink);display:none;flex-direction:column}
+.slide{position:absolute;inset:0;padding:84px 104px 96px;display:none;flex-direction:column;overflow:hidden}
 .slide.on{display:flex}
-.slide.dark{background:linear-gradient(160deg,#0E8F83 0%,#06211F 78%);color:#fff}
-.k{font-size:28px;font-weight:600;color:var(--vivid)}.dark .k{color:var(--pale)}
-h1{font-size:112px;line-height:.96;letter-spacing:-.045em;font-weight:700;margin-top:28px;max-width:16ch}
-h2{font-size:76px;line-height:1;letter-spacing:-.035em;font-weight:700;margin-top:24px;max-width:22ch}
-h1 em,h2 em{font-style:normal;color:var(--vivid)}.dark h1 em,.dark h2 em{color:var(--pale)}
-p{font-size:34px;line-height:1.3;color:var(--muted)}.dark p{color:#D5EEEA}
-.row{display:flex;gap:56px;margin-top:auto;align-items:flex-end}
-.shot{border-radius:14px;overflow:hidden;box-shadow:0 40px 90px -40px rgba(6,33,31,.6),0 0 0 1px var(--line);background:#fff}
+.night{background:var(--night);color:#fff}.paper{background:var(--paper);color:var(--ink)}.green{background:var(--deep);color:#fff}.limebg{background:var(--lime);color:var(--night)}
+.k{font-size:34px;font-weight:700;color:var(--teal);letter-spacing:-.01em}
+.night .k,.green .k{color:var(--lime)}.limebg .k{color:var(--teal)}
+h1{font-size:118px;line-height:.98;letter-spacing:-.045em;font-weight:800;margin-top:18px;max-width:17ch}
+h1 em{font-style:normal;color:var(--teal)}.night h1 em,.green h1 em{color:var(--lime)}
+p{font-size:44px;line-height:1.25;letter-spacing:-.01em}
+.sub{color:var(--ink2)}.night .sub,.green .sub{color:#C4DDD8}
+.src{font-size:26px;color:var(--muted);line-height:1.3}.night .src,.green .src{color:#8FA9A4}
+.foot{position:absolute;left:104px;right:104px;bottom:36px;display:flex;justify-content:space-between;align-items:center;font-size:24px;font-weight:600;color:var(--muted)}
+.night .foot,.green .foot{color:#8FA9A4}.limebg .foot{color:#2C5A4A}
+.foot img{height:30px}
+.row{display:flex;gap:72px;flex:1;min-height:0;margin-top:44px}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+/* 1 cover */
+.cover{padding:64px 88px 0}
+.cover .top{display:flex;justify-content:space-between;align-items:flex-start}
+.cover .top img{height:72px}
+.cover h1{font-size:92px;text-align:right;margin:0;max-width:none}
+.clock{margin:auto 0;text-align:center;font-weight:800;font-size:466px;letter-spacing:-.055em;line-height:.8;white-space:nowrap;padding:0 .07em 0 .02em;font-variant-numeric:tabular-nums;
+  background:url(assets/lakes.jpg) 50% 14%/1920px auto no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:brightness(1.15) saturate(1.1);animation:drift 40s ease-in-out infinite alternate}
+@keyframes drift{from{background-position:44% 6%}to{background-position:56% 30%}}
+.cover .base{display:flex;justify-content:space-between;align-items:center;padding-bottom:60px;font-size:40px;color:#A9C2BD}
+.url{background:var(--lime);color:var(--night);font-weight:800;padding:14px 30px;border-radius:18px;font-size:38px;letter-spacing:-.01em}
+/* big numbers */
+.big{font-size:230px;font-weight:800;letter-spacing:-.06em;line-height:.85;color:var(--teal)}
+.big small{font-size:.34em;letter-spacing:-.02em;margin-left:.08em}
+.night .big,.green .big{color:var(--lime)}
+/* maps */
+.map{position:absolute;right:96px;top:64px;bottom:84px;display:flex;align-items:center;justify-content:center}
+.map svg{height:900px;width:462px;flex:none;overflow:visible}
+.map svg[data-map=hub]{width:528px}
+.slide.withmap .row{animation:none!important;transform:none!important;opacity:1!important}
+.withmap h1{max-width:1180px}.withmap .col{max-width:1180px}
+.pair{display:flex;gap:90px;align-items:flex-end;margin-top:auto}
+.pair .big{font-size:210px}
+.land{fill:var(--land);stroke:var(--ink);stroke-width:1.6;stroke-opacity:.5;stroke-linejoin:round}
+.night .land{fill:#0E2B28;stroke:var(--pale);stroke-opacity:.5}
+.ln{fill:none;stroke:var(--teal);stroke-width:1.5;stroke-opacity:.6}
+.night .ln{stroke:var(--lime);stroke-opacity:.5}
+.dot{fill:var(--ink)}.night .dot{fill:#fff}
+.hosp{fill:var(--teal);stroke:#fff;stroke-width:3}
+.hub{fill:var(--lime)}.hubt{fill:var(--night);font:800 27px 'Hanken Grotesk',sans-serif;letter-spacing:-.03em}
+.lbl{font:700 22px 'Hanken Grotesk',sans-serif;fill:var(--ink)}
+/* screenshots */
+.shot{border-radius:18px;overflow:hidden;box-shadow:0 50px 90px -40px rgba(3,17,15,.75),0 0 0 1.5px var(--line);background:#fff}
 .shot img{display:block;width:100%}
-figure{flex:1}figcaption{font-size:26px;font-weight:600;margin-top:18px}
-.stats{display:flex;gap:0;margin-top:auto;border-top:3px solid var(--ink)}
-.stat{flex:1;padding:28px 32px 0 0}
-.stat b{display:block;font-size:112px;line-height:1;letter-spacing:-.05em;font-weight:700;color:var(--vivid)}
-.stat span{font-size:28px;color:var(--muted);display:block;margin-top:10px;max-width:14em}
-table{border-collapse:collapse;width:100%;margin-top:auto;font-size:32px}
-th,td{text-align:left;padding:22px 24px;border-top:1px solid var(--line)}
-th{font-size:26px;color:var(--muted);font-weight:600;border-top:0}
-td:last-child{font-weight:700;color:var(--vivid)}
-.foot{position:absolute;left:110px;right:110px;bottom:40px;display:flex;justify-content:space-between;font-size:22px;color:var(--muted)}.dark .foot{color:#9FC9C2}
-.note{font-size:24px;color:var(--muted);margin-top:22px}.dark .note{color:#9FC9C2}
-.a{opacity:0;transform:translateY(22px)}
-.slide.on .a{animation:in .6s cubic-bezier(.2,.7,.1,1) forwards}
-.slide.on .a:nth-of-type(2){animation-delay:.08s}.slide.on .a:nth-of-type(3){animation-delay:.16s}.slide.on .a:nth-of-type(4){animation-delay:.24s}
+.green .shot,.night .shot{box-shadow:0 50px 90px -40px rgba(0,0,0,.9),0 0 0 1.5px rgba(255,255,255,.18)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:48px;flex:1}
+.step .n{font-size:104px;font-weight:800;letter-spacing:-.06em;line-height:.9;color:var(--teal);margin-top:26px}
+.step h3{font-size:54px;letter-spacing:-.035em;font-weight:800;line-height:1.02;margin-top:6px}
+.step p{font-size:34px;color:var(--ink2);margin-top:10px}
+.lines{list-style:none;padding:0;margin:auto 0;display:grid;gap:34px}
+.lines li{display:grid;grid-template-columns:110px 1fr;align-items:center;font-size:70px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.lines li b{width:84px;height:84px;border-radius:50%;background:var(--lime);color:var(--night);display:grid;place-items:center;font-size:44px}
+.lines li span{display:block;font-size:34px;font-weight:500;letter-spacing:-.01em;color:#C4DDD8;margin-top:10px;line-height:1.2}
+.quad{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:auto 0;border-top:4px solid var(--night)}
+.quad>div{padding:44px 30px 10px 0;border-right:2px solid rgba(3,17,15,.18)}
+.quad>div+div{padding-left:40px}.quad>div:last-child{border-right:0}
+.quad .big{color:var(--night);font-size:240px}
+.quad p{font-size:38px;font-weight:600;margin-top:16px;line-height:1.15}
+.proof{list-style:none;padding:0;margin-top:44px;border-top:3px solid var(--ink)}
+.proof li{display:grid;grid-template-columns:330px 1fr;gap:40px;align-items:center;padding:30px 0;border-bottom:1.5px solid var(--line)}
+.proof b{font-size:104px;font-weight:800;letter-spacing:-.05em;line-height:.9;color:var(--teal)}
+.proof p{font-size:42px}.proof p span{display:block;font-size:30px;color:var(--muted);margin-top:6px}
+.next{list-style:none;padding:0;margin-top:52px;display:grid;gap:26px}
+.next li{font-size:52px;font-weight:600;letter-spacing:-.02em;display:flex;gap:26px;align-items:baseline}
+.next li::before{content:"→";color:var(--lime);font-weight:800}
+.a{opacity:0;transform:translateY(24px)}
+.slide.on .a{animation:in .7s cubic-bezier(.2,.7,.1,1) forwards}
+.slide.on .a:nth-child(2){animation-delay:.08s}.slide.on .a:nth-child(3){animation-delay:.16s}.slide.on .a:nth-child(4){animation-delay:.24s}
 @keyframes in{to{opacity:1;transform:none}}
-/* print: one slide per page, everything visible, no motion */
 @page{size:1920px 1080px;margin:0}
 html.print,html.print body{height:auto;overflow:visible;background:#fff}
 html.print .stage{position:static;transform:none;width:1920px;height:auto}
-html.print .slide{position:relative;display:flex;width:1920px;height:1080px;page-break-after:always;break-after:page;overflow:hidden}
+html.print .slide{position:relative;display:flex;width:1920px;height:1080px;page-break-after:always;break-after:page}
 html.print .a{opacity:1;transform:none;animation:none!important}
+html.print .clock{animation:none}
 </style>
 </head>
 <body>
 <div class="stage" id="stage">
 
-<section class="slide dark on">
-  <p class="k a">OncoScan · Equal Care Across Finland</p>
-  <h1 class="a">A specialist's answer within <em>24&nbsp;hours</em>, wherever you live.</h1>
-  <div class="row a"><p style="flex:1">Photo-first review for a worrying spot. Working prototype.</p>
-    <div class="shot" style="width:880px"><img src="assets/patient-6-case.png" alt="Patient case page with a running case clock"></div></div>
-  <div class="foot"><span>1 / 6</span><span>Junction 2026</span></div>
+<!-- 1 -->
+<section class="slide night cover on">
+  <div class="top"><img src="assets/logo-light.png" alt="OncoScan"><h1>A specialist's answer<br><em>before the clock runs out.</em></h1></div>
+  <div class="clock" id="clock">24:00:00</div>
+  <div class="base"><span>Photo-first cancer triage for Finland</span><span class="url">oncoscan.pgf.lv</span></div>
 </section>
 
-<section class="slide">
-  <p class="k a">The problem</p>
-  <h2 class="a">The first question waits behind a referral.</h2>
-  <div class="row a"><div style="flex:1"><p>The brief names late detection and referral as bottlenecks.</p>
-    <p class="note">Farthest town: about 550 km away (estimate).</p></div>
-    <div class="shot" style="padding:20px;flex:none;margin-bottom:40px"><img src="assets/landing-5-map.png" alt="Map of Finnish towns linked to their nearest university hospital" style="height:560px;width:auto"></div></div>
-  <div class="foot"><span>2 / 6</span><span>Sources: challenge brief, 13 Nov 2026 · straight-line distance to the nearest university hospital, 47 towns, approximate coordinates</span></div>
-</section>
-
-<section class="slide">
-  <p class="k a">The demonstration</p>
-  <h2 class="a">Photo in. Specialist verdict out.</h2>
+<!-- 2 -->
+<section class="slide paper withmap">
+  <p class="k a">The problem in Finland</p>
+  <h1 class="a">The first question <em>waits behind a referral.</em></h1>
   <div class="row a">
-    <figure><div class="shot"><img src="assets/patient-3-photos.png" alt="Patient adds photos"></div><figcaption>1 · Patient sends photos</figcaption></figure>
-    <figure><div class="shot"><img src="assets/review-1-patient-case.png" alt="Specialist reviews the case"></div><figcaption>2 · Specialist signs a verdict</figcaption></figure>
-    <figure><div class="shot"><img src="assets/patient-8-result.png" alt="Patient result page"></div><figcaption>3 · Patient gets a next step</figcaption></figure>
+    <div class="col">
+      <p class="sub" style="max-width:19em">"Does a specialist need to see this?" Far from a university hospital, that first step takes longest.</p>
+      <div style="margin-top:auto"><div class="big" style="font-size:210px">550<small>km</small></div>
+      <p style="margin-top:14px;max-width:17em">from the farthest town to its nearest university hospital</p>
+      <p class="src" style="margin-top:18px">Straight line, 47 towns, approximate coordinates: our estimate. The challenge brief names late detection and referral as bottlenecks.</p></div>
+    </div>
+    <div class="map"><svg viewBox="0 0 560 1090" data-map="hospitals" role="img" aria-label="Finland: towns linked to their nearest of five university hospitals"></svg></div>
   </div>
-  <div class="foot"><span>3 / 6</span><span>Real screenshots. Test photo is synthetic.</span></div>
+  <div class="foot"><img src="assets/logo.png" alt=""><span>2</span></div>
 </section>
 
-<section class="slide">
-  <p class="k a">Engineering</p>
-  <h2 class="a">No server. The whole loop runs in the browser.</h2>
-  <div class="stats a">
-    <div class="stat"><b>5/5</b><span>automated runs passed</span></div>
-    <div class="stat"><b>2.3 s</b><span>per automated loop</span></div>
-    <div class="stat"><b>3/3</b><span>test photos labelled correctly</span></div>
+<!-- 3 -->
+<section class="slide night withmap">
+  <p class="k a">The solution</p>
+  <h1 class="a">Send a photo. <em>A specialist answers in 24 hours.</em></h1>
+  <div class="row a">
+    <div class="col">
+      <p class="sub" style="max-width:17em">One shared queue for the whole country. The photo travels, not the patient.</p>
+      <div class="pair"><div class="big">52<small>towns</small></div><div class="big">1<small>queue</small></div></div>
+    </div>
+    <div class="map"><svg viewBox="-40 0 640 1090" data-map="hub" role="img" aria-label="Finland: every town linked to one OncoScan queue"></svg></div>
   </div>
-  <div class="foot"><span>4 / 6</span><span>Measured 14 Nov 2026 in headless Chrome · photos: sharp, dark, blurred (synthetic) · tradeoff: one browser, one computer</span></div>
+  <div class="foot"><img src="assets/logo-light.png" alt=""><span>3</span></div>
 </section>
 
-<section class="slide">
-  <p class="k a">Advantage</p>
-  <h2 class="a">The specialist looks first.</h2>
-  <table class="a">
-    <tr><th></th><th>Standard referral</th><th>OncoScan prototype</th></tr>
-    <tr><td>First look</td><td>After appointment</td><td>From the photo</td></tr>
-    <tr><td>Answer target</td><td>Not stated</td><td>24 hours</td></tr>
-  </table>
-  <p class="note a">Design comparison; not measured.</p>
-  <div class="foot"><span>5 / 6</span><span>OncoScan</span></div>
+<!-- 4 -->
+<section class="slide paper">
+  <p class="k a">How it works for patients</p>
+  <h1 class="a" style="max-width:none">Three steps. <em>No appointment.</em></h1>
+  <div class="steps a">
+    <div class="step"><div class="shot"><img src="assets/now-chat.jpg" alt="Chat: the patient describes the spot and adds a photo"></div><div class="n">1</div><h3>Tell us and add a photo.</h3><p>In your own words, in a chat.</p></div>
+    <div class="step"><div class="shot"><img src="assets/now-case.jpg" alt="Case page with a running 24-hour clock"></div><div class="n">2</div><h3>The clock starts.</h3><p>A specialist has 24 hours.</p></div>
+    <div class="step"><div class="shot"><img src="assets/now-book.jpg" alt="Result page with a table of specialists and times"></div><div class="n">3</div><h3>Know what's next.</h3><p>A result, and a booking if needed.</p></div>
+  </div>
+  <div class="foot"><img src="assets/logo.png" alt=""><span>Real screens from the live demo · example data · 4</span></div>
 </section>
 
-<section class="slide dark">
-  <p class="k a">Outcome</p>
-  <h2 class="a">Working loop today. <em>Evidence next.</em></h2>
-  <div class="row a" style="align-items:flex-start;margin-top:72px">
-    <div style="flex:1"><p style="color:#fff;font-weight:600">Not built yet</p><p>AI model, Goal 3 data, real sign-in.</p></div>
-    <div style="flex:1"><p style="color:#fff;font-weight:600">Next</p><p>Goal 3 indicator, a model, clinician tests.</p></div>
+<!-- 5 -->
+<section class="slide green">
+  <p class="k a">How it works for doctors</p>
+  <h1 class="a">One screen. <em>One key to sign.</em></h1>
+  <div class="row a" style="align-items:center">
+    <div class="shot" style="flex:1.25"><img src="assets/now-doctor.jpg" alt="Doctor panel: a lesion photo beside the signal check"></div>
+    <ul class="lines" style="flex:1">
+      <li><b>1</b><div>See the photo.<span>Large, with the patient's own words.</span></div></li>
+      <li><b>2</b><div>Check the signals.<span>Warning signs, and signs against.</span></div></li>
+      <li><b>3</b><div>Sign the verdict.<span>No concern, suspicious, or better photo.</span></div></li>
+    </ul>
   </div>
-  <div class="foot"><span>6 / 6</span><span>Demo runs locally · public link to be added</span></div>
+  <div class="foot"><img src="assets/logo-light.png" alt=""><span>Real screen · image from the public HAM10000 dataset · 5</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide limebg">
+  <p class="k a">Why it's simple</p>
+  <h1 class="a">Simple on purpose.</h1>
+  <div class="quad a">
+    <div><div class="big">1–2</div><p>photos from a phone</p></div>
+    <div><div class="big">8</div><p>details, asked in a chat</p></div>
+    <div><div class="big">24<small>h</small></div><p>target for an answer</p></div>
+    <div><div class="big">0</div><p>apps to install</p></div>
+  </div>
+  <div class="foot"><img src="assets/logo.png" alt=""><span>6</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide paper">
+  <p class="k a">What we tested</p>
+  <h1 class="a">We measured the AI. <em>The doctor decides.</em></h1>
+  <ul class="proof a">
+    <li><b>Live</b><p>Patient to doctor to result, working today.<span>oncoscan.pgf.lv</span></p></li>
+    <li><b>13/18</b><p>cancers flagged by a general AI model from the photo alone.<span>It cleared only 5 of 24 benign lesions. 42 labelled HAM10000 images.</span></p></li>
+    <li><b>So</b><p>AI helps patients describe. It never judges.<span>It reads free text, including Finnish. The verdict is always a doctor's.</span></p></li>
+  </ul>
+  <div class="foot"><img src="assets/logo.png" alt=""><span>7</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide night">
+  <p class="k a">Next</p>
+  <h1 class="a">A 6-month pilot in <em>one wellbeing services county.</em></h1>
+  <ul class="next a">
+    <li>Pick one Goal 3 indicator with the county</li>
+    <li>Test with 5 clinicians and their patients</li>
+    <li>Measure days from first suspicion to verdict</li>
+  </ul>
+  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-bottom:36px"><p class="sub">Try it now</p><span class="url" style="font-size:56px;padding:20px 40px">oncoscan.pgf.lv</span></div>
+  <div class="foot"><img src="assets/logo-light.png" alt=""><span>8</span></div>
 </section>
 
 </div>
 <script>
 const print = location.search.includes('print'), slides = [...document.querySelectorAll('.slide')], stage = document.getElementById('stage');
+/* ---- maps of Finland (simplified outline, approximate town coordinates) ---- */
+const NS = 'http://www.w3.org/2000/svg', XY = (la, lo) => [20 + (lo - 19.5) * 43.5, 20 + (70.2 - la) * 100];
+const LAND = [[59.78,22.95],[59.98,24.3],[60.15,25.0],[60.27,25.9],[60.45,26.95],[60.55,27.8],[61.05,28.8],[61.6,29.6],[62.0,30.3],[62.5,31.2],[62.9,31.58],[63.3,31.2],[63.75,30.4],[64.1,30.55],[64.5,30.05],[64.8,29.75],[65.2,29.75],[65.7,30.1],[66.1,29.9],[66.5,29.5],[66.9,29.1],[67.3,29.55],[67.7,29.95],[68.1,28.7],[68.5,28.45],[68.9,28.5],[69.05,28.95],[69.3,29.3],[69.65,29.1],[69.85,28.4],[70.09,27.95],[70.0,27.0],[69.7,26.4],[69.4,25.85],[69.0,25.75],[68.65,24.9],[68.8,23.8],[69.0,22.4],[69.3,21.6],[69.06,20.55],[68.75,21.4],[68.45,22.3],[68.2,23.15],[67.95,23.5],[67.35,23.75],[66.8,23.9],[66.3,23.65],[65.85,24.15],[65.73,24.55],[65.35,25.3],[65.0,25.3],[64.68,24.45],[64.25,23.95],[63.85,23.1],[63.67,22.7],[63.2,21.3],[62.5,21.1],[62.27,21.3],[61.6,21.4],[61.13,21.4],[60.8,21.3],[60.4,21.9],[60.1,22.4]];
+const HOSP = [['Helsinki',60.17,24.94],['Turku',60.45,22.27],['Tampere',61.50,23.76],['Kuopio',62.89,27.68],['Oulu',65.01,25.47]];
+const TOWNS = [[66.50,25.73],[65.74,24.56],[64.23,27.73],[65.96,29.19],[67.42,26.59],[68.91,27.03],[69.91,27.03],[67.65,24.91],[67.96,23.68],[68.38,23.63],[66.71,27.43],[66.83,28.67],[65.85,24.15],[64.68,24.48],[64.07,24.53],[63.84,23.13],[63.10,21.62],[62.79,22.84],[62.24,25.75],[62.60,29.76],[63.32,30.02],[63.54,29.14],[64.13,29.52],[64.89,28.91],[63.56,27.19],[61.87,28.88],[61.69,27.27],[61.06,28.19],[60.47,26.95],[60.87,26.70],[60.98,25.66],[61.00,24.46],[61.49,21.80],[61.13,21.51],[62.27,21.38],[60.38,23.13],[59.82,22.97],[60.39,25.66],[62.30,27.16],[62.32,27.87],[62.60,25.73],[62.10,30.14],[62.67,30.93],[65.36,27.00],[68.66,27.54],[66.77,23.96],[60.10,19.94]];
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt) e.textContent = txt; return e; };
+document.querySelectorAll('svg[data-map]').forEach(svg => {
+  const hub = svg.dataset.map === 'hub', HX = 60, HY = 505;
+  svg.append(el('path', { class: 'land', d: 'M' + LAND.map(p => XY(...p).map(v => v.toFixed(1)).join(' ')).join(' L') + ' Z M' + [[60.42,19.55],[60.45,20.35],[60.05,20.5],[59.97,19.75]].map(p => XY(...p).map(v => v.toFixed(1)).join(' ')).join(' L') + ' Z' }));
+  const all = hub ? [...TOWNS, ...HOSP.map(h => [h[1], h[2]])] : TOWNS;
+  all.forEach(([la, lo]) => { const [x, y] = XY(la, lo); let tx, ty;
+    if (hub) { tx = HX; ty = HY; } else { let best = Infinity; HOSP.forEach(h => { const [hx, hy] = XY(h[1], h[2]), dd = Math.hypot(hx - x, hy - y); if (dd < best) { best = dd; tx = hx; ty = hy; } }); }
+    const mx = (x + tx) / 2 - (y - ty) * .1, my = (y + ty) / 2 + (x - tx) * .04;
+    svg.append(el('path', { class: 'ln', d: hub ? `M${x} ${y} Q${mx} ${my} ${tx} ${ty}` : `M${x} ${y} L${tx} ${ty}` })); });
+  all.forEach(([la, lo]) => { const [x, y] = XY(la, lo); svg.append(el('circle', { class: 'dot', cx: x, cy: y, r: 5 })); });
+  if (hub) { svg.append(el('circle', { class: 'hub', cx: HX, cy: HY, r: 66 }), el('text', { class: 'hubt', x: HX, y: HY - 4, 'text-anchor': 'middle' }, 'Onco'), el('text', { class: 'hubt', x: HX, y: HY + 24, 'text-anchor': 'middle' }, 'Scan')); }
+  else HOSP.forEach(([name, la, lo]) => { const [x, y] = XY(la, lo), left = name === 'Turku'; svg.append(el('circle', { class: 'hosp', cx: x, cy: y, r: 13 }), el('text', { class: 'lbl', x: x + (left ? -20 : 20), y: y + (name === 'Helsinki' ? 36 : 8), 'text-anchor': left ? 'end' : 'start' }, name)); });
+  const pts = [...LAND, [60.42,19.55],[59.97,19.75]].map(p => XY(...p)), xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const x0 = Math.min(...xs, hub ? HX - 66 : Infinity) - (hub ? 10 : 90), x1 = Math.max(...xs) + 20, y0 = Math.min(...ys) - 20, y1 = Math.max(...ys) + 50;
+  svg.setAttribute('viewBox', `${x0} ${y0} ${x1 - x0} ${y1 - y0}`); svg.style.width = 900 * (x1 - x0) / (y1 - y0) + 'px';
+});
 if (print) document.documentElement.classList.add('print');
 else {
-  let i = 0;
+  let i = 0; const end = Date.now() + 24 * 3600e3, pad = n => String(n).padStart(2, '0'), clock = document.getElementById('clock');
+  setInterval(() => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); clock.textContent = `${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`; }, 1000);
   const fit = () => stage.style.setProperty('--k', Math.min(innerWidth / 1920, innerHeight / 1080));
-  const go = n => { i = Math.max(0, Math.min(slides.length - 1, n)); slides.forEach((s, j) => s.classList.toggle('on', j === i)); location.hash = i + 1; };
+  const go = n => { i = Math.max(0, Math.min(slides.length - 1, n)); slides.forEach((s, j) => s.classList.toggle('on', j === i)); history.replaceState(null, '', '#' + (i + 1)); };
   addEventListener('resize', fit); fit();
   addEventListener('keydown', e => { if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) go(i + 1); if (['ArrowLeft', 'PageUp'].includes(e.key)) go(i - 1); if (e.key === 'Home') go(0); if (e.key === 'End') go(slides.length - 1); });
   addEventListener('click', e => go(i + (e.clientX < innerWidth / 3 ? -1 : 1)));

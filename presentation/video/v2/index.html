@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OncoScan — story video (frames are rendered from this page)</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#03110F;--deep:#06211F;--ink:#0B2A2E;--ink2:#23444A;--teal:#0A7C72;--lime:#B6F0C8;--paper:#F6F3EC;--muted:#8FA9A4}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.sc{position:absolute;inset:0;overflow:hidden;visibility:hidden;background:var(--night)}
+.bg{position:absolute;inset:-6%;background-size:cover;background-position:center}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,17,15,.92) 0%,rgba(3,17,15,.72) 38%,rgba(3,17,15,.08) 78%)}
+.shade.b{background:linear-gradient(180deg,rgba(3,17,15,.1) 30%,rgba(3,17,15,.92) 100%)}
+.pad{position:absolute;inset:0;padding:96px 110px;display:flex;flex-direction:column;justify-content:flex-end}
+.pad.mid{justify-content:center}
+.ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}.ln>span{display:block}
+h1{font-size:128px;font-weight:800;letter-spacing:-.045em;line-height:.98}
+h2{font-size:92px;font-weight:800;letter-spacing:-.04em;line-height:1}
+em{font-style:normal;color:var(--lime)}
+.sub{font-size:44px;font-weight:500;line-height:1.25;color:#D5E6E2;margin-top:28px;max-width:1100px}
+.tag{display:inline-block;align-self:flex-start;font-size:30px;font-weight:700;padding:12px 24px;border-radius:99px;background:var(--lime);color:var(--night);margin-bottom:34px}
+.note{position:absolute;right:60px;bottom:44px;font-size:22px;font-weight:600;color:rgba(255,255,255,.7)}
+.note.l{right:auto;left:110px}
+.big{font-size:330px;font-weight:800;letter-spacing:-.06em;line-height:.85;color:var(--lime);font-variant-numeric:tabular-nums}
+.big small{font-size:.34em;letter-spacing:-.02em;margin-left:.06em}
+.logo{position:absolute;left:110px;top:80px;height:64px}
+/* status card */
+.card{position:absolute;right:150px;top:300px;width:620px;background:#fff;color:var(--ink);border-radius:34px;padding:44px 48px;box-shadow:0 60px 120px -40px rgba(0,0,0,.8)}
+.card .k{font-size:28px;color:#566769;font-weight:600}
+.card .v{font-size:96px;font-weight:800;letter-spacing:-.045em;line-height:1.05;margin:6px 0 18px}
+.card .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.card .seg i{height:12px;border-radius:6px;background:#DDD9D1}
+.card .st{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:700;margin-top:22px;color:var(--ink2)}.card .st i{width:18px;height:18px;border-radius:50%;background:#9AA8A6}
+/* problems list */
+.plist{display:grid;gap:14px;margin-top:20px}
+.plist div{display:flex;align-items:baseline;gap:36px;font-size:118px;font-weight:800;letter-spacing:-.045em;line-height:1.02;position:relative;align-self:flex-start;justify-self:start}
+.plist b{font-size:.5em;color:var(--lime);width:.9em;font-variant-numeric:tabular-nums}
+.plist u{position:absolute;left:1.1em;right:-.2em;top:56%;height:12px;border-radius:6px;background:var(--lime);transform-origin:0 50%}
+/* countdown */
+.clock{font-size:420px;font-weight:800;letter-spacing:-.06em;line-height:.9;text-align:center;font-variant-numeric:tabular-nums;background:url(../../../landing/assets/lakes-hero.jpg) 50% 45%/130% auto;-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:30px}
+/* steps */
+.step{display:grid;grid-template-columns:760px 1fr;gap:70px;align-items:center;position:absolute;inset:0;padding:90px 110px}
+.step .n{font-size:300px;font-weight:800;letter-spacing:-.07em;line-height:.8}
+.step h2{margin-top:26px}
+.shot{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 70px 140px -50px rgba(0,0,0,.75);height:820px;background:#fff}
+.shot img{display:block;width:100%;transform-origin:50% 0}
+.s8{background:var(--paper);color:var(--ink)}.s8 .n{color:var(--teal)}.s8 .sub{color:var(--ink2)}
+.s9{background:var(--deep)}.s9 .n{color:var(--lime)}
+.s10{background:var(--teal)}.s10 .n{color:#fff}.s10 .sub{color:#fff}
+.live{display:grid;gap:16px;margin-top:40px}
+.live div{display:flex;align-items:center;gap:20px;font-size:40px;font-weight:700;color:#8FA9A4}
+.live i{width:52px;height:52px;border-radius:15px;flex:none;display:grid;place-items:center;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.live svg{width:32px;height:32px}.live path{stroke-dasharray:24;stroke-dashoffset:24}
+.ring{position:absolute;left:2.2%;right:2.2%;top:15.6%;height:8.3%;border:7px solid var(--lime);border-radius:16px;box-shadow:0 0 0 2000px rgba(3,17,15,.38)}
+.chip{position:absolute;right:40px;top:26px;font-size:28px;font-weight:800;background:var(--night);color:var(--lime);padding:14px 24px;border-radius:99px}
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:60px}
+.cmp>div{border-radius:34px;padding:50px 56px}
+.cmp .a{box-shadow:inset 0 0 0 3px rgba(255,255,255,.25);color:#B9CFCB}
+.cmp .b{background:var(--lime);color:var(--night)}
+.cmp small{display:block;font-size:30px;font-weight:700;margin-bottom:18px;opacity:.8}
+.cmp p{font-size:84px;font-weight:800;letter-spacing:-.045em;line-height:1.08}
+.end{align-items:center;text-align:center}
+.end img{height:120px;margin-bottom:60px}
+.url{display:inline-block;margin-top:56px;font-size:46px;font-weight:800;background:var(--lime);color:var(--night);padding:22px 44px;border-radius:26px}
+</style>
+</head>
+<body>
+<!-- 1 · the spot -->
+<section class="sc" id="s1"><div class="bg" style="background-image:url(../../../landing/assets/prob-detect.jpg);background-position:60% 30%"></div><div class="shade"></div>
+  <div class="pad"><span class="tag">Anna, 52 · Lapland</span><h1><span class="ln"><span>A dark spot.</span></span><span class="ln"><span><em>It wasn't there</em></span></span><span class="ln"><span><em>last summer.</em></span></span></h1></div>
+  <span class="note">Illustrative story</span></section>
+<!-- 2 · the distance -->
+<section class="sc" id="s2"><div class="bg" style="background-image:url(../../../landing/assets/town.jpg)"></div><div class="shade"></div>
+  <div class="pad"><div class="big"><span id="km">0</span><small>km</small></div><h2 style="margin-top:20px"><span class="ln"><span>to the nearest</span></span><span class="ln"><span>university hospital.</span></span></h2></div></section>
+<!-- 3 · the GP -->
+<section class="sc" id="s3"><div class="bg" style="background-image:url(../../../landing/assets/clinic.jpg);left:44%;inset-block:-6%;right:-6%"></div><div class="shade" style="background:linear-gradient(90deg,var(--night) 46%,rgba(3,17,15,.1) 80%)"></div>
+  <div class="pad mid"><span class="tag">At the health centre</span><h2 style="font-size:74px;color:#B9CFCB"><span class="ln"><span>Her GP takes a look.</span></span></h2><h1 style="margin-top:26px"><span class="ln"><span>“I can't say</span></span><span class="ln"><span><em>for sure.”</em></span></span></h1><p class="sub" id="s3sub">A referral is sent to a specialist.</p></div></section>
+<!-- 4 · the queue -->
+<section class="sc" id="s4"><div class="bg" style="background-image:url(../../../landing/assets/prob-queue.jpg);background-position:30% 50%"></div><div class="shade b"></div><div class="shade" style="opacity:.75"></div>
+  <div class="pad"><span class="tag">Then, the queue</span><div class="big" style="font-size:300px" id="q">0</div><p class="sub" style="color:#fff;font-weight:700">people are waiting for non-urgent specialist care in Finland.</p></div>
+  <span class="note">THL, end of August 2026</span></section>
+<!-- 5 · no status -->
+<section class="sc" id="s5"><div class="bg" style="background-image:url(../../../landing/assets/prob-book.jpg);background-position:20% 40%"></div><div class="shade"></div>
+  <div class="pad"><h1><span class="ln"><span>Weeks pass.</span></span><span class="ln"><span><em>Where is my case?</em></span></span></h1><p class="sub">No answer. No way to check.</p></div>
+  <div class="card" id="s5card"><span class="k">Referral sent · 12 March</span><div class="v">Status: ?</div><div class="seg"><i></i><i></i><i></i><i></i></div><div class="st"><i></i>No updates</div></div>
+  <span class="note">Illustrative story</span></section>
+<!-- 6 · four problems -->
+<section class="sc" id="s6"><div class="pad mid"><span class="tag">Four problems</span>
+  <div class="plist"><div><b>1</b>Late detection<u></u></div><div><b>2</b>Referral queue<u></u></div><div><b>3</b>Treatment start<u></u></div><div><b>4</b>No transparency<u></u></div></div></div></section>
+<!-- 7 · the promise -->
+<section class="sc" id="s7"><img class="logo" src="../../../assets/logo-light.png" alt="">
+  <div class="pad mid" style="align-items:center;text-align:center"><h2><span class="ln"><span>A specialist's answer <em>in 24 hours.</em></span></span></h2><div class="clock" id="clock">24:00:00</div></div></section>
+<!-- 8 · step 1 -->
+<section class="sc s8" id="s8"><div class="step"><div><div class="n">1</div><h2><span class="ln"><span>Send a photo.</span></span></h2><p class="sub">Your photos and your story, in a short chat. From home.</p></div><div class="shot"><img src="../../deck/assets/now-chat.jpg" alt=""></div></div></section>
+<!-- 9 · step 2 -->
+<section class="sc s9" id="s9"><div class="step"><div><div class="n">2</div><h2><span class="ln"><span>A specialist</span></span><span class="ln"><span>reviews it.</span></span></h2>
+  <div class="live"><div><i><svg viewBox="0 0 24 24" fill="none" stroke="#03110F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Received</div><div><i><svg viewBox="0 0 24 24" fill="none" stroke="#03110F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Sorted by urgency</div><div><i><svg viewBox="0 0 24 24" fill="none" stroke="#03110F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>With a specialist</div><div><i><svg viewBox="0 0 24 24" fill="none" stroke="#03110F" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Answered</div></div></div>
+  <div class="shot"><img src="../../deck/assets/now-case.jpg" alt=""><span class="chip">Live status</span></div></div></section>
+<!-- 10 · step 3 -->
+<section class="sc s10" id="s10"><div class="step"><div><div class="n">3</div><h2><span class="ln"><span>Suspicious?</span></span><span class="ln"><span>Book the nearest.</span></span></h2><p class="sub">Closest specialists first, with their next free time.</p></div><div class="shot"><img src="../../deck/assets/now-book.jpg" alt="" style="width:118%;margin-left:-18%"><div class="ring" id="ring"></div><span class="chip">Example specialists</span></div></div></section>
+<!-- 11 · before / after -->
+<section class="sc" id="s11"><div class="pad mid"><h2><span class="ln"><span>For Anna, the first answer comes <em>the next day.</em></span></span></h2>
+  <div class="cmp"><div class="a"><small>Before</small><p>500 km<br>Weeks<br>No status</p></div><div class="b"><small>With OncoScan</small><p>0 km<br>24 hours<br>Live status</p></div></div></div>
+  <span class="note">24 hours is our target · illustrative story</span></section>
+<!-- 12 · end -->
+<section class="sc" id="s12"><div class="pad mid end"><img src="../../../assets/logo-light.png" alt=""><h1 style="font-size:112px"><span class="ln"><span>Already in use in Latvia.</span></span><span class="ln"><span><em>Next: Finland.</em></span></span></h1><span class="url">oncoscan.pgf.lv</span></div></section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+// One paused timeline drives everything, so any frame can be rendered by seeking: window.seek(seconds).
+const tl = gsap.timeline({ paused: true }), $ = (s, r = document) => [...r.querySelectorAll(s)];
+const CUT = { s1: 0, s2: 5.6, s3: 11.2, s4: 17, s5: 23, s6: 28.8, s7: 34, s8: 38.4, s9: 44.4, s10: 51, s11: 57.6, s12: 62.4 }, END = 68;
+const ids = Object.keys(CUT);
+ids.forEach((id, i) => { const el = document.getElementById(id), t = CUT[id], next = ids[i + 1] ? CUT[ids[i + 1]] : END;
+  el.style.zIndex = i + 1;
+  tl.set(el, { autoAlpha: 1 }, t);
+  if (i) tl.fromTo(el, { clipPath: i % 2 ? 'inset(0 0 100% 0)' : 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: .6, ease: 'power4.inOut' }, t);
+  tl.set(el, { autoAlpha: 0 }, next + .6);
+  // shared entrances
+  tl.from($('.ln>span', el), { yPercent: 115, duration: .8, ease: 'power4.out', stagger: .14 }, t + .35);
+  $('.tag', el).forEach(x => tl.from(x, { y: 40, autoAlpha: 0, duration: .6, ease: 'power3.out' }, t + .25));
+  $('.sub', el).forEach(x => tl.from(x, { y: 30, autoAlpha: 0, duration: .7, ease: 'power3.out' }, t + 1.1));
+  $('.bg', el).forEach((x, k) => tl.fromTo(x, { scale: 1.02, xPercent: i % 2 ? 1.5 : -1.5 }, { scale: 1.12, xPercent: i % 2 ? -1.5 : 1.5, duration: next - t + .6, ease: 'none' }, t));
+});
+const count = (el, to, at, dur, fmt = v => Math.round(v)) => { const o = { v: 0 }; tl.to(o, { v: to, duration: dur, ease: 'power2.out', onUpdate: () => el.textContent = fmt(o.v) }, at); };
+// 2 · 500 km
+count(document.getElementById('km'), 500, CUT.s2 + .5, 2.2);
+tl.from('#s2 .big', { y: 80, autoAlpha: 0, duration: .8, ease: 'power4.out' }, CUT.s2 + .4);
+// 3 · referral line arrives late
+tl.to('#s3sub', { color: '#B6F0C8', duration: .4 }, CUT.s3 + 3.6);
+// 4 · the queue
+count(document.getElementById('q'), 126200, CUT.s4 + .6, 2.6, v => Math.round(v).toLocaleString('en-US'));
+tl.from('#q', { y: 80, autoAlpha: 0, duration: .8, ease: 'power4.out' }, CUT.s4 + .5);
+// 5 · status card
+tl.from('#s5card', { y: 120, rotation: 5, autoAlpha: 0, duration: .9, ease: 'back.out(1.6)' }, CUT.s5 + 1.5)
+  .to('#s5card', { x: -10, duration: .08, repeat: 5, yoyo: true, ease: 'none' }, CUT.s5 + 3.4);
+// 6 · four problems slam in, then get struck out
+$('#s6 .plist div').forEach((d, k) => { tl.from(d, { x: -120, autoAlpha: 0, duration: .5, ease: 'power4.out' }, CUT.s6 + .5 + k * .45);
+  tl.fromTo(d.querySelector('u'), { scaleX: 0 }, { scaleX: 1, duration: .35, ease: 'power3.inOut' }, CUT.s6 + 3.3 + k * .22)
+    .to(d, { color: '#5C726E', duration: .3 }, CUT.s6 + 3.3 + k * .22); });
+// 7 · the clock
+const c = { s: 86400 }, clock = document.getElementById('clock'), p2 = n => String(n).padStart(2, '0');
+tl.to(c, { s: 86400 - 26, duration: 4.2, ease: 'none', onUpdate: () => { const s = Math.round(c.s); clock.textContent = `${p2(Math.floor(s / 3600))}:${p2(Math.floor(s / 60) % 60)}:${p2(s % 60)}`; } }, CUT.s7 + .4)
+  .from(clock, { scale: .8, autoAlpha: 0, duration: 1, ease: 'power4.out' }, CUT.s7 + .5)
+  .fromTo(clock, { backgroundPosition: '40% 35%' }, { backgroundPosition: '60% 60%', duration: 4.6, ease: 'none' }, CUT.s7)
+  .from('#s7 .logo', { y: -40, autoAlpha: 0, duration: .6 }, CUT.s7 + .3);
+// 8–10 · steps: number drops, screenshot slides in and drifts
+['s8', 's9', 's10'].forEach(id => { const t = CUT[id];
+  tl.from(`#${id} .n`, { yPercent: -60, autoAlpha: 0, duration: .7, ease: 'back.out(1.8)' }, t + .3)
+    .from(`#${id} .shot`, { x: 260, rotation: 3, autoAlpha: 0, duration: 1, ease: 'power4.out' }, t + .5)
+  ; const chip = document.querySelector(`#${id} .chip`); if (chip) tl.from(chip, { scale: 0, duration: .5, ease: 'back.out(2.4)' }, t + 1.6); });
+tl.fromTo('#s8 .shot img', { scale: 1.5, yPercent: -30 }, { scale: 1.5, yPercent: -12, duration: 5, ease: 'power1.inOut' }, CUT.s8 + .8);
+tl.fromTo('#s9 .shot img', { scale: 1.9, xPercent: -22, yPercent: -12 }, { scale: 1.9, xPercent: -22, yPercent: -24, duration: 5.4, ease: 'power1.inOut' }, CUT.s9 + .8);
+$('#s9 .live div').forEach((d, k) => { const at = CUT.s9 + 1.6 + k * .95;
+  tl.from(d, { x: -60, autoAlpha: 0, duration: .45, ease: 'power3.out' }, CUT.s9 + 1 + k * .12)
+    .to(d, { color: '#fff', duration: .3 }, at)
+    .to(d.querySelector('i'), { backgroundColor: '#B6F0C8', boxShadow: 'inset 0 0 0 3px #B6F0C8', scale: 1.25, duration: .2, yoyo: true, repeat: 1 }, at)
+    .set(d.querySelector('i'), { backgroundColor: '#B6F0C8', boxShadow: 'inset 0 0 0 3px #B6F0C8', scale: 1 }, at + .4)
+    .to(d.querySelector('path'), { strokeDashoffset: 0, duration: .3 }, at + .1); });
+tl.fromTo('#s10 .shot img', { scale: 1.25, yPercent: -4 }, { scale: 1.25, yPercent: -9, duration: 6, ease: 'power1.inOut' }, CUT.s10 + .8)
+  .from('#ring', { scale: 1.2, autoAlpha: 0, duration: .6, ease: 'power3.out' }, CUT.s10 + 2.4)
+  .to('#ring', { scale: 1.02, duration: .35, yoyo: true, repeat: 5, ease: 'sine.inOut' }, CUT.s10 + 3.1);
+// 11 · before / after
+tl.from('#s11 .cmp .a', { y: 80, autoAlpha: 0, duration: .7, ease: 'power4.out' }, CUT.s11 + 1.1)
+  .from('#s11 .cmp .b', { y: 80, scale: .9, autoAlpha: 0, duration: .8, ease: 'back.out(1.7)' }, CUT.s11 + 2);
+// 12 · end card
+tl.from('#s12 img', { scale: .6, autoAlpha: 0, duration: .8, ease: 'back.out(1.8)' }, CUT.s12 + .3)
+  .from('#s12 .url', { y: 40, autoAlpha: 0, duration: .6, ease: 'power3.out' }, CUT.s12 + 2.1);
+window.DURATION = END; window.seek = t => { tl.time(t, false); };
+window.seek(0);
+</script>
+</body>
+</html>

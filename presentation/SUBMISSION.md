@@ -1,72 +1,77 @@
 # Submission: copy-paste blocks
 
+Updated 15 November 2026 to match the live site.
+
 ## Name (8 / 30)
 ```
 OncoScan
 ```
 
-## Punchline (101 / 200)
+## Punchline (112 / 200)
 ```
-A specialist's answer on a worrying skin or mouth spot within 24 hours, wherever you live in Finland.
+Send a photo of a worrying skin or mouth spot. Get a specialist's answer in 24 hours, wherever you live in Finland.
 ```
 
 ## Challenge
 ```
 Equal Care Across Finland (AstraZeneca)
 ```
-Why it fits: it targets two bottlenecks named in the brief, late detection and the referral from primary to specialist care.
+Why it fits: the brief names three bottlenecks, late detection, referral to specialist care and treatment start. OncoScan has one step for each.
 
 ## Tech challenges
-None. No partner technology is used.
+None. No partner technology is required. Google Gemini is optional and switched off on the live demo.
 
-## Description (markdown, 2,999 / 5,000)
+## Description (markdown, about 3,400 / 5,000)
 ```markdown
 ## The problem
-You find a mole that has grown, or a mouth sore that won't heal. Whether a specialist needs to see it is the first question, and today it waits behind a GP or dentist visit and a referral. AstraZeneca's brief names late detection and the primary-to-specialist referral as known bottlenecks in Finnish cancer care. The further you live from a specialist, the more that first step matters.
+You find a mole that has changed, or a mouth sore that won't heal. Today the first question, "does a specialist need to see this?", waits behind a GP or dentist visit and a referral. Finland has 308 municipalities and 5 university hospitals. From the farthest town on our map it is about 550 km to the nearest one (our straight-line estimate). At the end of August 2026, 126,200 people were waiting for non-urgent specialist care (THL). And while you wait, you cannot see where your case is.
+
+AstraZeneca's brief names three bottlenecks: late detection, referral to specialist care, and treatment start. We add a fourth we kept running into: no transparency.
 
 ## What we built
-OncoScan is a working browser prototype of a photo-first review:
+OncoScan is a working, hosted prototype of photo-first review.
 
-1. **The patient** sends 1–4 photos and a short description. Each photo is checked for darkness and blur before it is sent.
-2. **A case clock** starts, counting toward a 24-hour answer.
-3. **The specialist** sees the case first in a review queue, with a large photo and the patient's own words, and signs one of three verdicts with a note: no concern, suspicious, or can't tell.
-4. **The patient** gets one of three calm results with a next step. OncoScan never says "you have cancer"; a suspicious result means "a specialist should see this in person".
+1. **Send a photo.** A short chat collects 1 or 2 photos and the history a doctor would ask for: where, how long, what changed, age, home municipality. Each photo is checked for focus and light.
+2. **A specialist reviews it.** A 24-hour case clock starts. The specialist sees the photo, the patient's words and a checklist of warning signs, and signs one of three answers with a note: no concern, better photo needed, or suspicious. The patient follows the status live.
+3. **Book the nearest specialist.** A suspicious result opens a list of specialists sorted by distance from the patient's municipality and by first free time, with booking.
+
+OncoScan never says "you have cancer". A suspicious result means "a specialist should see this in person".
 
 ## How to try it
-Open the patient page and the specialist page in two tabs of the same browser.
-- Patient: any email, pick skin or mouth, add a photo, describe it, choose Rovaniemi, send.
-- Specialist: your case is first in the queue. Press → then Enter.
-- Patient: open the result.
-
-Look for: the photo label ("Looks clear", "Too dark", "May be blurry"), the case jumping the queue, and the specialist's note arriving on the patient's screen.
+Open https://oncoscan.pgf.lv
+- **Patient:** "Get checked now", then answer in your own words and add a photo.
+- **Doctor:** "Review cases". Your case is first in the queue. Sign an answer.
+- **Patient again:** the result arrives on the case page.
+- Shortcuts: the four step buttons on the home page open the chat, the doctor's view, and an example result with the booking list.
 
 ## The technical part
-We had no time for a backend, so the whole two-sided loop runs in the browser. Both screens share local storage and react to each other, photos are downscaled on the device, and the quality check measures brightness and edge sharpness on a small copy of the image. The tradeoff: both tabs must be in one browser on one computer.
+A dependency-free Node server stores each case and its photos and serves both sides, so patient and doctor can be on different devices. The chat understands free text with our own patterns; an optional language model can fill gaps, but every reply the patient sees is scripted by us. The photo check measures brightness and edge sharpness in the browser.
 
-## Evidence
-- The full journey passed **5 of 5** automated runs in headless Chrome, twice.
-- The photo check labelled a sharp, a dark and a blurred test image correctly (3 of 3; synthetic images).
-- No sideways overflow at phone width on 8 screens (emulated).
-
-Compared with a standard referral, the specialist looks first, before any appointment exists. We have not measured the difference.
-
-## Challenge fit
-OncoScan addresses detection and referral, two of the three bottlenecks in the brief, and gives a county something concrete to pilot: photo-first specialist review from health centres and dental clinics.
+## What we measured
+We tested Google Gemini on 42 labelled dermatoscopy images (HAM10000), photo only. The cheaper model flagged 13 of 18 cancers and cleared only 5 of 24 benign lesions. That is not good enough to sort patients, so the model only describes what is visible. The warning-sign checklist comes from the patient's own answers, and the doctor decides.
 
 ## Limitations
-- **No AI model is connected.** The scores on the 8 demo cases are hand-written examples; patient cases show "no AI pre-read".
-- **No Goal 3 indicator or public dataset is used yet**, so the regional gap is argued, not shown.
-- Sign-in, email, payment, county cover, licence checks and payouts are simulated.
+- The 16 bookable specialists, their times and the email are examples. No booking or email is sent.
+- 24 hours is a product target. We have not measured it in use.
 - No one outside the team has tested it.
+- The doctor's view has no login in this demo, so do not upload real patient photos.
+- The demo images are dermatoscopy images, not phone photos.
+- We found no reliable public figure for how many cancers are detected late in Finland, so we do not state one.
 
 ## Next
-Pick one Goal 3 indicator with the mentors and show it by county. Connect a model. Test with 3–5 clinicians. Then propose a 6-month pilot in one wellbeing services county.
+A 6-month pilot in one wellbeing services county: agree one indicator with the county, test with 5 clinicians and their patients, and measure days from first suspicion to a specialist's answer.
 ```
 
 ## Links (each must open in an incognito window on a phone)
 | Field | Value |
 |---|---|
-| Demo | **Missing.** The prototype runs only on localhost. Needs hosting by the team |
-| Source | **Missing.** The project is not in a git repository |
-| Video | **Missing.** `video/video.mp4` is ready to upload as unlisted |
+| Demo | https://oncoscan.pgf.lv |
+| Source | https://github.com/progresful/Onco-Scan (**private**: make it public or invite the judges before submitting) |
+| Video | `presentation/video/v2/video.mp4`. Upload as unlisted and paste the link here |
 | Other | — |
+
+## Before you submit
+- [ ] Latvia: the video's end card says "Already in use in Latvia". Confirm the exact wording you want to stand behind.
+- [ ] Make the repository public, or share access.
+- [ ] Upload the video and paste its link.
+- [ ] Open all three links in an incognito window on a phone.

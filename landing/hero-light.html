@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OncoScan — light hero, 4 versions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F3EC;--white:#FBFAF7;--ink:#0B2A2E;--night:#03110F;--teal:#0A7C72;--lime:#B6F0C8;--muted:#5C7572;--line:#DDD6C6}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.h{position:relative;height:100vh;min-height:640px;overflow:hidden;padding:clamp(22px,3.2vw,52px) clamp(22px,4.6vw,92px);display:flex;flex-direction:column}
+.logo img{display:block;height:clamp(34px,3vw,48px);width:auto}
+.tag{position:absolute;right:clamp(22px,4.6vw,92px);bottom:14px;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.mask{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}.mask>span{display:block}
+h1{font-weight:800;letter-spacing:-.045em;line-height:.95}
+h1 em{font-style:normal;color:var(--teal)}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.note{font-size:clamp(15px,1.15vw,19px);color:var(--muted)}.note b{color:var(--ink)}
+/* buttons */
+.cta{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:16px;padding:10px 10px 10px 12px;border-radius:20px;text-decoration:none;font-weight:700;font-size:clamp(17px,1.35vw,22px);letter-spacing:-.02em;transition:transform .25s}
+.btn:hover{transform:translateY(-3px)}
+.btn .who{font-size:14px;font-weight:600;padding:10px 14px;border-radius:12px;letter-spacing:0}
+.btn small{display:block;font-size:13px;font-weight:500;letter-spacing:0;opacity:.75}
+.btn .go{display:grid;place-items:center;width:48px;height:48px;border-radius:13px;font-size:22px}
+.btn-a{background:var(--ink);color:#fff;box-shadow:0 14px 34px -14px rgba(11,42,46,.6)}.btn-a .who{background:rgba(255,255,255,.12)}.btn-a .go{background:var(--lime);color:var(--night)}
+.btn-b{border:2px solid var(--ink);color:var(--ink)}.btn-b .who{background:rgba(11,42,46,.08)}.btn-b .go{background:var(--ink);color:#fff}
+/* switcher */
+.pick{position:fixed;z-index:9;left:50%;top:12px;transform:translateX(-50%);display:flex;gap:4px;padding:4px;border-radius:99px;background:rgba(3,17,15,.86)}
+.pick a{font-size:13px;font-weight:700;color:#fff;text-decoration:none;padding:6px 13px;border-radius:99px}.pick a:hover{background:var(--lime);color:var(--night)}
+
+/* ===== 1 · ODOMETER ===== */
+.v1{background:var(--paper)}
+.v1 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:30px}
+.v1 h1{font-size:clamp(34px,5.4vw,104px);text-align:right}
+.odo{margin:auto 0;display:flex;justify-content:center;align-items:center;font-weight:800;font-size:clamp(84px,19.5vw,380px);letter-spacing:-.05em;line-height:1}
+.odo .colm{display:inline-block;height:1em;overflow:hidden}
+.odo .strip{display:block}.odo .strip i{display:block;height:1em;line-height:1em;font-style:normal;text-align:center}
+.odo .sep{color:var(--line);padding:0 .02em;transform:translateY(-.06em)}
+.odo .sec{color:var(--teal)}
+.v1 .bot{display:flex;flex-direction:column;align-items:center;gap:18px}
+
+/* ===== 2 · RING ===== */
+.v2{background:var(--white)}
+.v2 .grid{flex:1;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,80px);align-items:center;min-height:0}
+.v2 h1{font-size:clamp(38px,5.3vw,104px);white-space:nowrap}
+.v2 .note{margin:clamp(16px,2.4vh,30px) 0 clamp(18px,3vh,36px);max-width:26em}
+.ring{position:relative;justify-self:center;width:min(74vh,44vw);aspect-ratio:1}
+.ring svg{width:100%;height:100%;overflow:visible}
+.ring .track{fill:none;stroke:#E9E4D8;stroke-width:26}
+.ring .day{fill:none;stroke:var(--teal);stroke-width:26;stroke-linecap:round}
+.ring .min{fill:none;stroke:var(--lime);stroke-width:10;stroke-linecap:round}
+.ring .tk{stroke:var(--ink);stroke-width:2;stroke-opacity:.35}.ring .tk.b{stroke-width:3.5;stroke-opacity:.9}
+.ring .orb{fill:var(--night)}
+.ring .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ring .mid span{font-size:clamp(13px,1vw,17px);font-weight:600;color:var(--muted)}
+.ring .mid b{font-size:clamp(40px,min(6.4vw,10.6vh),118px);font-weight:800;letter-spacing:-.05em;line-height:1}
+
+/* ===== 3 · SWEEP ===== */
+.v3{background:var(--lime);color:var(--night)}
+.v3 .face,.v3 .wedge,.v3 .hand{position:absolute;left:50%;top:50%;pointer-events:none}
+.v3 .face{width:150vmax;height:150vmax;margin:-75vmax 0 0 -75vmax;background:repeating-conic-gradient(from -.2deg,rgba(3,17,15,.5) 0 .4deg,transparent .4deg 6deg);
+  -webkit-mask:radial-gradient(circle,transparent 0 39vmin,#000 39vmin 42.5vmin,transparent 42.5vmin);mask:radial-gradient(circle,transparent 0 39vmin,#000 39vmin 42.5vmin,transparent 42.5vmin)}
+.v3 .wedge{width:240vmax;height:240vmax;margin:-120vmax 0 0 -120vmax;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 250deg,rgba(10,124,114,.34) 360deg)}
+.v3 .hand{width:3px;height:120vmax;margin-left:-1.5px;background:var(--night);transform-origin:50% 0;rotate:180deg}
+.v3 .hub{position:absolute;left:50%;top:50%;background:var(--night);color:var(--lime);padding:.12em .3em .14em;border-radius:.2em;font-size:clamp(54px,11.5vw,220px);font-weight:800;letter-spacing:-.05em;line-height:1;box-shadow:0 30px 80px -30px rgba(3,17,15,.7)}
+.v3 h1{position:relative;font-size:clamp(36px,6.2vw,120px);color:var(--night)}
+.v3 .t1{margin-top:clamp(14px,2.4vh,30px)}
+.v3 .t2{margin-top:auto;text-align:right}
+.v3 .bot{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:clamp(14px,2.4vh,28px)}
+.v3 .note{color:#0F3B36}.v3 .note b{color:var(--night)}
+.v3 .btn-a{background:var(--night)}
+
+/* ===== 4 · SENTENCE ===== */
+.v4{background:var(--paper)}
+.v4 h1{margin:auto 0;font-size:clamp(44px,9.4vw,186px);line-height:1}
+.v4 .clock{display:inline-block;background:var(--lime);color:var(--night);padding:0 .12em;border-radius:.1em;transform-origin:0 50%}
+.v4 .bot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.rule{position:relative;display:flex;justify-content:space-between;align-items:flex-end;height:46px;margin:clamp(14px,2.6vh,30px) 0 6px;border-bottom:2px solid var(--ink)}
+.rule i{width:2px;height:14px;background:var(--ink);opacity:.4}.rule i:nth-child(6n+1){height:28px;opacity:1}
+.rule u{position:absolute;bottom:-2px;left:0;width:14px;height:46px;margin-left:-7px;background:var(--teal);border-radius:7px 7px 0 0}
+.rule-l{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--muted)}
+
+/* ===== 5 · CURRENT HERO ON LIGHT ===== */
+.v5{background:var(--paper);padding-bottom:44px}
+.v5 .top{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,5vw,96px);align-items:start}
+.v5 h1{font-size:clamp(34px,5.2vw,96px);font-weight:700;line-height:.98;text-align:right}
+.v5 .big{margin:auto 0;padding:1px;overflow:hidden;clip-path:inset(3px);background:var(--paper) url(assets/lakes.jpg) 50% 40%/135% auto no-repeat;background-blend-mode:darken;animation:drift 46s ease-in-out infinite alternate}
+/* the sheet is paper with black digits; 'lighten' lets the photo show only through the digits, so each digit can move freely */
+.v5 .sheet{display:flex;justify-content:center;padding:0;margin:-1px;background:var(--paper);color:#000;mix-blend-mode:lighten;font-weight:800;letter-spacing:-.06em;white-space:nowrap;font-size:clamp(64px,21.6vw,440px);line-height:1}
+.v5 .dg{position:relative;display:inline-block;height:1em;overflow:hidden}
+.v5 .dg b{display:block;font-weight:800;line-height:1em}
+.v5 .dg b+b{position:absolute;left:0;top:0}
+@keyframes drift{0%{background-position:38% 30%;background-size:135% auto}50%{background-position:60% 52%;background-size:158% auto}100%{background-position:46% 66%;background-size:142% auto}}
+.v5 .note{text-align:center}
+.v5 .cta{justify-content:center;margin-top:clamp(18px,3vh,38px)}
+.v5 .btn{min-height:76px}
+.v5 .more{position:absolute;left:clamp(22px,4.6vw,92px);bottom:44px;font-size:14px;color:var(--muted);text-decoration:none}
+.v5 .snd{position:absolute;right:clamp(22px,4.6vw,92px);bottom:40px;display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 14px;border-radius:99px;box-shadow:inset 0 0 0 1px rgba(11,42,46,.3);font-size:13px;font-weight:600;color:var(--ink)}
+.v5 .snd i{width:9px;height:9px;border-radius:50%;background:var(--teal)}
+@media (max-width:900px){
+  .v5 .top{grid-template-columns:1fr}.v5 h1{text-align:left}.v5 .more,.v5 .snd{display:none}
+  .v1 .top{flex-direction:column}.v1 h1{text-align:left}
+  .v2 .grid{grid-template-columns:1fr}.ring{width:min(46vh,80vw)}
+  .v3 .bot,.v4 .bot{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav class="pick" aria-label="Versions"><a href="#v1">1 Odometer</a><a href="#v2">2 Ring</a><a href="#v3">3 Sweep</a><a href="#v4">4 Sentence</a><a href="#v5">5 Current, light</a></nav>
+
+<!-- shared button markup is repeated per version so each hero can be lifted out on its own -->
+
+<!-- 1 · ODOMETER: digits roll like a counter -->
+<section class="h v1" id="v1">
+  <div class="top">
+    <a class="logo" href="./"><img src="../assets/logo.png" alt="OncoScan"></a>
+    <h1><span class="mask"><span>A specialist's answer</span></span><span class="mask"><span><em>before the clock runs out.</em></span></span></h1>
+  </div>
+  <div class="odo num" id="odo" role="timer" aria-label="Time left on the 24-hour clock"></div>
+  <div class="bot">
+    <p class="note">Every case starts a <b>24-hour clock</b>. This one started when you opened the page.</p>
+    <div class="cta">
+      <a class="btn btn-a" href="../patient/chat.html"><span class="who">Patient</span><span>Get checked now<small>Specialist's answer within 24 hours</small></span><span class="go">→</span></a>
+      <a class="btn btn-b" href="../review/"><span class="who">Doctor</span><span>Review cases</span><span class="go">→</span></a>
+    </div>
+  </div>
+  <span class="tag">1 · Odometer</span>
+</section>
+
+<!-- 2 · RING: the day as a dial, the minute as an inner ring -->
+<section class="h v2" id="v2">
+  <a class="logo" href="./"><img src="../assets/logo.png" alt="OncoScan"></a>
+  <div class="grid">
+    <div>
+      <h1><span class="mask"><span>A specialist's</span></span><span class="mask"><span>answer <em>before</em></span></span><span class="mask"><span><em>the clock runs out.</em></span></span></h1>
+      <p class="note">Every case starts a <b>24-hour clock</b>. This one started when you opened the page.</p>
+      <div class="cta">
+        <a class="btn btn-a" href="../patient/chat.html"><span class="who">Patient</span><span>Get checked now<small>Specialist's answer within 24 hours</small></span><span class="go">→</span></a>
+        <a class="btn btn-b" href="../review/"><span class="who">Doctor</span><span>Review cases</span><span class="go">→</span></a>
+      </div>
+    </div>
+    <div class="ring" role="timer" aria-label="Time left on the 24-hour clock">
+      <svg viewBox="0 0 600 600" aria-hidden="true">
+        <g id="ticks"></g>
+        <circle class="track" cx="300" cy="300" r="236"/>
+        <circle class="day" id="day" cx="300" cy="300" r="236" transform="rotate(-90 300 300)"/>
+        <circle class="min" id="min" cx="300" cy="300" r="204" transform="rotate(-90 300 300)"/>
+        <circle class="orb" id="orb" cx="300" cy="64" r="15"/>
+      </svg>
+      <div class="mid"><span>Time left to answer</span><b class="num" data-clock>24:00:00</b><span>of 24 hours</span></div>
+    </div>
+  </div>
+  <span class="tag">2 · Ring</span>
+</section>
+
+<!-- 3 · SWEEP: the whole screen is the clock face -->
+<section class="h v3" id="v3">
+  <div class="wedge" id="wedge"></div><div class="face"></div><div class="hand" id="hand"></div>
+  <a class="logo" href="./" style="position:relative"><img src="../assets/logo.png" alt="OncoScan"></a>
+  <h1 class="t1"><span class="mask"><span>A specialist's answer</span></span></h1>
+  <div class="hub num" role="timer" aria-label="Time left on the 24-hour clock" data-clock>24:00:00</div>
+  <h1 class="t2"><span class="mask"><span>before the clock runs out.</span></span></h1>
+  <div class="bot">
+    <div class="cta">
+      <a class="btn btn-a" href="../patient/chat.html"><span class="who">Patient</span><span>Get checked now<small>Specialist's answer within 24 hours</small></span><span class="go">→</span></a>
+      <a class="btn btn-b" href="../review/"><span class="who">Doctor</span><span>Review cases</span><span class="go">→</span></a>
+    </div>
+    <p class="note">Every case starts a <b>24-hour clock</b>.</p>
+  </div>
+  <span class="tag" style="color:#0F3B36">3 · Sweep</span>
+</section>
+
+<!-- 4 · SENTENCE: the timer is a word in the headline -->
+<section class="h v4" id="v4">
+  <a class="logo" href="./"><img src="../assets/logo.png" alt="OncoScan"></a>
+  <h1><span class="mask"><span>A specialist's answer</span></span><span class="mask"><span>before <span class="clock num" role="timer" aria-label="Time left on the 24-hour clock" data-clock>24:00:00</span></span></span><span class="mask"><span><em>runs out.</em></span></span></h1>
+  <div class="bot">
+    <div class="cta">
+      <a class="btn btn-a" href="../patient/chat.html"><span class="who">Patient</span><span>Get checked now<small>Specialist's answer within 24 hours</small></span><span class="go">→</span></a>
+      <a class="btn btn-b" href="../review/"><span class="who">Doctor</span><span>Review cases</span><span class="go">→</span></a>
+    </div>
+    <p class="note">Every case starts a <b>24-hour clock</b>. This one started when you opened the page.</p>
+  </div>
+  <div class="rule" id="rule" aria-hidden="true"></div>
+  <div class="rule-l" aria-hidden="true"><span>Photo sent</span><span>6 h</span><span>12 h</span><span>18 h</span><span>Answer due · 24 h</span></div>
+  <span class="tag" style="position:static;margin-top:8px;text-align:right">4 · Sentence</span>
+</section>
+
+<!-- 5 · CURRENT HERO, LIGHT: same layout as the live page, paper instead of night -->
+<section class="h v5" id="v5">
+  <div class="top">
+    <a class="logo" href="./"><img src="../assets/logo.png" alt="OncoScan"></a>
+    <h1><span class="mask"><span>A specialist's answer</span></span><span class="mask"><span><em>before the clock runs out.</em></span></span></h1>
+  </div>
+  <div class="big" role="timer" aria-label="Time left on the 24-hour clock"><div class="sheet num" id="roll"></div></div>
+  <p class="note">Every case starts a <b>24-hour clock</b>. This one started when you opened the page.</p>
+  <div class="cta">
+    <a class="btn btn-a" href="../patient/chat.html"><span class="who">Patient</span><span>Get checked now<small>Specialist's answer within 24 hours</small></span><span class="go">→</span></a>
+    <a class="btn btn-b" href="../review/"><span class="who">Doctor</span><span>Review cases</span><span class="go">→</span></a>
+  </div>
+  <a class="more" href="#v1">Why this matters</a><span class="snd"><i></i>Sound on</span>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg', DAY = 86400, end = Date.now() + DAY * 1000, pad = n => String(n).padStart(2, '0');
+gsap.ticker.lagSmoothing(0);
+
+// 1 · odometer columns
+const odo = document.getElementById('odo'), strips = [];
+'hh:mm:ss'.split('').forEach((c, i) => {
+  if (c === ':') { const s = document.createElement('span'); s.className = 'sep'; s.textContent = ':'; odo.append(s); return; }
+  const col = document.createElement('span'), strip = document.createElement('span');
+  col.className = 'colm' + (i > 5 ? ' sec' : ''); strip.className = 'strip';
+  strip.innerHTML = [0,1,2,3,4,5,6,7,8,9].map(n => `<i>${n}</i>`).join(''); col.append(strip); odo.append(col); strips.push(strip);
+});
+
+// 2 · ring
+const ticks = document.getElementById('ticks');
+for (let i = 0; i < 96; i++) { const big = i % 4 === 0, a = i / 96 * Math.PI * 2, r1 = 272, r2 = big ? 296 : 284, l = document.createElementNS(NS, 'line');
+  l.setAttribute('x1', 300 + Math.sin(a) * r1); l.setAttribute('y1', 300 - Math.cos(a) * r1); l.setAttribute('x2', 300 + Math.sin(a) * r2); l.setAttribute('y2', 300 - Math.cos(a) * r2);
+  l.setAttribute('class', 'tk' + (big ? ' b' : '')); ticks.append(l); }
+const day = document.getElementById('day'), min = document.getElementById('min'), C1 = 2 * Math.PI * 236, C2 = 2 * Math.PI * 204;
+gsap.set(day, { strokeDasharray: C1, strokeDashoffset: C1 }); gsap.set(min, { strokeDasharray: C2, strokeDashoffset: 0 });
+gsap.to('#orb', { rotation: 360, svgOrigin: '300 300', duration: 60, ease: 'none', repeat: -1 });
+
+// 3 · sweep: one turn a minute
+gsap.to('#hand', { rotation: 360, duration: 60, ease: 'none', repeat: -1 });
+gsap.to('#wedge', { rotation: 360, duration: 60, ease: 'none', repeat: -1 });
+
+// 4 · ruler
+gsap.set('.v3 .hub', { xPercent: -50, yPercent: -50 });
+const rule = document.getElementById('rule'); for (let i = 0; i < 25; i++) rule.append(document.createElement('i'));
+const mark = document.createElement('u'); rule.append(mark);
+
+// 5 · each digit that changes drops in from above, the old one falls away
+const roll = document.getElementById('roll'), cells = [];
+'00:00:00'.split('').forEach(c => { const d = document.createElement('span'); d.className = 'dg'; d.innerHTML = `<b>${c === ':' ? ':' : ''}</b>`; roll.append(d); cells.push(d); });
+function rollTo(text) { [...text].forEach((c, i) => { const cell = cells[i], old = cell.lastElementChild; if (old.textContent === c) return;
+  if (!old.textContent) { old.textContent = c; return; }
+  const nu = document.createElement('b'); nu.textContent = c; cell.append(nu);
+  gsap.fromTo(nu, { yPercent: -100 }, { yPercent: 0, duration: .38, ease: 'power3.out' });
+  gsap.to(old, { yPercent: 100, duration: .38, ease: 'power3.out', onComplete: () => { old.remove(); gsap.set(nu, { clearProps: 'all' }); } }); }); }
+
+// one clock drives all four
+let last = -1, first = true;
+function tick() {
+  const s = Math.max(0, Math.round((end - Date.now()) / 1000)); if (s === last) return; last = s;
+  const hh = pad(Math.floor(s / 3600)), mm = pad(Math.floor(s / 60) % 60), ss = pad(s % 60), text = `${hh}:${mm}:${ss}`;
+  [...(hh + mm + ss)].forEach((d, i) => gsap.to(strips[i], { yPercent: -10 * d, duration: first ? 1.4 : .55, ease: first ? 'expo.out' : 'power3.inOut', delay: first ? i * .06 : 0 }));
+  document.querySelectorAll('[data-clock]').forEach(e => e.textContent = text); rollTo(text);
+  gsap.to(day, { strokeDashoffset: C1 * (1 - s / DAY), duration: first ? 1.6 : 1, ease: first ? 'power3.out' : 'none' });
+  gsap.to(min, { strokeDashoffset: C2 * (1 - (s % 60) / 60), duration: .6, ease: 'power2.out' });
+  gsap.fromTo('.v4 .clock', { scaleX: 1.035 }, { scaleX: 1, duration: .7, ease: 'elastic.out(1,.5)' });
+  gsap.fromTo('.v3 .hub', { scale: 1.02 }, { scale: 1, xPercent: -50, yPercent: -50, duration: .5, ease: 'power2.out' });
+  gsap.to(mark, { left: (1 - s / DAY) * 100 + '%', duration: 1, ease: 'none' });
+  first = false;
+}
+tick(); setInterval(tick, 200);
+
+// entrances: transform only, so nothing is ever left faded
+gsap.from('.mask>span', { yPercent: 115, duration: 1.1, ease: 'power4.out', stagger: .07 });
+gsap.from('.ring', { scale: .86, rotation: -20, duration: 1.4, ease: 'power3.out' });
+gsap.from('.v5 .big', { scale: 1.08, duration: 1.6, ease: 'power3.out' });
+gsap.from('.btn', { y: 26, duration: .9, ease: 'power3.out', stagger: .05, delay: .3 });
+</script>
+</body>
+</html>

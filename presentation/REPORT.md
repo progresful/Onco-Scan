@@ -1,5 +1,8 @@
 # Report
 
+> **Update, 15 November 2026.** This report describes the first prototype. Since then the product is hosted at https://oncoscan.pgf.lv with server-side cases, a chat intake, live case status, a booking list after a suspicious result, and a new story video (`video/v2/`). `SUBMISSION.md`, `DEMO.md` and `video/v2/STORYBOARD.md` are current; the gate scores below have not been re-run.
+
+
 Date: 14 Nov 2026. **5 of 11 release gates pass. Not ready to submit.**
 
 ## Release gates

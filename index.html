@@ -1,5 +1,523 @@
 <!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<title>OncoScan</title>
-<meta http-equiv="refresh" content="0; url=landing/">
-<a href="landing/">OncoScan</a>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OncoScan — a specialist's answer before the clock runs out</title>
+<meta name="description" content="A working demo of photo-first cancer triage: send a photo and your history, a specialist answers within 24 hours, and a suspicious result comes with an appointment.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OncoScan">
+<meta property="og:title" content="OncoScan — a specialist's answer before the clock runs out">
+<meta property="og:description" content="A working demo of photo-first cancer triage: send a photo and your history, a specialist answers within 24 hours, and a suspicious result comes with an appointment.">
+<meta property="og:url" content="https://oncoscan.pgf.lv/landing/">
+<meta property="og:image" content="https://oncoscan.pgf.lv/assets/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OncoScan: a 24-hour countdown with the line 'A specialist's answer before the clock runs out'">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://oncoscan.pgf.lv/assets/og.jpg?v=2">
+<meta name="theme-color" content="#03110F">
+<link rel="icon" type="image/png" href="assets/mark.png">
+<link rel="preload" as="image" href="landing/assets/lakes-hero.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js">
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('pre');setTimeout(function(){document.documentElement.classList.remove('pre');var s=document.querySelector('.solved');if(s)s.classList.add('go')},3000)</script>
+<style>
+.pre .hero .top,.pre .hero .clock,.pre .hero .solved,.pre .hero .cta,.pre .hero .scroll,.pre .hero .sound{visibility:hidden}
+:root{--night:#03110F;--deep:#06211F;--ink:#0B2A2E;--ink2:#23444A;--teal:#0A7C72;--lime:#B6F0C8;--pale:#9AD9CC;--paper:#F6F3EC;--line:#DDD9D1;--muted:#566769;--pad:clamp(22px,4.5vw,84px);--ease:cubic-bezier(.2,.7,.1,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--night);color:#fff;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,h3{letter-spacing:-.035em;line-height:1}
+:focus-visible{outline:3px solid var(--lime);outline-offset:4px;border-radius:8px}
+.wrap{max-width:1480px;margin:0 auto;padding:0 var(--pad)}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:22px;letter-spacing:-.02em;flex:none}
+.logo{height:30px;width:auto;display:block}.hero .logo{height:38px}
+.brand i{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;position:relative;overflow:hidden;display:block}
+.brand i::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:2px;margin-top:-1px;background:currentColor}
+
+/* ================= HERO ================= */
+.hero{min-height:100svh;display:flex;flex-direction:column;--hb:clamp(64px,10vh,120px);padding:34px var(--pad) var(--hb);position:relative;overflow:hidden}
+.top{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,5vw,96px);align-items:start}
+.top .brand{margin-top:8px}
+.hero h1{font-size:clamp(28px,4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:.98;text-align:right;margin-left:auto}
+.hero h1 em{font-style:normal;color:var(--lime)}
+/* desktop: title centred on the page, logo stays in the corner */
+@media (min-width:981px){.top{display:block;position:relative}.top .brand{position:absolute;left:0;top:0}.hero h1{text-align:center;margin:0 auto}}
+@media (min-width:981px) and (max-width:1280px){.hero h1{padding-top:58px}}
+/* the countdown: one element, the photo shows through the digits and drifts slowly */
+.clock{margin:auto 0;padding:2vh 0;font-weight:800;line-height:.8;letter-spacing:-.06em;white-space:nowrap;display:flex;align-items:baseline;justify-content:center;font-variant-numeric:tabular-nums;
+  background:url(landing/assets/lakes-hero.jpg) 50% 40%/135% auto no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:drift 46s ease-in-out infinite alternate;animation-play-state:paused}
+.hero.hero-ready .clock{animation-play-state:running}
+.clock span{font-size:clamp(64px,21.6vw,440px)}
+@keyframes drift{0%{background-position:38% 30%;background-size:135% auto}50%{background-position:60% 52%;background-size:158% auto}100%{background-position:46% 66%;background-size:142% auto}}
+.clock-cap{text-align:center;color:#A9C2BD;font-size:clamp(15px,1.15vw,19px);margin-top:6px}
+.clock-cap b{color:#fff;font-weight:600}
+.solved{list-style:none;padding:0;display:flex;justify-content:center;flex-wrap:wrap;gap:12px clamp(18px,2.6vw,44px);margin-top:6px;font-size:clamp(16px,1.35vw,22px);font-weight:600;letter-spacing:-.01em}
+.solved li{display:flex;align-items:center;gap:12px;color:#8FA9A4}
+.solved.go li{animation:said .4s var(--ease) forwards}
+.solved i{width:28px;height:28px;border-radius:9px;flex:none;display:grid;place-items:center;color:var(--night);box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}
+.solved.go i{animation:tickbox .4s var(--ease) forwards}
+.solved svg{width:18px;height:18px}
+.solved path{stroke-dasharray:24;stroke-dashoffset:24}
+.solved.go path{animation:tick .35s var(--ease) forwards}
+.solved li:nth-child(1),.solved li:nth-child(1) i{animation-delay:.1s}.solved li:nth-child(1) path{animation-delay:.25s}
+.solved li:nth-child(2),.solved li:nth-child(2) i{animation-delay:.55s}.solved li:nth-child(2) path{animation-delay:.7s}
+.solved li:nth-child(3),.solved li:nth-child(3) i{animation-delay:1s}.solved li:nth-child(3) path{animation-delay:1.15s}
+@keyframes said{to{color:#fff}}
+@keyframes tickbox{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1);background:var(--lime);box-shadow:inset 0 0 0 2px var(--lime)}}
+@keyframes tick{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.solved li,.solved i,.solved path{animation-duration:.01s;animation-delay:0s}}
+.cta{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:clamp(22px,3.6vh,44px)}
+.btn{display:inline-flex;align-items:center;gap:14px;height:76px;padding:0 12px 0 12px;border-radius:20px;font-size:clamp(18px,1.35vw,22px);font-weight:700;letter-spacing:-.015em;min-width:min(330px,100%);cursor:pointer;position:relative;transition:transform .18s var(--ease),box-shadow .25s,background .25s,color .25s,border-color .25s}
+.btn .who{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 16px;border-radius:12px;font-size:14px;font-weight:600;letter-spacing:0;white-space:nowrap}
+.btn .who svg{width:20px;height:20px;flex:none}
+.btn .label{flex:1;white-space:nowrap;line-height:1.15}
+.btn .label small{display:block;font-size:13px;font-weight:600;letter-spacing:0;opacity:.72;margin-top:3px}
+.cta .btn-a{height:84px;padding-right:14px;font-size:clamp(20px,1.55vw,25px);min-width:min(400px,100%)}
+.cta .btn-b{height:84px}
+.cta .btn-a .arrow{width:56px;height:56px;animation:nudgeR 2.2s var(--ease) infinite}
+@keyframes nudgeR{0%,70%,100%{transform:none}82%{transform:translateX(5px)}}
+.cta .btn-a:hover .arrow{animation:none}
+.btn .arrow{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;flex:none;transition:transform .25s var(--ease),background .25s}
+.btn .arrow svg{width:22px;height:22px}
+.btn-a{background:var(--lime);color:var(--night);box-shadow:0 0 0 1px rgba(255,255,255,.35) inset,0 18px 44px -14px rgba(182,240,200,.65)}
+.btn-a .who{background:rgba(3,17,15,.1)}
+.btn-a .arrow{background:var(--night);color:var(--lime)}
+.btn-b{background:rgba(255,255,255,.07);color:#fff;box-shadow:0 0 0 1.5px rgba(255,255,255,.55) inset}
+.btn-b .who{background:rgba(255,255,255,.12)}
+.btn-b .arrow{background:#fff;color:var(--night)}
+.btn:hover{transform:translateY(-3px)}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-a:hover{background:#D3F8DF;box-shadow:0 0 0 1px rgba(255,255,255,.5) inset,0 26px 54px -14px rgba(182,240,200,.85)}
+.btn-b:hover{background:#fff;color:var(--night)}
+.btn-b:hover .who{background:rgba(3,17,15,.08)}.btn-b:hover .arrow{background:var(--night);color:#fff}
+.btn:active{transform:translateY(1px) scale(.985)}
+.sound{position:absolute;right:var(--pad);bottom:calc(var(--hb) + 18px);display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 16px 0 14px;border-radius:99px;border:0;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);color:#C9DDD8;font:600 13px 'Hanken Grotesk',sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.sound:hover{background:rgba(255,255,255,.16);color:#fff}
+.sound .beat{width:9px;height:9px;border-radius:50%;background:#5C726E}
+.sound.on .beat{background:var(--lime)}
+.sound.on .beat.hit{animation:beat .5s ease-out}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(182,240,200,.7);transform:scale(1.35)}100%{box-shadow:0 0 0 12px rgba(182,240,200,0);transform:scale(1)}}
+.scroll{position:absolute;left:var(--pad);bottom:calc(var(--hb) + 22px);font-size:14px;color:#8FA9A4;display:flex;align-items:center;gap:10px}
+.scroll::before{content:"";width:1px;height:34px;background:currentColor;animation:nudge 2.4s var(--ease) infinite}
+@keyframes nudge{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ================= SECTIONS ================= */
+section.s{padding:clamp(80px,11vw,170px) 0}
+.kicker{font-size:15px;font-weight:600;color:var(--teal);margin-bottom:18px}
+.s h2{font-size:clamp(36px,4.8vw,84px);font-weight:700;max-width:16ch}
+.lead{font-size:clamp(18px,1.4vw,23px);max-width:34em;margin-top:22px}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* map: every town connects to one hub */
+.why-top{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,5vw,90px);align-items:center}
+.net-line{font-size:clamp(22px,2.2vw,38px);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-top:34px;max-width:18em}
+.net-line b{color:var(--teal);font-weight:800}
+.net{margin:0}
+.net svg{display:block;width:100%;max-height:min(84vh,820px);margin:0 auto;overflow:visible}
+.net-lines path{fill:none;stroke:var(--teal);stroke-width:1.4;stroke-opacity:.55;stroke-linecap:round}
+.net-dots circle{fill:var(--ink)}
+.net-hub circle{fill:var(--ink)}
+.net-land{fill:#E7E1D3;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round;stroke-opacity:.55}
+.net-hub .ring{fill:none;stroke:var(--teal);stroke-width:2;transform-origin:92px 505px;animation:ping 3.2s ease-out infinite}
+.net-hub .r2{animation-delay:1.6s}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.net-hub text{fill:#fff;font:800 26px 'Hanken Grotesk',sans-serif;letter-spacing:-.03em}
+.net figcaption{font-size:13px;color:var(--muted);margin-top:10px;text-align:center}
+.net .pulse{fill:var(--lime);stroke:var(--ink);stroke-width:1.5}
+/* 1 · facts */
+.facts{background:var(--paper);color:var(--ink)}
+.facts .lead{color:var(--ink2)}
+.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(40px,5vw,80px);border-top:2px solid var(--ink)}
+.fact{padding:30px 30px 34px 0;border-right:1px solid var(--line)}
+.fact+.fact{padding-left:30px}.fact:last-child{border-right:0}
+.fact b{display:block;font-size:clamp(64px,8vw,150px);font-weight:800;letter-spacing:-.06em;line-height:.9;color:var(--teal)}
+.fact b small{font-size:.32em;letter-spacing:-.02em;margin-left:.1em}
+.fact h3{font-size:22px;letter-spacing:-.02em;margin-top:16px}
+.fact p{font-size:16px;color:var(--ink2);margin-top:8px;max-width:22em}
+.fact cite{display:block;font-style:normal;font-size:13px;color:var(--muted);margin-top:12px}
+/* desktop: headline, map and the three facts share one screen */
+@media (min-width:1000px){
+  section.s{padding:clamp(64px,10vh,130px) 0}
+  #why h2{font-size:clamp(32px,min(4.4vw,6.6vh),76px);max-width:20ch}
+  #why .lead{font-size:clamp(16px,min(1.3vw,2.3vh),21px);margin-top:2vh}
+  #why .net-line{font-size:clamp(20px,min(2vw,3.6vh),34px);margin-top:2.6vh}
+  #why .net svg{max-height:46vh}
+  #why .net figcaption{font-size:12px;margin-top:6px}
+  #why .fact-grid{margin-top:2.4vh}
+  #why .fact{padding:2.2vh 26px 0 0}#why .fact+.fact{padding-left:26px}
+  #why .fact b{font-size:clamp(52px,min(7vw,11vh),118px)}
+  #why .fact h3{font-size:clamp(17px,2.2vh,21px);margin-top:1.2vh}
+  #why .fact p{font-size:clamp(13px,1.8vh,15px);margin-top:5px;max-width:30em}
+  #why .fact cite{font-size:12px;margin-top:5px}
+  #why .solve{margin-top:clamp(64px,10vh,130px)}
+}
+/* desktop: the four patient steps and the button share one screen */
+@media (min-width:1000px){
+  #patients .kicker{margin-bottom:1.2vh}
+  #patients h2{font-size:clamp(32px,min(4.4vw,6.6vh),76px);max-width:none}
+  #patients .lead{font-size:clamp(16px,min(1.3vw,2.3vh),21px);margin-top:1.4vh;max-width:none}
+  #patients .steps{margin-top:3vh}
+  #patients .step{gap:.8vh}
+  #patients .tile{aspect-ratio:auto;height:27vh;padding:2vh 18px}
+  #patients .step .n{font-size:clamp(44px,8vh,90px);margin-top:1.2vh}
+  #patients .step h3{font-size:clamp(20px,min(2vw,3.4vh),30px)}
+  #patients .step p{font-size:clamp(13px,1.9vh,16px)}
+  #patients .row-cta{margin-top:2.6vh}
+}
+.solve{margin-top:clamp(70px,9vw,150px)}
+.solve>h3{font-size:clamp(30px,3.4vw,60px);font-weight:700}
+.solve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(28px,3.4vw,52px)}
+.sol{position:relative;min-height:clamp(320px,34vw,520px);padding:clamp(22px,2.2vw,36px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:24px;transition:transform .45s var(--ease)}
+.sol:hover{transform:translateY(-8px)}
+.sol .big{position:absolute;left:clamp(14px,1.6vw,28px);top:-.06em;font-size:clamp(150px,19vw,360px);font-weight:800;letter-spacing:-.07em;line-height:1}
+.sol h4{position:relative;font-size:clamp(30px,3.3vw,60px);font-weight:800;letter-spacing:-.045em;line-height:.95}
+.sol p{position:relative;font-size:clamp(16px,1.2vw,20px);margin-top:12px;max-width:17em}
+.sol-1{background:var(--ink);color:#fff}.sol-1 .big{color:var(--lime)}.sol-1 p{color:#C4DDD8}
+.sol-2{background:var(--teal);color:#fff}.sol-2 .big{color:#06211F}.sol-2 p{color:#DDF3EE}
+.sol-3{background:var(--lime);color:var(--night)}.sol-3 .big{color:#fff}.sol-3 p{color:#12352B}
+
+/* 2 · patients */
+.pat{background:var(--deep)}
+.pat .kicker{color:var(--lime)}.pat .lead{color:#C4DDD8}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:clamp(40px,5vw,72px)}
+.step{display:flex;flex-direction:column;gap:10px}
+.tile{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;background-size:cover;background-position:center;font-size:15px;line-height:1.3;transition:transform .45s var(--ease)}
+.step:hover .tile{transform:translateY(-8px)}
+.step:hover .card{transform:translateY(-4px)}
+.step .n{font-size:clamp(64px,6.4vw,112px);font-weight:800;letter-spacing:-.06em;line-height:.9;color:var(--lime);margin-top:14px;font-variant-numeric:tabular-nums}
+.step h3{font-size:clamp(24px,2.1vw,34px);font-weight:800;letter-spacing:-.035em}
+.step p{font-size:16px;color:#C4DDD8}
+.card{position:relative;background:#fff;color:var(--ink);padding:18px;border-radius:16px;display:grid;gap:7px;box-shadow:0 28px 50px -24px rgba(0,0,0,.75);transition:transform .45s var(--ease)}
+.card .k{font-size:13px;color:var(--muted)}
+.card .v{font:800 clamp(34px,3vw,50px)/1 'Hanken Grotesk',sans-serif;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.card .ok{color:var(--teal);font-weight:700}
+/* 1 camera */
+.t-cam{background-image:url(landing/assets/lesion.jpg);background-size:140%;background-position:50% 40%;color:#fff}
+.t-cam::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,17,15,.2),rgba(3,17,15,0) 35%,rgba(3,17,15,.9) 88%)}
+.t-cam .vf{position:absolute;inset:22px 22px 104px}
+.t-cam .vf i{position:absolute;width:30px;height:30px;border:2.5px solid #fff}
+.t-cam .vf i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}.t-cam .vf i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.t-cam .vf i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}.t-cam .vf i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.t-cam .bar{position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-size:14px;font-weight:600}
+.t-cam .shutter{width:58px;height:58px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(3,17,15,.9),0 0 0 6px #fff}
+.t-cam .sharp{justify-self:end;color:var(--lime)}
+/* 2 describe */
+.t-form{background:var(--paper);color:var(--ink);justify-content:center}
+.t-form .q{font-size:13px;color:var(--muted);margin-bottom:-4px}
+.t-form .chips{display:flex;flex-wrap:wrap;gap:7px}
+.t-form .chips span{padding:9px 14px;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:600;font-size:14px}
+.t-form .chips span.on{background:var(--ink);color:#fff;box-shadow:none}
+/* 3 clock */
+.t-clock{background-image:url(landing/assets/specialist.jpg);background-position:62% center}
+.t-clock::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,17,15,0) 30%,rgba(3,17,15,.6))}
+.h24{position:absolute;left:18px;top:10px;font-size:clamp(44px,8vh,84px);font-weight:800;letter-spacing:-.06em;line-height:1;color:var(--lime);text-shadow:0 4px 24px rgba(3,17,15,.6)}.h24 small{font-size:.5em;margin-left:.04em}
+.card .v small{font-size:.38em;font-weight:700;letter-spacing:-.01em;color:var(--teal)}
+.step h3 mark{background:var(--lime);color:var(--night);padding:0 .18em;border-radius:.2em}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.seg i{height:5px;background:var(--line);border-radius:3px}.seg i.on{background:var(--teal)}
+.live{display:flex;align-items:center;gap:8px;font-weight:700}.live i{width:9px;height:9px;border-radius:50%;background:var(--teal);animation:blink 1.8s infinite}
+@keyframes blink{50%{opacity:.25}}
+/* 4 result */
+.t-res{background:linear-gradient(160deg,#12A594,#086A62);color:#fff}
+.t-res .card{border-radius:20px;grid-template-columns:46px 1fr;column-gap:14px;row-gap:1px;align-items:center}
+.t-res .app{grid-row:span 3;width:46px;height:46px;border-radius:13px;background:var(--night);display:grid;place-items:center;color:var(--lime)}
+.t-res .app svg{width:24px;height:24px}
+.t-res .card b{font-size:17px;letter-spacing:-.01em}
+.t-res .pill{align-self:flex-start;background:#fff;color:var(--ink);font-weight:700;padding:12px 20px;border-radius:12px}
+.row-cta{margin-top:44px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.note{font-size:14px;color:#8FA9A4}
+
+/* 3 · clinics */
+.cli{background:var(--paper);color:var(--ink)}
+.cli .lead{color:var(--ink2)}
+.cli-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,5vw,90px);margin-top:clamp(40px,5vw,72px);align-items:center}
+.cli-shot{border-radius:16px;overflow:hidden;box-shadow:0 50px 90px -40px rgba(6,33,31,.6),0 0 0 1px var(--line)}
+.cli ol{list-style:none;padding:0}
+.cli li{padding:20px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:110px 1fr;gap:16px}
+.cli li:last-child{border-bottom:1px solid var(--line)}
+.cli li small{font-size:14px;font-weight:700;color:var(--teal);padding-top:4px;font-variant-numeric:tabular-nums}
+.cli li b{font-size:21px;letter-spacing:-.02em;display:block}
+.cli li span{color:var(--ink2);font-size:16px}
+.cli .btn-a{background:var(--ink);color:#fff;box-shadow:0 18px 40px -16px rgba(11,42,46,.7)}
+.cli .btn-a .who{background:rgba(255,255,255,.12)}
+.cli .btn-a .arrow{background:var(--lime);color:var(--ink)}
+.cli .btn-a:hover{background:var(--teal);box-shadow:0 24px 46px -16px rgba(10,124,114,.7)}
+.cli .note{color:var(--muted)}
+/* four problems: built exactly like the patient steps (photo tile, number, title, line, small button) */
+.ps{margin-top:clamp(64px,10vh,130px)}
+.ps-title{font-size:clamp(36px,4.8vw,84px);font-weight:700;letter-spacing:-.035em;line-height:1}
+.probs .n{color:var(--teal)}.probs p{color:var(--ink2)}
+.probs .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,17,15,0) 35%,rgba(3,17,15,.6))}
+.p-detect{background-image:url(landing/assets/prob-detect.jpg);background-position:50% 12%}
+.p-queue{background-image:url(landing/assets/prob-queue.jpg);background-position:22% center}
+.p-book{background-image:url(landing/assets/prob-book.jpg);background-position:32% center}
+.p-dark{background:var(--ink);justify-content:center}.probs .p-dark::before{display:none}
+.stuck{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--ink2)}.stuck i{width:9px;height:9px;border-radius:50%;background:#9AA8A6;flex:none}
+.ps-note{font-size:13px;color:var(--ink2);margin-top:20px}
+/* small button under a step title */
+.mini{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:8px 12px 8px 14px;border-radius:99px;font-size:14px;font-weight:700;letter-spacing:-.005em;color:var(--lime);box-shadow:inset 0 0 0 1.5px rgba(182,240,200,.5);transition:background .2s,color .2s,box-shadow .2s}
+.mini svg{width:16px;height:16px;transition:transform .25s var(--ease)}
+.mini:hover{background:var(--lime);color:var(--night);box-shadow:none}.mini:hover svg{transform:translateX(3px)}
+.probs .mini{color:var(--ink);box-shadow:inset 0 0 0 1.5px rgba(11,42,46,.45)}
+.probs .mini:hover{background:var(--ink);color:#fff;box-shadow:none}
+@media (min-width:1000px){
+  #ps .ps-title{font-size:clamp(32px,min(4.4vw,6.6vh),76px)}
+  #ps .lead{font-size:clamp(16px,min(1.3vw,2.3vh),21px);margin-top:1.4vh;max-width:none}
+  #ps .steps{margin-top:3vh}#ps .step{gap:.8vh}
+  #ps .tile{aspect-ratio:auto;height:34vh;padding:2vh 18px}
+  #ps .card{padding:12px 14px;gap:5px}#ps .card .v{font-size:clamp(26px,min(2.4vw,4.4vh),40px)}
+  #ps .step .n{font-size:clamp(44px,8vh,90px);margin-top:1.2vh}
+  #ps .step h3{font-size:clamp(20px,min(2vw,3.4vh),30px)}
+  #ps .step p{font-size:clamp(13px,1.9vh,16px)}
+}
+/* sourced numbers beside the map */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.4vh,26px) clamp(20px,3vw,48px);margin-top:clamp(18px,3vh,34px);max-width:720px}
+.stat b{display:block;font-size:clamp(40px,min(4.6vw,8vh),78px);font-weight:800;letter-spacing:-.055em;line-height:.9;color:var(--teal);white-space:nowrap}
+.stat b small{font-size:.42em;letter-spacing:-.02em;margin-left:.06em}
+.stat span{display:block;font-size:clamp(15px,1.15vw,18px);font-weight:600;line-height:1.25;margin-top:8px;color:var(--ink)}
+.stat cite{display:block;font-style:normal;font-size:12px;color:var(--ink2);margin-top:3px}
+@media (min-width:1000px){#why .net svg{max-height:66vh}}
+@media (max-width:560px){.stats{grid-template-columns:1fr}}
+/* patient step 4: appointment list */
+.t-book{gap:7px;justify-content:center}
+.t-book .k2{font-size:13px;font-weight:700;color:#DDF3EE;margin-bottom:2px}
+.slot{display:flex;align-items:center;gap:10px;background:#fff;color:var(--ink);border-radius:12px;padding:9px 10px 9px 13px;font-size:14px;line-height:1.2}
+.slot b{font-weight:700;white-space:nowrap}.slot span{margin-left:auto;color:var(--ink2);font-weight:600;white-space:nowrap}
+.slot i{font-style:normal;font-size:12px;font-weight:700;background:var(--ink);color:#fff;border-radius:8px;padding:5px 10px}
+.slot.first{box-shadow:0 0 0 2px var(--lime),0 12px 26px -12px rgba(3,17,15,.6)}
+
+footer{padding:40px 0 56px;font-size:14px;color:#8FA9A4}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+@media (max-width:980px){
+  .sound{position:static;align-self:center;margin-top:18px}
+  .why-top{grid-template-columns:1fr}.net svg{max-height:70vh}
+  .solve-grid{grid-template-columns:1fr}.sol{min-height:260px}
+  .top{grid-template-columns:1fr}.hero h1{text-align:left;margin-left:0}.hero h1 br{display:none}
+  .fact-grid{grid-template-columns:1fr}.fact,.fact+.fact{padding:26px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .solve,.cli-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .scroll{display:none}
+}
+@media (max-width:560px){.steps{grid-template-columns:1fr}.btn{width:100%}.cli li{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){.cta .btn-a .arrow{animation:none}.sound.on .beat.hit{animation:none}.net-hub .ring{animation:none;opacity:0}.clock{animation:none}.scroll::before{animation:none}.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.btn,.tile,.sol{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="top">
+    <a class="brand" href="./" aria-label="OncoScan home"><img class="logo" src="assets/logo-light-sm.png" alt="OncoScan" width="413" height="96"></a>
+    <h1>Send a photo of a worrying spot.<br><em>Get a specialist's answer in 24 hours.</em></h1>
+  </div>
+
+  <div class="clock" role="timer" aria-label="24 hour countdown"><span id="hm">24:00</span><span id="ss">:00</span></div>
+  <ul class="solved" aria-label="The three bottlenecks OncoScan covers"><li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Initial feedback within 24 hours</li><li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Referral to a specialist</li><li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.6 4.6L19 7.6"/></svg></i>Treatment start</li></ul>
+
+  <div class="cta">
+    <a class="btn btn-a" href="patient/chat.html"><span class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.300 1.800 7.500 5.400"/></svg>Patient</span><span class="label">Get checked now<small>Specialist's answer within 24 hours</small></span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    <a class="btn btn-b" href="review/"><span class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/></svg>Doctor</span><span class="label">Review cases</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
+  <a class="scroll" href="#why">Why this matters</a>
+  <button class="sound" id="sound" type="button" aria-pressed="true"><span class="beat" aria-hidden="true"></span><span id="sound-label">Tap anywhere for sound</span></button>
+</header>
+
+<main>
+<!-- 1 · FACTS: why this matters, and how we solve it -->
+<section class="s facts" id="why">
+  <div class="wrap">
+    <div class="why-top">
+    <div>
+    <p class="kicker reveal">The problem in Finland</p>
+    <h2 class="reveal">Far from a specialist. Stuck in a queue.</h2>
+    <div class="stats">
+      <div class="stat reveal"><b>308</b><span>municipalities, 5 university hospitals</span><cite>Statistics Finland, 2026</cite></div>
+      <div class="stat reveal"><b>550<small>km</small></b><span>from the farthest town to its university hospital</span><cite>Our straight-line estimate</cite></div>
+      <div class="stat reveal"><b>126,200</b><span>people waiting for non-urgent specialist care</span><cite>THL, end of August 2026</cite></div>
+      <div class="stat reveal"><b>3<small>wk</small> + 6<small>mo</small></b><span>the law allows: assessment, then treatment</span><cite>Care guarantee, specialised care</cite></div>
+    </div>
+    <p class="net-line reveal"><b>308</b> municipalities. <b>1</b> queue.</p>
+    </div>
+    <figure class="net reveal" id="net">
+      <svg viewBox="0 0 640 1090" role="img" aria-labelledby="net-t net-d"><title id="net-t">Every town connects to OncoScan</title><desc id="net-d">An outline map of Finland with 52 towns. A line runs from each town to a single OncoScan hub drawn in the sea to the west.</desc>
+        <path class="net-land" d=""/><g class="net-lines"></g><g class="net-dots"></g>
+        <g class="net-hub"><circle class="ring r1" cx="92" cy="505" r="60"/><circle class="ring r2" cx="92" cy="505" r="60"/><circle cx="92" cy="505" r="60"/><text x="92" y="499" text-anchor="middle">Onco</text><text x="92" y="527" text-anchor="middle">scan</text></g>
+      </svg>
+      <figcaption>Finland, simplified outline. Dots are 52 example towns at approximate coordinates. The hub is the shared specialist queue, not a place.</figcaption>
+    </figure>
+    </div>
+    <div class="ps" id="ps">
+      <p class="kicker reveal">Today</p>
+      <h3 class="ps-title reveal">Four problems we solve.</h3>
+      <p class="lead reveal">Where the path to a specialist breaks.</p>
+      <div class="steps probs">
+        <div class="step">
+          <div class="tile p-detect" role="img" aria-label="A woman looks at a dark spot on her arm"><div class="card"><span class="k">Spot noticed</span><span class="v">Week 6</span><span class="seg"><i class="on"></i><i></i><i></i><i></i></span><span class="stuck"><i></i>Not looked at yet</span></div></div>
+          <span class="n">1</span><h3>Late detection.</h3><p>A worrying spot waits for an appointment.</p>
+        </div>
+        <div class="step">
+          <div class="tile p-queue" role="img" aria-label="People sitting in a clinic waiting room"><div class="card"><span class="k">Waiting for specialist care</span><span class="v">126,200</span><span class="stuck"><i></i>THL, end of August 2026</span></div></div>
+          <span class="n">2</span><h3>Referral queue.</h3><p>The specialist sits behind a referral.</p>
+        </div>
+        <div class="step">
+          <div class="tile p-book" role="img" aria-label="A woman on the phone with a paper calendar, trying to book a visit"><div class="card"><span class="k">Calls to book a visit</span><span class="v">3</span><span class="seg"><i></i><i></i><i></i><i></i></span><span class="stuck"><i></i>No time booked yet</span></div></div>
+          <span class="n">3</span><h3>Treatment start.</h3><p>You still have to find and book a specialist.</p>
+        </div>
+        <div class="step">
+          <div class="tile p-dark" aria-hidden="true"><div class="card"><span class="k">Referral sent · 12 March</span><span class="v">Status: ?</span><span class="seg"><i></i><i></i><i></i><i></i></span><span class="stuck"><i></i>No updates</span></div></div>
+          <span class="n">4</span><h3>No transparency.</h3><p>You can't see where your case is.</p>
+        </div>
+      </div>
+      <p class="ps-note reveal">Tiles show example data. Bottlenecks 1 to 3 are named in the challenge brief, Junction 2026.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · HOW IT WORKS FOR PATIENTS -->
+<section class="s pat" id="patients">
+  <div class="wrap">
+    <p class="kicker reveal">For patients</p>
+    <h2 class="reveal">Four steps to get results ASAP.</h2>
+    <p class="lead reveal">Worried about a mole that has changed, or a mouth sore that won't heal? This is what you do.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="tile t-cam" role="img" aria-label="Phone camera framing a skin lesion"><div class="vf"><i></i><i></i><i></i><i></i></div><div class="bar"><span>Photo 1 of 2</span><span class="shutter"></span><span class="sharp">✓ Sharp</span></div></div>
+        <span class="n">1</span><h3>Snap it.</h3><p>1 or 2 photos, checked for focus.</p><a class="mini" href="patient/chat.html">Send a photo<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="step reveal">
+        <div class="tile t-form" aria-hidden="true"><span class="q">Where is it?</span><div class="chips"><span class="on">Left forearm</span></div><span class="q">How long?</span><div class="chips"><span>Under 2 weeks</span><span class="on">6+ weeks</span></div><span class="q">Noticed</span><div class="chips"><span class="on">Has grown</span><span>Bleeds</span><span class="on">Itches</span></div></div>
+        <span class="n">2</span><h3>Tell your story.</h3><p>The history a doctor would ask for.</p><a class="mini" href="patient/chat.html">Start the chat<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="step reveal">
+        <div class="tile t-clock" role="img" aria-label="A specialist reviewing images; the case clock shows 17 hours 19 minutes left of 24"><div class="card"><span class="k">Case FI-0428 · answer due in</span><span class="v">17:19 <small>of 24 h</small></span><span class="seg"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="live"><i></i>With a specialist</span></div></div>
+        <span class="n">3</span><h3>Answer in <mark>24 hours</mark>.</h3><p>The clock starts when you send. A specialist answers before it runs out.</p><a class="mini" href="review/">See the specialist's view<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="step reveal">
+        <div class="tile t-res t-book" role="img" aria-label="Example list of the nearest specialists with distance and next free time"><span class="k2">Nearest specialists · example</span><div class="slot first"><b>Oulu · 12 km</b><span>Tue 09:40</span><i>Book</i></div><div class="slot"><b>Kemi · 96 km</b><span>Mon 14:10</span></div><div class="slot"><b>Kajaani · 138 km</b><span>Today 16:30</span></div></div>
+        <span class="n">4</span><h3>Book the nearest.</h3><p>If you need a visit: closest first, with free times.</p><a class="mini" href="patient/?demo=bad">See doctors and times<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · HOW IT WORKS FOR CLINICS -->
+<section class="s cli" id="clinics">
+  <div class="wrap">
+    <p class="kicker reveal">For clinics</p>
+    <h2 class="reveal">A specialist's opinion during the visit week.</h2>
+    <p class="lead reveal">For GPs and dentists who see something they are unsure about. Send it instead of waiting on a referral queue.</p>
+    <div class="cli-grid">
+      <div class="cli-shot reveal"><img src="docs/screenshots/5-specialist-patient-case.jpg" alt="Specialist screen: a case photo beside the signal check" loading="lazy"></div>
+      <div>
+        <ol>
+          <li class="reveal"><small>In the visit</small><div><b>Photograph the finding</b><span>With a phone or the clinic's camera, plus what the patient reports.</span></div></li>
+          <li class="reveal"><small>Minutes later</small><div><b>It joins the specialist queue</b><span>With the patient's history and a checklist of warning signs drawn from it.</span></div></li>
+          <li class="reveal"><small>Within 24 h</small><div><b>A signed verdict comes back</b><span>No concern, better photo needed, or suspicious, with a short note.</span></div></li>
+          <li class="reveal"><small>Same week</small><div><b>Book or reassure</b><span>A suspicious result comes with appointment times at the nearest specialists.</span></div></li>
+        </ol>
+        <div class="row-cta reveal"><a class="btn btn-a" href="review/"><span class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/></svg>Doctor</span><span class="label">Open the panel</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+        <p class="note reveal" style="margin-top:14px">In this demo a clinic sends a case through the same form as a patient.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span class="brand"><img class="logo" src="assets/logo-light.png" alt="OncoScan" width="1420" height="330"></span><span>Working demo with example data · Not a diagnosis; a biopsy confirms · Junction 2026</span></div></footer>
+
+<script>
+// 24-hour countdown that starts when the page opens
+(() => {
+  const hm = document.getElementById('hm'), ss = document.getElementById('ss'), end = Date.now() + 24 * 3600e3, p = n => String(n).padStart(2, '0');
+  // Sound: a quiet heartbeat each second. Browsers only allow audio after a tap or key press, so it starts on the first one.
+  const sBtn = document.getElementById('sound'), sLbl = document.getElementById('sound-label'), dot = sBtn.querySelector('.beat');
+  let actx = null, soundOn = localStorage.getItem('oncoscan_sound') !== 'off', heroSeen = true, last = -1;
+  const running = () => actx && actx.state === 'running';
+  const paintSound = () => { sBtn.classList.toggle('on', soundOn && running()); sBtn.setAttribute('aria-pressed', soundOn); sLbl.textContent = !soundOn ? 'Sound off' : running() ? 'Sound on' : 'Tap anywhere for sound'; };
+  const unlock = () => { const A = window.AudioContext || window.webkitAudioContext; if (!A) { sBtn.hidden = true; return; } actx = actx || new A(); actx.resume().then(paintSound, paintSound); };
+  const blip = () => {
+    if (!soundOn || !running() || document.hidden) return;
+    // a heartbeat: two soft low thumps ("lub-dub"), 60 beats a minute. LEVEL is the overall loudness.
+    const LEVEL = .8, t = actx.currentTime, vol = (heroSeen ? 1 : .4) * LEVEL;
+    const thump = (at, f0, f1, peak) => { const o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.setValueAtTime(f0, at); o.frequency.exponentialRampToValueAtTime(f1, at + .11);
+      g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(peak * vol, at + .015); g.gain.exponentialRampToValueAtTime(0.0001, at + .16);
+      o.connect(g).connect(actx.destination); o.start(at); o.stop(at + .18); };
+    thump(t, 150, 62, .16); thump(t + .2, 185, 80, .11);
+    dot.classList.remove('hit'); void dot.offsetWidth; dot.classList.add('hit');
+  };
+  sBtn.addEventListener('click', e => { e.stopPropagation(); soundOn = !soundOn; localStorage.setItem('oncoscan_sound', soundOn ? 'on' : 'off'); if (soundOn) unlock(); paintSound(); });
+  ['pointerdown', 'keydown'].forEach(ev => addEventListener(ev, e => { if (soundOn && !running() && !(e.target.closest && e.target.closest('#sound'))) unlock(); }, { passive: true }));
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { heroSeen = e.isIntersecting; }).observe(document.querySelector('.hero'));
+  paintSound();
+  const tick = () => { const left = Math.max(0, Math.round((end - Date.now()) / 1000)); hm.textContent = p(Math.floor(left / 3600)) + ':' + p(Math.floor(left / 60) % 60); ss.textContent = ':' + p(left % 60); if (left !== last) { last = left; blip(); } };
+  tick(); setInterval(tick, 1000);
+  // map: every town draws a line to the OncoScan hub
+  const T = [[60.17,24.94],[60.45,22.27],[61.50,23.76],[62.89,27.68],[65.01,25.47],[66.50,25.73],[65.74,24.56],[64.23,27.73],[65.96,29.19],[67.42,26.59],[68.91,27.03],[69.91,27.03],[67.65,24.91],[67.96,23.68],[68.38,23.63],[66.71,27.43],[66.83,28.67],[65.85,24.15],[64.68,24.48],[64.07,24.53],[63.84,23.13],[63.10,21.62],[62.79,22.84],[62.24,25.75],[62.60,29.76],[63.32,30.02],[63.54,29.14],[64.13,29.52],[64.89,28.91],[63.56,27.19],[61.87,28.88],[61.69,27.27],[61.06,28.19],[60.47,26.95],[60.87,26.70],[60.98,25.66],[61.00,24.46],[61.49,21.80],[61.13,21.51],[62.27,21.38],[60.38,23.13],[59.82,22.97],[60.39,25.66],[62.30,27.16],[62.32,27.87],[62.60,25.73],[62.10,30.14],[62.67,30.93],[65.36,27.00],[68.66,27.54],[66.77,23.96],[60.10,19.94]];
+  const NS = 'http://www.w3.org/2000/svg', net = document.getElementById('net'), gl = net.querySelector('.net-lines'), gd = net.querySelector('.net-dots'), HX = 92, HY = 505;
+  const XY = (la, lo) => [20 + (lo - 19.5) * 43.5, 20 + (70.2 - la) * 100];
+  // simplified outline of mainland Finland (lat, lon), clockwise from Hanko
+  const LAND = [[59.78,22.95],[59.98,24.3],[60.15,25.0],[60.27,25.9],[60.45,26.95],[60.55,27.8],[61.05,28.8],[61.6,29.6],[62.0,30.3],[62.5,31.2],[62.9,31.58],[63.3,31.2],[63.75,30.4],[64.1,30.55],[64.5,30.05],[64.8,29.75],[65.2,29.75],[65.7,30.1],[66.1,29.9],[66.5,29.5],[66.9,29.1],[67.3,29.55],[67.7,29.95],[68.1,28.7],[68.5,28.45],[68.9,28.5],[69.05,28.95],[69.3,29.3],[69.65,29.1],[69.85,28.4],[70.09,27.95],[70.0,27.0],[69.7,26.4],[69.4,25.85],[69.0,25.75],[68.65,24.9],[68.8,23.8],[69.0,22.4],[69.3,21.6],[69.06,20.55],[68.75,21.4],[68.45,22.3],[68.2,23.15],[67.95,23.5],[67.35,23.75],[66.8,23.9],[66.3,23.65],[65.85,24.15],[65.73,24.55],[65.35,25.3],[65.0,25.3],[64.68,24.45],[64.25,23.95],[63.85,23.1],[63.67,22.7],[63.2,21.3],[62.5,21.1],[62.27,21.3],[61.6,21.4],[61.13,21.4],[60.8,21.3],[60.4,21.9],[60.1,22.4]];
+  net.querySelector('.net-land').setAttribute('d', 'M' + LAND.map(([la, lo]) => XY(la, lo).map(v => v.toFixed(1)).join(' ')).join(' L') + ' Z' + ' M' + [[60.42,19.55],[60.45,20.35],[60.05,20.5],[59.97,19.75]].map(([la, lo]) => XY(la, lo).map(v => v.toFixed(1)).join(' ')).join(' L') + ' Z');   // plus Åland
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches, paths = [];
+  T.forEach(([la, lo]) => {
+    const [x, y] = XY(la, lo), mx = (x + HX) / 2 - (y - HY) * .1, my = (y + HY) / 2 + (x - HX) * .04;
+    const path = document.createElementNS(NS, 'path'); path.setAttribute('d', `M${x.toFixed(1)} ${y.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${HX} ${HY}`); gl.append(path);
+    const dot = document.createElementNS(NS, 'circle'); dot.setAttribute('cx', x); dot.setAttribute('cy', y); dot.setAttribute('r', 5); gd.append(dot);
+    const len = path.getTotalLength(); paths.push({ path, len, d: Math.hypot(x - HX, y - HY) });
+    if (!still) { path.style.strokeDasharray = len; path.style.strokeDashoffset = len; }
+  });
+  const draw = () => paths.forEach(({ path, len, d }) => { path.style.transition = `stroke-dashoffset ${(0.9 + len / 900).toFixed(2)}s cubic-bezier(.2,.7,.1,1) ${(d / 1400).toFixed(2)}s`; path.style.strokeDashoffset = 0; });
+  // a few photos travelling toward the hub
+  const send = () => { if (document.hidden) return; const { path, len } = paths[Math.floor(Math.random() * paths.length)], c = document.createElementNS(NS, 'circle'); c.setAttribute('r', 6); c.setAttribute('class', 'pulse'); gl.append(c);
+    const t0 = performance.now(), dur = 1600 + len * 1.6; const step = t => { const k = Math.min(1, (t - t0) / dur), pt = path.getPointAtLength(len * (1 - Math.pow(1 - k, 2))); c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); k < 1 ? requestAnimationFrame(step) : c.remove(); }; requestAnimationFrame(step); };
+  if (!still && 'IntersectionObserver' in window) { let timer; new IntersectionObserver(([e]) => { if (e.isIntersecting) { draw(); timer = timer || setInterval(send, 700); } else { clearInterval(timer); timer = null; } }, { threshold: .25 }).observe(net); }
+  // reveal on scroll
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { els.forEach(e => e.classList.add('in')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  els.forEach((e, i) => { e.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(e); });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+// first load: wait (at most 1.2 s) until the font and the hero picture are ready, then build the hero in one sequence
+(() => {
+  const root = document.documentElement, hero = document.querySelector('.hero'), solved = document.querySelector('.solved');
+  const show = () => { root.classList.remove('pre'); hero.classList.add('hero-ready'); solved.classList.add('go'); };
+  if (!window.gsap || matchMedia('(prefers-reduced-motion:reduce)').matches) return show();
+  gsap.ticker.lagSmoothing(0);
+  const pic = new Image(); pic.src = document.querySelector('link[rel=preload][as=image]').href;
+  const ready = Promise.all([document.fonts ? document.fonts.ready : 0, pic.decode ? pic.decode().catch(() => 0) : 0]);
+  Promise.race([ready, new Promise(r => setTimeout(r, 1200))]).then(() => {
+    root.classList.remove('pre');
+    gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: () => hero.classList.add('hero-ready') })
+      .from('.hero .brand', { y: -20, autoAlpha: 0, duration: .6 })
+      .from('.hero h1', { y: 40, autoAlpha: 0, duration: .8 }, '<.05')
+      .from('.hero .clock', { y: 40, autoAlpha: 0, duration: 1, force3D: true }, '<.12')
+      .from('.hero .solved', { y: 16, autoAlpha: 0, duration: .5, onStart: () => solved.classList.add('go') }, '<.45')
+      .from('.hero .cta .btn', { y: 24, autoAlpha: 0, duration: .6, stagger: .08, clearProps: 'all' }, '<.1')
+      .from('.hero .scroll, .hero .sound', { autoAlpha: 0, duration: .5 }, '<.2');
+  });
+})();
+// four problems: tiles rise in one after another; without GSAP they are simply there
+(() => {
+  if (!window.gsap || !window.ScrollTrigger || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  gsap.registerPlugin(ScrollTrigger);
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } })
+    .from('#ps .step', { y: 50, autoAlpha: 0, duration: .7, stagger: .1, clearProps: 'transform' });
+  ScrollTrigger.create({ trigger: '#ps .steps', start: 'top 82%', once: true, onEnter: () => tl.play() });
+})();
+</script>
+</body>
+</html>

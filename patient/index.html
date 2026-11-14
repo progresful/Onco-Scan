@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OncoScan — send a photo, get an answer within 24 hours</title>
+<meta name="description" content="Add 1 or 2 photos of a worrying skin or mouth spot and describe it. A specialist answers within 24 hours.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OncoScan">
+<meta property="og:title" content="OncoScan — send a photo, get a specialist's answer within 24 hours">
+<meta property="og:description" content="Add 1 or 2 photos of a worrying skin or mouth spot and describe it. A specialist answers within 24 hours.">
+<meta property="og:url" content="https://oncoscan.pgf.lv/patient/">
+<meta property="og:image" content="https://oncoscan.pgf.lv/assets/og.jpg?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="OncoScan: a 24-hour countdown with the line 'A specialist's answer before the clock runs out'">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://oncoscan.pgf.lv/assets/og.jpg?v=2">
+<meta name="theme-color" content="#03110F">
 <link rel="icon" type="image/png" href="../assets/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -619,7 +632,13 @@ $("#restart").addEventListener("click", restart); $("#restart2").addEventListene
 
 /* resume an open case */
 my = jget(LM, null);
-if (my) { state.email = my.email; showCase(); } else go(0);
+const demo = new URLSearchParams(location.search).get("demo");   // ?demo=bad | ?demo=done open an example result directly
+if (demo === "bad" || demo === "done") {
+  my = { id: "FI-0428", email: "you@example.fi", createdAt: Date.now() - 7 * 3600e3, muni: "Rovaniemi", area: "Skin" };
+  my.result = demo === "bad" ? { v: "pos", note: "Example result. Suspicious features. In-person specialist assessment within 2 weeks.", sample: true }
+                             : { v: "neg", note: "Example result. Benign appearance. No action needed; return if it changes.", sample: true };
+  $("#open-result").click();
+} else if (my) { state.email = my.email; showCase(); } else go(0);
 })();
 </script>
 </body>
