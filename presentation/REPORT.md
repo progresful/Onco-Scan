@@ -13,7 +13,7 @@ Date: 14 Nov 2026. **5 of 11 release gates pass. Not ready to submit.**
 | 5 | Challenge fit is explicit | **FAIL** | Stated, but two minimum requirements are unmet: no Goal 3 indicator, no public data source. The brief also asks for an AI solution; no model is connected |
 | 6 | Demo and repository open in incognito, on a phone, without login | **FAIL** | Runs on localhost only. No public URL. The folder is not a git repository |
 | 7 | A recorded backup of the demo exists | **PASS** | `video/backup-demo.mp4` (26 s, real screen recording) |
-| 8 | Name, promise and numbers are consistent, no typos | **PASS** | "Oncoscan" spelled identically 13 times across assets. Numbers used: 24 hours, 5/5, 2.3 s, 3/3, 550 km |
+| 8 | Name, promise and numbers are consistent, no typos | **PASS** | "OncoScan" spelled identically 13 times across assets. Numbers used: 24 hours, 5/5, 2.3 s, 3/3, 550 km |
 | 9 | PDF is readable and within the upload limit | **PASS** | `deck/deck.pdf`: 6 pages, 1.5 MB (limit 20 MB), opened and read |
 | 10 | Every field and link has been checked | **FAIL** | Text fields are within limits (name 8/30, punchline 101/200, description 2,999/5,000). Demo, source and video links do not exist |
 | 11 | Final submission is confirmed | **FAIL** | Not submitted. The page shows "Status: Closed" (unverified) |

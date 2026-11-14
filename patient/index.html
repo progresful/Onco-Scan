@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oncoscan — send a photo, get an answer within 24 hours</title>
+<title>OncoScan — send a photo, get an answer within 24 hours</title>
+<link rel="icon" type="image/png" href="../assets/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
@@ -139,11 +140,93 @@ button{cursor:pointer}
 .status li.live i{border-color:var(--vivid);box-shadow:inset 0 0 0 4px var(--vivid)}
 .demo{background:var(--pale)}
 .side{background:linear-gradient(180deg,#0A7C72 0%,#086A62 100%)}
+/* animated case progress */
+[tabindex="-1"]:focus{outline:none}
+.status li{position:relative;padding:14px 0 15px;border-bottom:1px solid var(--line)}
+.status li .lbl{flex:1}
+.status li .pct{font-variant-numeric:tabular-nums;font-weight:600;font-size:15px;min-width:3.2em;text-align:right;color:var(--muted)}
+.status li.live .pct{color:var(--vivid)}
+.status li.done .pct{width:22px;min-width:22px;height:22px;border-radius:50%;background:var(--vivid);color:#fff;font-size:12px;display:grid;place-items:center;animation:pop .35s var(--ease)}
+@keyframes pop{from{transform:scale(.4)}60%{transform:scale(1.15)}}
+.status li .bar{position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent;overflow:hidden}
+.status li .bar b{display:block;height:100%;width:0;background:var(--vivid);transition:width .12s linear}
+.status li.done .bar b{opacity:.35}
+.status li.live i{animation:ring 1.4s ease-out infinite}
+@keyframes ring{0%{box-shadow:inset 0 0 0 4px var(--vivid),0 0 0 0 rgba(10,124,114,.45)}100%{box-shadow:inset 0 0 0 4px var(--vivid),0 0 0 9px rgba(10,124,114,0)}}
+.status li.done i::after{content:"✓"}
+/* demo controls */
+.demo-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.demo-row .btn{justify-content:center;font-weight:600}
+.btn-bad{background:#A61E2E}.btn-bad:hover{background:#7F1622}
+.btn-good{background:var(--vivid)}
+.demo-sep{border:0;border-top:1px dashed #B9B4A9;margin:4px 0 0}
+/* booking after a suspicious result */
+.step[data-step="7"]{max-width:900px}
+.book{display:grid;gap:14px;margin-top:6px;padding-top:22px;border-top:2px solid var(--ink)}
+.book-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.book h3{font-size:clamp(22px,2vw,28px);font-weight:700;letter-spacing:-.02em}
+.seg-toggle{display:inline-flex;padding:4px;background:#fff;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.seg-toggle button{border:0;background:transparent;padding:9px 16px;border-radius:99px;font-weight:600;font-size:14px}
+.seg-toggle button[aria-pressed=true]{background:var(--ink);color:#fff}
+.table-wrap{overflow-x:auto;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line)}
+.docs{width:100%;border-collapse:collapse;font-size:15px}
+.docs th{text-align:left;font-size:13px;font-weight:600;color:var(--muted);padding:12px 14px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+.docs td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+.docs tr:last-child td{border-bottom:0}
+.docs .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.docs td.who{color:var(--ink);font-size:15px}
+.docs .who b{display:block;font-weight:600;color:var(--ink)}.docs .who span{font-size:13px;color:var(--muted)}
+.docs .when b{font-weight:600;white-space:nowrap}.docs .when span{display:block;font-size:13px;color:var(--muted)}
+.docs tr.first td{background:var(--ok-bg)}
+.docs .tag{display:inline-block;font-size:12px;font-weight:600;color:var(--vivid);margin-left:6px}
+.docs .bk{border:0;background:var(--vivid);color:#fff;font-weight:600;padding:10px 18px;border-radius:99px;white-space:nowrap}
+.docs .bk:hover{background:var(--ink)}
+.docs tr.open td{border-bottom:0}
+.docs tr.slots td{background:var(--bg2);padding:12px 14px 16px}
+.slots-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.slots-row span{font-size:13px;color:var(--muted);margin-right:4px}
+.slot{border:1.5px solid var(--ink);background:#fff;padding:9px 14px;border-radius:99px;font-weight:600;font-size:14px}
+.slot:hover{background:var(--ink);color:#fff}
+.booked{background:var(--ink);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;animation:rise .4s var(--ease)}
+.booked b{display:block;font-size:20px;letter-spacing:-.01em}
+.booked span{font-size:14px;color:var(--pale)}
+.booked button{border:0;background:#fff;color:var(--ink);font-weight:600;padding:9px 16px;border-radius:99px}
+/* avatars, aligned rows, confirmation-only state */
+.logo{height:30px;width:auto;display:block}
+img.av{object-fit:cover;object-position:50% 18%;background:#fff}
+.person.light img.av{width:58px;height:58px}
+body.wide .shell{grid-template-columns:minmax(240px,.42fr) 1.58fr}
+body.wide .main{padding-left:clamp(20px,4vw,64px);padding-right:clamp(20px,4vw,64px)}
+.docs .who .av{color:#fff;font-size:16px}
+.docs .who .tag{color:#fff;font-size:11px}
+.docs td:nth-child(2){min-width:11em}
+.person{display:flex;align-items:center;gap:12px}
+.person>div{min-width:0}
+.av{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;letter-spacing:.02em;box-shadow:0 0 0 3px #fff,0 0 0 4px var(--line)}
+.docs .who b{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;white-space:nowrap}
+.docs .tag{margin-left:0;background:var(--vivid);color:#fff;padding:2px 9px;border-radius:99px;font-size:11px}
+.docs td{height:76px}
+.docs .when b{display:block}.docs .when span{white-space:nowrap}
+.docs th:nth-child(1){padding-left:72px}
+.book.no-dist .docs th:nth-child(3),.book.no-dist .docs td.dist{display:none}
+.book.is-booked .seg-toggle,.book.is-booked .table-wrap{display:none}
+.booked{display:grid;grid-template-columns:auto 1fr auto;gap:20px 24px;align-items:center;padding:26px 28px}
+.ok-mark{width:56px;height:56px;border-radius:50%;background:var(--pale);color:var(--ink);font-size:26px;font-weight:700;display:grid;place-items:center;animation:pop .4s var(--ease)}
+.bk-main{display:grid;gap:6px}
+.bk-main>b{font-size:clamp(26px,2.6vw,38px);letter-spacing:-.03em;line-height:1.05}
+.person.light{margin-top:8px}.person.light b{display:block;font-size:17px;color:#fff}.person.light span{color:var(--pale)}
+.person.light .av{box-shadow:0 0 0 3px var(--ink),0 0 0 4px rgba(255,255,255,.4)}
+.bk-facts{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:0;border-top:1px solid rgba(255,255,255,.2)}
+.bk-facts div{padding:14px 16px 0 0}.bk-facts dt{font-size:13px;color:var(--pale)}.bk-facts dd{margin:2px 0 0;font-weight:600;font-size:16px}
+.booked #unbook{grid-column:3;grid-row:1;align-self:start}
+@media (max-width:700px){.booked{grid-template-columns:auto 1fr}.booked #unbook{grid-column:1/-1;grid-row:auto;justify-self:start}.bk-facts{grid-template-columns:1fr}.docs th:nth-child(1){padding-left:8px}.av{width:38px;height:38px;font-size:14px}}
+@media (max-width:700px){.docs th:nth-child(2),.docs td:nth-child(2){display:none}.docs td,.docs th{padding:10px 8px}}
+@media (prefers-reduced-motion:reduce){.status li.live i,.status li.done .pct{animation:none}}
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="../landing/" style="color:inherit;text-decoration:none"><i aria-hidden="true"></i>Oncoscan</a>
+  <a class="brand" href="../landing/" aria-label="OncoScan home"><img class="logo" src="../assets/logo-light.png" alt="OncoScan" width="1420" height="330"></a>
   <span class="who" id="who"></span>
   <span class="demo">Demo</span>
 </header>
@@ -166,7 +249,7 @@ button{cursor:pointer}
       <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required><p class="err" id="email-err" hidden>Enter a valid email address.</p></div>
       <div class="btns"><button class="btn" type="submit">Send sign-in link</button></div>
       <p class="fine" id="email-sent" hidden>Demo: no email is sent. You are signed in.</p>
-      <p class="fine">Oncoscan does not give a diagnosis. A specialist reviews your photos and tells you whether you need to be seen in person.</p>
+      <p class="fine">OncoScan does not give a diagnosis. A specialist reviews your photos and tells you whether you need to be seen in person.</p>
     </form>
 
     <!-- 1 area -->
@@ -237,12 +320,19 @@ button{cursor:pointer}
       <p class="clock" id="s-clock" aria-label="Time since you sent your case">T+00:00:00</p>
       <div class="meta"><div><span>Answer by, at the latest</span><b id="s-due" style="font-weight:500"></b></div><div><span>We'll email</span><b id="s-email" style="font-weight:500"></b></div></div>
       <ol class="status" id="status">
-        <li><i>✓</i>Received</li><li><i>✓</i>Pre-sorted by urgency</li><li><i>✓</i>With a specialist</li><li><i>✓</i>Answered</li>
+
+        <li><i aria-hidden="true"></i><span class="lbl">Received</span><span class="pct" aria-live="off"></span><b class="bar" aria-hidden="true"><b></b></b></li>
+        <li><i aria-hidden="true"></i><span class="lbl">Pre-sorted by urgency</span><span class="pct" aria-live="off"></span><b class="bar" aria-hidden="true"><b></b></b></li>
+        <li><i aria-hidden="true"></i><span class="lbl">With a specialist</span><span class="pct" aria-live="off"></span><b class="bar" aria-hidden="true"><b></b></b></li>
+        <li><i aria-hidden="true"></i><span class="lbl">Answered</span><span class="pct" aria-live="off"></span><b class="bar" aria-hidden="true"><b></b></b></li>
+      
       </ol>
       <div class="demo-box"><b>Demo controls</b>
-        <span>Open the specialist queue in another tab and review this case. The result arrives here.</span>
-        <div class="btns" style="margin:0"><a class="btn" href="../review/" target="_blank" rel="noopener">Open specialist queue</a>
-        <button class="btn btn-quiet" type="button" data-sample="neg">Sample: no concern</button><button class="btn btn-quiet" type="button" data-sample="uns">Sample: better photo</button><button class="btn btn-quiet" type="button" data-sample="pos">Sample: fast-track</button></div>
+        <span>Jump straight to a result, or review the case yourself in the specialist queue.</span>
+        <div class="demo-row"><button class="btn btn-bad" type="button" data-sample="pos">Bad result</button><button class="btn btn-good" type="button" data-sample="neg">Good result</button></div>
+        <hr class="demo-sep">
+        <span class="fine">Other demo options</span>
+        <div class="btns" style="margin:0"><button class="btn btn-quiet" type="button" data-sample="uns">Better photo needed</button><a class="btn btn-quiet" href="../review/" target="_blank" rel="noopener">Open specialist queue</a></div>
       </div>
       <div class="btns"><button class="btn btn-quiet" type="button" id="restart">Start a new case</button></div>
     </section>
@@ -252,7 +342,7 @@ button{cursor:pointer}
       <h2>You've got mail</h2>
       <p class="hint">This is the email the patient receives. It carries no medical details, only a link.</p>
       <div class="mail">
-        <div class="mail-head"><span>From Oncoscan · to <span id="m-to"></span></span><b>Your Oncoscan result is ready</b></div>
+        <div class="mail-head"><span>From OncoScan · to <span id="m-to"></span></span><b>Your OncoScan result is ready</b></div>
         <div class="mail-body"><p>A specialist has reviewed case <span id="m-id"></span>. Sign in to read the result and your next step.</p><div><button class="btn" type="button" id="open-result">View my result</button></div><p class="fine">For your privacy, results are never shown in email.</p></div>
       </div>
       <p class="fine">Demo: no real email is sent.</p>
@@ -264,6 +354,15 @@ button{cursor:pointer}
       <div class="note"><span>Specialist's note</span><p id="r-note"></p></div>
       <h3 style="font-weight:500;font-size:18px">What to do next</h3>
       <ol class="next" id="r-next"></ol>
+      <section class="book" id="book" hidden aria-labelledby="book-title">
+        <div class="book-head">
+          <div><h3 id="book-title">Choose a specialist and a time</h3><p class="fine" id="book-sub"></p></div>
+          <div class="seg-toggle" role="group" aria-label="Sort specialists"><button type="button" data-sort="near" aria-pressed="true">Nearest</button><button type="button" data-sort="soon" aria-pressed="false">Soonest</button></div>
+        </div>
+        <div class="booked" id="booked" hidden role="status"></div>
+        <div class="table-wrap"><table class="docs"><thead><tr><th>Specialist</th><th>Clinic</th><th class="num">Distance</th><th>Earliest time</th><th><span class="sr">Book</span></th></tr></thead><tbody id="docs"></tbody></table></div>
+        <p class="fine">Demo: the specialists, clinics and times are invented examples, the portraits are illustrative, and no real booking is made. Distances are straight-line from your home municipality.</p>
+      </section>
       <p class="fine">This review is based on photos and is not a diagnosis. If anything changes or you are worried, contact your health centre.</p>
       <div class="btns"><button class="btn btn-quiet" type="button" id="restart2">Start a new case</button></div>
     </section>
@@ -281,7 +380,7 @@ const SIDE = [
   ["Step 2 of 5", "Skin or mouth?", "This decides which specialist sees your case."],
   ["Step 3 of 5", "Good photos get good answers.", "A sharp, well-lit photo is the single most useful thing you can send."],
   ["Step 4 of 5", "A few details help a lot.", "How long it has been there and whether it has changed matter as much as the photo."],
-  ["Step 5 of 5", "Almost there.", "If your wellbeing services county covers Oncoscan, the review costs you nothing."],
+  ["Step 5 of 5", "Almost there.", "If your wellbeing services county covers OncoScan, the review costs you nothing."],
   ["Your case", "Your case is with us.", "You can close this page. We'll email you when the specialist has answered."],
   ["Your case", "Your result is ready.", ""],
   ["Your result", "Reviewed by a specialist.", ""]
@@ -292,12 +391,13 @@ const RES = {
   uns: { tag: "We need a better look", title: "The photos weren't clear enough to tell.", sum: "This says nothing about whether it is harmful. The specialist could not judge it from these pictures.",
     next: ["Retake the photos in daylight, in focus, with a coin for size, and send them again at no extra cost.", "Or book a regular appointment at your health centre or dentist to have it looked at in person."] },
   pos: { tag: "Needs a closer look, fast-track", title: "A specialist should see this in person.", sum: "This is not a cancer diagnosis. It means the photos show features that need to be examined, and soon.",
-    next: ["Your urgent referral has been sent. You do not need to arrange it yourself.", "Expect a call with an appointment time within a few working days.", "If you have not heard within 5 working days, call your health centre and quote your case number."] }
+    next: ["Choose a specialist and a time below.", "Bring your case number, {id}, to the visit.", "If it bleeds, grows quickly or hurts before then, call your health centre."] }
 };
 let state = { email: "", photos: [] }, cur = 0, tick = null, my = null;
 
 function go(n) {
   cur = n; $$(".step").forEach(s => s.hidden = +s.dataset.step !== n);
+  document.body.classList.toggle('wide', n === 7);
   const [e, t, l] = SIDE[n]; $("#eyebrow").textContent = e; $("#side-title").textContent = t; $("#side-lead").textContent = l;
   $("#trail").hidden = n > 4;
   $$("#trail li").forEach((li, i) => { li.className = i < n ? "past" : i === n ? "now" : ""; });
@@ -395,11 +495,11 @@ $('[data-step="4"]').addEventListener("submit", async e => {
     if (r.status === 201) saved = await r.json();
     else if (r.status === 400 || r.status === 413) { const j = await r.json().catch(() => ({})); alert(j.error || "Could not send. Try again."); btn.disabled = false; return; }
   } catch {}
-  if (saved) my = { id: saved.id, token: saved.token, email: state.email, createdAt: saved.createdAt, server: true };
+  if (saved) my = { id: saved.id, token: saved.token, email: state.email, createdAt: saved.createdAt, server: true, muni: $("#muni").value, area: state.area };
   else {
     try { localStorage.setItem(LS, JSON.stringify(jget(LS, []).concat(c))); }
     catch { alert("These photos are too large to store in this browser. Remove one and try again."); btn.disabled = false; return; }
-    my = { id, email: state.email, createdAt: c.createdAt };
+    my = { id, email: state.email, createdAt: c.createdAt, muni: $("#muni").value, area: state.area };
   }
   localStorage.setItem(LM, JSON.stringify(my)); showCase();
 });
@@ -409,14 +509,29 @@ const pad = n => String(n).padStart(2, "0");
 function showCase() {
   $("#who").textContent = my.email; $("#s-id").textContent = my.id; $("#s-email").textContent = my.email;
   $("#s-due").textContent = new Date(my.createdAt + 864e5).toLocaleString("en-GB", { weekday: "short", hour: "2-digit", minute: "2-digit" });
-  go(5); clearInterval(tick); const run = () => {
-    const s = Math.floor((Date.now() - my.createdAt) / 1000);
-    $("#s-clock").textContent = `T+${pad(Math.floor(s / 3600))}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)}`;
-    const stage = s < 2 ? 0 : s < 5 ? 1 : 2;
-    $$("#status li").forEach((li, i) => li.className = i < stage ? "done" : i === stage ? "live" : "");
-    $$("#status li").forEach((li, i) => li.firstChild.textContent = i < stage ? "✓" : "");
+  go(5); clearInterval(tick); clearInterval(prog); finishAt = 0; lastP2 = 0;
+  const run = () => {
+    const sec = Math.floor((Date.now() - my.createdAt) / 1000);
+    $("#s-clock").textContent = `T+${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(sec % 60)}`;
     check();
   }; run(); tick = setInterval(run, 1000);
+  paintStatus(); prog = setInterval(paintStatus, 90);
+}
+// Each row fills from 0 to 100% and then turns into a tick. "With a specialist" keeps creeping until the verdict arrives.
+let prog = null, finishAt = 0, lastP2 = 0;
+function paintStatus() {
+  if (!my) return;
+  const t = (Date.now() - my.createdAt) / 1000, lim = v => Math.max(0, Math.min(100, v));
+  let p = [lim(t / 1.6 * 100), lim((t - 1.6) / 3.2 * 100), t < 4.8 ? 0 : 6 + 90 * (1 - Math.exp(-(t - 4.8) / 28)), 0];
+  if (finishAt) { const k = Date.now() - finishAt; p = [100, 100, lim(lastP2 + (100 - lastP2) * k / 600), lim((k - 650) / 900 * 100)];
+    if (k > 2000) { clearInterval(prog); finishAt = 0; go(6); return; } }
+  else lastP2 = p[2];
+  $$("#status li").forEach((li, i) => {
+    const v = Math.floor(p[i]), done = v >= 100, live = !done && (i === 0 || p[i - 1] >= 100);
+    li.className = done ? "done" : live ? "live" : "";
+    li.querySelector(".pct").textContent = done ? "✓" : live ? v + "%" : "";
+    li.querySelector(".bar b").style.width = (done ? 100 : p[i]) + "%";
+  });
 }
 let asking = false;
 async function check() {
@@ -426,7 +541,11 @@ async function check() {
     asking = false; return; }
   const r = jget(LR, {})[my.id]; if (r) arrive(r);
 }
-function arrive(r) { clearInterval(tick); my.result = r; $("#m-to").textContent = my.email; $("#m-id").textContent = my.id; go(6); }
+function arrive(r) {   // finish the progress rows first, then show the email
+  if (my.result) return; clearInterval(tick); my.result = r; $("#m-to").textContent = my.email; $("#m-id").textContent = my.id;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { clearInterval(prog); go(6); return; }
+  finishAt = Date.now();
+}
 addEventListener("storage", e => { if (e.key === LR && my) check(); });
 $$("[data-sample]").forEach(b => b.addEventListener("click", () => {
   const v = b.dataset.sample, note = { neg: "Benign appearance. No action needed; return if it changes.", uns: "Image too blurred or dark to assess. Retake in daylight, in focus.", pos: "Suspicious features. In-person specialist assessment within 2 weeks." }[v];
@@ -435,10 +554,65 @@ $$("[data-sample]").forEach(b => b.addEventListener("click", () => {
 $("#open-result").addEventListener("click", () => {
   const r = my.result, d = RES[r.v];
   $("#r-box").className = "result " + r.v; $("#r-tag").textContent = d.tag; $("#r-title").textContent = d.title; $("#r-sum").textContent = d.sum;
-  $("#r-note").textContent = r.note; $("#r-next").innerHTML = d.next.map(t => `<li>${t}</li>`).join(""); go(7);
+  $("#r-note").textContent = r.note; $("#r-next").innerHTML = d.next.map(t => `<li>${t.replace("{id}", my.id)}</li>`).join(""); $("#book").hidden = r.v !== "pos"; if (r.v === "pos") drawDocs(); go(7);
 });
+// ---- booking list (invented example specialists; distances are real straight-line km) ----
+const HOME = { Rovaniemi: [66.50, 25.73], Inari: [68.91, 27.03], "Sodankylä": [67.42, 26.59], Kemi: [65.74, 24.56], "Kittilä": [67.65, 24.91], Helsinki: [60.17, 24.94], Tampere: [61.50, 23.76], Turku: [60.45, 22.27] };
+const DOCS = [
+  ["Aino Laine", "Helsinki", 60.17, 24.94, "University hospital", 2, 1], ["Mikko Heikkinen", "Turku", 60.45, 22.27, "University hospital", 4, 7], ["Sanna Korhonen", "Tampere", 61.50, 23.76, "University hospital", 1, 3],
+  ["Juha Nieminen", "Kuopio", 62.89, 27.68, "University hospital", 3, 2], ["Elina Mäkelä", "Oulu", 65.01, 25.47, "University hospital", 2, 6], ["Timo Hämäläinen", "Rovaniemi", 66.50, 25.73, "Central hospital", 6, 4],
+  ["Noora Koskinen", "Jyväskylä", 62.24, 25.75, "Central hospital", 3], ["Antti Järvinen", "Joensuu", 62.60, 29.76, "Central hospital", 5], ["Riikka Lehtonen", "Lahti", 60.98, 25.66, "Central hospital", 1],
+  ["Petri Saarinen", "Vaasa", 63.10, 21.62, "Central hospital", 7], ["Päivi Salminen", "Seinäjoki", 62.79, 22.84, "Central hospital", 4], ["Ville Heinonen", "Kajaani", 64.23, 27.73, "Central hospital", 8, 5],
+  ["Tiina Niemi", "Kemi", 65.74, 24.56, "Central hospital", 9, 8], ["Jari Virtanen", "Kokkola", 63.84, 23.13, "Central hospital", 5], ["Outi Karjalainen", "Lappeenranta", 61.06, 28.19, "Central hospital", 2],
+  ["Markus Lindholm", "Mikkeli", 61.69, 27.27, "Central hospital", 6]
+];
+const TIMES = ["08:40", "09:20", "10:40", "13:00", "14:20", "15:40"];
+const km = (a, b, c, d) => { const R = 6371, r = Math.PI / 180, x = Math.sin((c - a) * r / 2) ** 2 + Math.cos(a * r) * Math.cos(c * r) * Math.sin((d - b) * r / 2) ** 2; return Math.round(2 * R * Math.asin(Math.sqrt(x))); };
+function workday(n) { const d = new Date(); d.setHours(0, 0, 0, 0); while (n > 0) { d.setDate(d.getDate() + 1); if (d.getDay() % 6) n--; } return d; }
+const fmtDay = d => d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+let sortBy = "near", openDoc = -1;
+// Portraits supplied by the team for 8 of the 16 example specialists; the rest show initials.
+const TINT = ["#0A7C72", "#2F6F8F", "#7A5C99", "#A6603A", "#3F7D4E", "#8A4B62", "#4B5FA8", "#6B7A2E"];
+const avatar = d => { const photo = d.photo ?? (DOCS[d.i] || [])[6], parts = d.name.replace("Dr ", "").split(" ");
+  return photo ? `<img class="av" src="../assets/doctors/d${photo}.jpg" alt="" width="46" height="46" loading="lazy">`
+    : `<span class="av" style="background:${TINT[(d.i ?? 0) % TINT.length]}" aria-hidden="true">${parts[0][0]}${parts[parts.length - 1][0]}</span>`; };
+function docList() {
+  const home = HOME[my.muni], field = my.area === "Mouth" ? "Oral and maxillofacial surgery" : "Dermatology";
+  return DOCS.map(([name, city, la, lo, place, days, photo], i) => ({ i, photo, name: "Dr " + name, field, city, place: `${city} ${place.toLowerCase()}`, dist: home ? km(home[0], home[1], la, lo) : null, days,
+    slots: [0, 1, 3].map((plus, j) => ({ day: workday(days + plus), time: TIMES[(i * 2 + j * 3) % TIMES.length] })) }));
+}
+function drawDocs() {
+  const home = HOME[my.muni]; if (!home && sortBy === "near") sortBy = "soon";
+  $$(".seg-toggle button").forEach(b => { b.setAttribute("aria-pressed", b.dataset.sort === sortBy); if (b.dataset.sort === "near") b.hidden = !home; });
+  $("#book-sub").textContent = home ? `${DOCS.length} specialists, measured from ${my.muni}.` : `${DOCS.length} specialists. Choose a home municipality when you send a case to see distances.`;
+  const list = docList().sort((a, b) => sortBy === "near" ? a.dist - b.dist || a.days - b.days : a.days - b.days || (a.dist ?? 0) - (b.dist ?? 0));
+  $("#book").classList.toggle("no-dist", !home);
+  $("#docs").innerHTML = list.map((d, n) => `<tr class="${n === 0 ? "first" : ""}${d.i === openDoc ? " open" : ""}">
+    <td class="who"><div class="person">${avatar(d)}<div><b>${d.name}${n === 0 ? `<span class="tag">${sortBy === "near" ? "Nearest" : "Soonest"}</span>` : ""}</b><span>${d.field}</span></div></div></td>
+    <td>${d.place}</td><td class="num dist">${d.dist === null ? "" : d.dist + " km"}</td>
+    <td class="when"><b>${fmtDay(d.slots[0].day)} · ${d.slots[0].time}</b><span>in ${d.days} working day${d.days > 1 ? "s" : ""}</span></td>
+    <td class="num"><button class="bk" type="button" data-doc="${d.i}" aria-expanded="${d.i === openDoc}">${d.i === openDoc ? "Close" : "Book"}</button></td></tr>` +
+    (d.i === openDoc ? `<tr class="slots"><td colspan="5"><div class="slots-row"><span>Pick a time with ${d.name}:</span>${d.slots.map((sl, j) => `<button class="slot" type="button" data-doc="${d.i}" data-slot="${j}">${fmtDay(sl.day)} · ${sl.time}</button>`).join("")}</div></td></tr>` : "")).join("");
+  const bk = my.booking, box = $("#booked"); box.hidden = !bk; $("#book").classList.toggle("is-booked", !!bk);
+  $("#book-title").textContent = bk ? "Your appointment" : "Choose a specialist and a time";
+  if (bk) { $("#book-sub").textContent = "Booked. You can change it any time before the visit.";
+    box.innerHTML = `<div class="ok-mark" aria-hidden="true">✓</div>
+      <div class="bk-main"><span>Appointment booked</span><b>${bk.when}</b>
+        <div class="person light">${avatar(bk)}<div><b>${bk.name}</b><span>${bk.field || ""}</span></div></div></div>
+      <dl class="bk-facts"><div><dt>Where</dt><dd>${bk.place}</dd></div>${bk.dist === null ? "" : `<div><dt>Distance</dt><dd>${bk.dist} km from ${my.muni}</dd></div>`}<div><dt>Bring</dt><dd>Case number ${my.id}</dd></div></dl>
+      <button type="button" id="unbook">Change appointment</button>`; }
+}
+$("#docs").addEventListener("click", e => {
+  const s = e.target.closest(".slot"), b = e.target.closest(".bk");
+  if (s) { const d = docList().find(x => x.i === +s.dataset.doc), sl = d.slots[+s.dataset.slot];
+    my.booking = { i: d.i, name: d.name, field: d.field, place: d.place, dist: d.dist, when: `${fmtDay(sl.day)} at ${sl.time}` }; localStorage.setItem(LM, JSON.stringify(my)); openDoc = -1; drawDocs(); $("#book").scrollIntoView({ block: "start", behavior: "smooth" }); }
+  else if (b) { openDoc = openDoc === +b.dataset.doc ? -1 : +b.dataset.doc; drawDocs(); }
+});
+$("#booked").addEventListener("click", e => { if (e.target.id === "unbook") { my.booking = null; localStorage.setItem(LM, JSON.stringify(my)); drawDocs(); } });
+$$(".seg-toggle button").forEach(b => b.addEventListener("click", () => { sortBy = b.dataset.sort; drawDocs(); }));
+
 function restart() {
-  clearInterval(tick); localStorage.removeItem(LM); my = null; const email = state.email || "";
+  clearInterval(tick); clearInterval(prog); localStorage.removeItem(LM); my = null; const email = state.email || "";
   state = { email, photos: [] }; $$("form.step").forEach(f => f.reset()); $("#email").value = email; drawThumbs(); cover(); go(email ? 1 : 0);
 }
 $("#restart").addEventListener("click", restart); $("#restart2").addEventListener("click", restart);

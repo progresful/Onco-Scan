@@ -2,7 +2,7 @@
 
 ## Name (8 / 30)
 ```
-Oncoscan
+OncoScan
 ```
 
 ## Punchline (101 / 200)
@@ -25,12 +25,12 @@ None. No partner technology is used.
 You find a mole that has grown, or a mouth sore that won't heal. Whether a specialist needs to see it is the first question, and today it waits behind a GP or dentist visit and a referral. AstraZeneca's brief names late detection and the primary-to-specialist referral as known bottlenecks in Finnish cancer care. The further you live from a specialist, the more that first step matters.
 
 ## What we built
-Oncoscan is a working browser prototype of a photo-first review:
+OncoScan is a working browser prototype of a photo-first review:
 
 1. **The patient** sends 1–4 photos and a short description. Each photo is checked for darkness and blur before it is sent.
 2. **A case clock** starts, counting toward a 24-hour answer.
 3. **The specialist** sees the case first in a review queue, with a large photo and the patient's own words, and signs one of three verdicts with a note: no concern, suspicious, or can't tell.
-4. **The patient** gets one of three calm results with a next step. Oncoscan never says "you have cancer"; a suspicious result means "a specialist should see this in person".
+4. **The patient** gets one of three calm results with a next step. OncoScan never says "you have cancer"; a suspicious result means "a specialist should see this in person".
 
 ## How to try it
 Open the patient page and the specialist page in two tabs of the same browser.
@@ -51,7 +51,7 @@ We had no time for a backend, so the whole two-sided loop runs in the browser. B
 Compared with a standard referral, the specialist looks first, before any appointment exists. We have not measured the difference.
 
 ## Challenge fit
-Oncoscan addresses detection and referral, two of the three bottlenecks in the brief, and gives a county something concrete to pilot: photo-first specialist review from health centres and dental clinics.
+OncoScan addresses detection and referral, two of the three bottlenecks in the brief, and gives a county something concrete to pilot: photo-first specialist review from health centres and dental clinics.
 
 ## Limitations
 - **No AI model is connected.** The scores on the 8 demo cases are hand-written examples; patient cases show "no AI pre-read".

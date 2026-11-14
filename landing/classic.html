@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OncoScan — a specialist's answer within 24 hours</title>
+<meta name="description" content="OncoScan connects every GP and dentist in Finland to a cancer specialist. Take a photo, AI pre-sorts it, a specialist answers within 24 hours.">
+<meta property="og:title" content="OncoScan — Know within 24 hours">
+<meta property="og:image" content="assets/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../assets/mark.png">
+<link rel="stylesheet" href="styles.css">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="top">
+  <a class="brand" href="#top" aria-label="OncoScan home"><img class="logo" src="../assets/logo.png" alt="OncoScan" width="1420" height="330"></a>
+  <nav aria-label="Main">
+    <ul class="nav-links">
+      <li><a href="#steps">Step by step</a></li>
+      <li><a href="#clinics">For clinics</a></li>
+      <li><a href="#specialists">For specialists</a></li>
+      <li><a href="#counties">For counties</a></li>
+      <li><a href="../patient/">For patients</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn-small" href="#pilot">Start a pilot</a>
+  <button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu"><span class="sr">Menu</span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
+</header>
+<div class="mobile-menu" id="mobile-menu" hidden>
+  <a href="#steps">Step by step</a><a href="#clinics">For clinics</a><a href="#specialists">For specialists</a><a href="#counties">For counties</a><a href="../patient/">For patients</a><a href="#pilot" class="btn">Start a pilot</a>
+</div>
+
+<main id="main">
+
+<!-- HERO · T+00:00 -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-media">
+    <img class="hero-img" src="assets/hero.jpg" onerror="this.onerror=null;this.src='assets/lakes.jpg'" alt="A dentist photographs a patient's mouth with a phone to send the case for review." fetchpriority="high">
+    <div class="hero-veil" aria-hidden="true"></div>
+  </div>
+  <div class="hero-content">
+    <p class="tc"><span class="tc-dot" aria-hidden="true"></span>Demo · Junction 2026</p>
+    <h1 id="hero-title" class="split">A specialist's answer within <em>24&nbsp;hours.</em></h1>
+    <p class="hero-sub">OncoScan is a working demo of photo-first cancer triage. A patient sends photos of a worrying skin or mouth spot, and a cancer specialist reviews them. Pick a side to try it.</p>
+    <div class="roles">
+      <a class="role" href="../patient/">
+        <span class="role-k"><iconify-icon icon="solar:user-linear" aria-hidden="true"></iconify-icon> I'm a patient</span>
+        <b>Send a photo</b>
+        <span class="role-d">Add a photo, describe the spot and get a result. 5 short steps.</span>
+        <span class="role-go">Open patient flow <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></span>
+      </a>
+      <a class="role role-alt" href="../review/">
+        <span class="role-k"><iconify-icon icon="solar:stethoscope-linear" aria-hidden="true"></iconify-icon> I'm a doctor</span>
+        <b>Review cases</b>
+        <span class="role-d">See the queue, the signal check for each case, and sign a verdict.</span>
+        <span class="role-go">Open doctor panel <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></span>
+      </a>
+    </div>
+    <p class="roles-tip">To see the full loop, send a case as a patient, then open the doctor panel in the same browser.</p>
+  </div>
+  <div class="hero-sim" aria-hidden="true">
+    <p class="sim-head"><span><i></i>Case flow</span><span>Simulation</span></p>
+    <ul class="sim-list"></ul>
+    <p class="sim-foot"><span><b data-sim-n>0</b> answered</span><span>median answer <b data-sim-m>–</b></span><span><b data-sim-f>0</b> fast-tracked</span></p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem" aria-labelledby="problem-title">
+  <div class="wrap grid-2">
+    <div class="problem-copy">
+      <p class="label">The gap</p>
+      <h2 id="problem-title" class="split">Where you live shouldn't decide when cancer is found.</h2>
+      <p class="body">Finland's cancer specialists work in five university-hospital cities. Clinics are everywhere else. For a GP or dentist far from those cities, the hardest question, <i>is this cancer?</i>, means a referral and a long wait before a specialist even looks.</p>
+      <p class="body">The delay starts at the very first step: detection and referral. That's the step OncoScan removes.</p>
+      <div class="stat-row">
+        <div class="stat"><p class="stat-num" data-far>—</p><p class="stat-cap">km from the farthest clinic on this map to its nearest university hospital</p></div>
+        <div class="stat"><p class="stat-num">5</p><p class="stat-cap">university-hospital cities hold the specialists</p></div>
+      </div>
+      <p class="fine">Distances are straight-line, calculated from city coordinates. Goal 3 of the <a href="https://files.hackjunction.app/resources/Kansallinen_syopastrategia_2026_2035_FINAL.pdf">National Cancer Strategy 2026–2035</a> sets the target for equal access.</p>
+    </div>
+    <figure class="map">
+      <svg class="map-svg" viewBox="0 0 560 1080" role="img" aria-labelledby="map-title map-desc">
+        <title id="map-title">Finland: clinics and university hospitals</title>
+        <desc id="map-desc">Dots mark towns across Finland. Five larger dots mark the university-hospital cities Helsinki, Turku, Tampere, Kuopio and Oulu. Lines connect each town to its nearest university hospital.</desc>
+        <g class="map-lines"></g><g class="map-dots"></g><g class="map-hubs"></g>
+      </svg>
+      <figcaption class="map-legend"><span><i class="lg-hub"></i>University hospital</span><span><i class="lg-dot"></i>Town with a health centre</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- STEP BY STEP -->
+<section class="flow" id="steps" aria-labelledby="flow-title">
+  <div class="wrap">
+    <p class="label">Step by step</p>
+    <h2 id="flow-title" class="split">Four steps, either side.</h2>
+    <div class="flow-tabs" role="tablist" aria-label="Choose your role">
+      <button role="tab" id="tab-patient" aria-controls="flow-patient" aria-selected="true">Patient</button>
+      <button role="tab" id="tab-specialist" aria-controls="flow-specialist" aria-selected="false">Specialist</button>
+    </div>
+    <div class="flow-panel" id="flow-patient" role="tabpanel" aria-labelledby="tab-patient">
+      <ol class="flow-steps">
+        <li><div class="vis vis-dark vis-cam" style="background-image:url(assets/lesion.jpg)" aria-hidden="true">
+          <div class="vf"><i></i><i></i><i></i><i></i><span class="vf-ring"></span><span class="vf-tip">Hold steady · about 10 cm</span></div>
+          <div class="vf-bar"><span class="vf-count">Photo 1 of 2</span><span class="vf-shutter"></span><span class="vf-ok"><iconify-icon icon="solar:check-circle-bold" aria-hidden="true"></iconify-icon> Sharp</span></div>
+        </div>
+          <span class="flow-n">1</span><h3>Case sent</h3><p>Add 1 or 2 photos of the spot and describe it. Takes 3 minutes.</p></li>
+        <li><div class="vis vis-photo" style="background-image:url(assets/town.jpg)" aria-hidden="true">
+          <div class="vc"><span class="vc-k">Rovaniemi</span><strong class="vc-big">€0</strong><span class="vc-ok"><iconify-icon icon="solar:check-circle-bold" aria-hidden="true"></iconify-icon> Covered by your county</span></div>
+        </div>
+          <span class="flow-n">2</span><h3>Cost confirmed</h3><p>€0 where your county has a contract. Otherwise one card payment.</p></li>
+        <li><div class="vis vis-photo" style="background-image:url(assets/specialist.jpg)" aria-hidden="true">
+          <div class="vc"><span class="vc-k">Case FI-0428</span><strong class="vc-big">T+06:41</strong><span class="vc-seg"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="vc-live"><i></i>With a specialist</span></div>
+        </div>
+          <span class="flow-n">3</span><h3>Specialist reviews</h3><p>A licensed cancer doctor studies your photos within 24 hours.</p></li>
+        <li><div class="vis vis-teal" aria-hidden="true">
+          <div class="vc vc-note"><span class="vc-app"><iconify-icon icon="solar:letter-bold" aria-hidden="true"></iconify-icon></span><span class="vc-k">OncoScan · 09:14</span><b>Your result is ready</b><span class="vc-sub">Case FI-0428 has been reviewed.</span></div>
+          <span class="vc-btn">View my result</span>
+        </div>
+          <span class="flow-n">4</span><h3>Answer received</h3><p>An email link opens your result and your next step.</p></li>
+      </ol>
+      <p class="flow-note">Screens show example data. OncoScan resolves the suspicion; a final diagnosis is still made by biopsy.</p>
+      <a class="btn" href="../patient/">Send a photo <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></a>
+    </div>
+    <div class="flow-panel" id="flow-specialist" role="tabpanel" aria-labelledby="tab-specialist">
+      <ol class="flow-steps">
+        <li><div class="vis vis-teal" aria-hidden="true">
+          <div class="vc"><span class="vc-k">Licence number</span><strong class="vc-mid">•••• •• 4471</strong><span class="vc-rule"></span><span class="vc-ok"><iconify-icon icon="solar:verified-check-bold" aria-hidden="true"></iconify-icon> Found in Valvira's register</span><span class="vc-sub">Dermatology · valid</span></div>
+        </div>
+          <span class="flow-n">1</span><h3>Licence verified</h3><p>Register with your number. We check it against Valvira's public register.</p></li>
+        <li><div class="vis vis-dark" aria-hidden="true">
+          <strong class="vd-big">20<small>/20</small></strong>
+          <div class="vd-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i class="miss"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="miss"></i><i></i><i></i><i></i><i></i></div>
+          <span class="vd-line"><b>18 matched</b><span>Queue unlocked</span></span>
+        </div>
+          <span class="flow-n">2</span><h3>Calibration passed</h3><p>Judge 20 cases with known answers before the live queue opens.</p></li>
+        <li><div class="vis vis-photo" style="background-image:url(assets/clinic.jpg)" aria-hidden="true">
+          <div class="vc vc-tilt"><span class="vc-k">FI-0412 · Mouth</span><span class="vc-ai"><span>AI pre-read</span><strong>84</strong></span><span class="vc-meter"><i style="width:84%"></i></span><span class="vc-stamp">Suspicious</span></div>
+          <div class="vc-acts"><span>−</span><span>?</span><span class="on">+</span></div>
+        </div>
+          <span class="flow-n">3</span><h3>Cases reviewed</h3><p>Large photo, the patient's words and an AI pre-read. Mark each one: no concern, suspicious or can't tell.</p></li>
+        <li><div class="vis vis-light" aria-hidden="true">
+          <span class="vc-k">November</span><strong class="vl-big">€512</strong>
+          <div class="vl-bars"><i style="height:35%"></i><i style="height:60%"></i><i style="height:45%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:100%"></i><i style="height:70%"></i></div>
+          <span class="vd-line"><b>128 cases signed</b><span>Paid Dec 1</span></span>
+        </div>
+          <span class="flow-n">4</span><h3>Paid monthly</h3><p>A fixed fee for every signed verdict. Your total updates as you work.</p></li>
+      </ol>
+      <p class="flow-note">Screens show example data.</p>
+      <a class="btn" href="../review/">Open specialist demo <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></a>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCES -->
+<section class="who" aria-labelledby="who-title">
+  <div class="wrap">
+    <p class="label">Who it's for</p>
+    <h2 id="who-title" class="split">Everyone in the pathway wins.</h2>
+  </div>
+  <article class="aud wrap" id="clinics">
+    <div class="aud-img"><img src="assets/clinic.jpg" alt="A GP at a desk in a rural Finnish health centre, snowy pine forest outside the window." loading="lazy" width="1420" height="2000"></div>
+    <div class="aud-copy">
+      <p class="mono aud-num">01 · Clinics</p>
+      <h3>A specialist in your pocket.</h3>
+      <p class="body">GPs and dentists get an expert answer within 24 hours, without sending the patient anywhere.</p>
+      <ul class="ticks"><li>Answer within 24 hours</li><li>A clear next step for every case</li><li>Fewer unnecessary referrals</li></ul>
+    </div>
+  </article>
+  <article class="aud aud-flip wrap" id="specialists">
+    <div class="aud-img"><img src="assets/specialist.jpg" alt="A specialist reviews medical images at home in the evening." loading="lazy" width="1611" height="2000"></div>
+    <div class="aud-copy">
+      <p class="mono aud-num">02 · Specialists</p>
+      <h3>Review from anywhere.</h3>
+      <p class="body">Cases arrive pre-sorted, with photos and symptoms in one view. One specialist reviews up to 20 cases an hour.</p>
+      <ul class="ticks"><li>Paid per review</li><li>Flexible hours, from anywhere in Finland</li><li>Urgent cases first</li></ul>
+      <a class="link" href="#pilot">Join as specialist <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></a>
+      <a class="link" style="margin-left:24px" href="../review/">Open specialist demo <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></a>
+    </div>
+  </article>
+  <article class="aud wrap" id="counties">
+    <div class="aud-img aud-wide"><img src="assets/town.jpg" alt="A regional Finnish town at winter dusk with its health centre lit up." loading="lazy" width="2000" height="1116"></div>
+    <div class="aud-copy">
+      <p class="mono aud-num">03 · Wellbeing services counties</p>
+      <h3>Equal care you can measure.</h3>
+      <p class="body">Pay per case reviewed. Track days from first suspicion to specialist verdict, for every clinic in the county.</p>
+      <ul class="ticks"><li>Shorter specialist queues</li><li>Earlier-stage cancers, cheaper to treat</li><li>Your own specialists first, a national pool as backup</li></ul>
+    </div>
+  </article>
+  <p class="wrap patients"><span class="mono">For patients</span> An answer within 24 hours. <a class="link" style="margin-top:0" href="../patient/">Send a photo <iconify-icon icon="solar:arrow-right-linear" aria-hidden="true"></iconify-icon></a></p>
+</section>
+
+<!-- TRUST -->
+<section class="trust" aria-labelledby="trust-title">
+  <div class="wrap">
+    <p class="label">Safety</p>
+    <h2 id="trust-title" class="split">AI sorts. A specialist decides.</h2>
+    <div class="trust-grid">
+      <div class="trust-item"><iconify-icon icon="solar:user-check-rounded-linear" aria-hidden="true"></iconify-icon><h3>Human in the loop</h3><p>A licensed specialist signs every verdict. The AI only sets priority.</p></div>
+      <div class="trust-item"><iconify-icon icon="solar:shield-check-linear" aria-hidden="true"></iconify-icon><h3>Built for EU rules</h3><p>Designed around the EU Medical Device Regulation and the AI Act's human-oversight requirements.</p></div>
+      <div class="trust-item"><iconify-icon icon="solar:lock-keyhole-minimalistic-linear" aria-hidden="true"></iconify-icon><h3>Data stays in the EU</h3><p>GDPR-compliant processing, hosted in the EU, shared only with the reviewing clinician.</p></div>
+      <div class="trust-item"><iconify-icon icon="solar:diploma-verified-linear" aria-hidden="true"></iconify-icon><h3>Licensed specialists</h3><p>Every specialist holds a licence to treat Finnish patients, granted by Valvira.</p></div>
+    </div>
+    <p class="origin">OncoScan builds on <b>Oriscan</b>, the oral-cancer review service already used by dental clinics in Latvia.</p>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="road" aria-labelledby="road-title">
+  <div class="wrap">
+    <p class="label">Roadmap</p>
+    <h2 id="road-title" class="split">One platform. Ten cancer types.</h2>
+    <p class="body road-intro">We start where the evidence is strongest and add each cancer type only after its own clinical validation.</p>
+    <ol class="waves">
+      <li class="wave wave-now"><p class="mono">Wave 1 · Now</p><h3>Oral, skin</h3><p>Photo and dermoscopy images from dentists and GPs.</p></li>
+      <li class="wave"><p class="mono">Wave 2</p><h3>Cervical, eye, visible lumps</h3><p>Photos, colposcopy images and structured symptoms.</p></li>
+      <li class="wave"><p class="mono">Wave 3</p><h3>Colorectal, lung, prostate, ovarian</h3><p>Triage on lab values and imaging reports.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- PILOT -->
+<section class="pilot" id="pilot" aria-labelledby="pilot-title">
+  <div class="wrap grid-2">
+    <div>
+      <p class="label">Start a pilot</p>
+      <h2 id="pilot-title" class="split">Run a 6-month pilot in your county.</h2>
+      <ul class="ticks ticks-light"><li>Setup and training for your clinics</li><li>Your specialists, plus a national backup pool</li><li>Monthly KPI report: days from suspicion to verdict</li><li>A clear go or no-go decision at month six</li></ul>
+    </div>
+    <form class="form" novalidate>
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required><p class="err" id="e-name">Enter your name.</p></div>
+      <div class="field"><label for="f-org">Organisation</label><input id="f-org" name="org" autocomplete="organization" required><p class="err" id="e-org">Enter your organisation.</p></div>
+      <div class="field"><label for="f-role">I am a</label>
+        <select id="f-role" name="role" required><option value="">Choose one</option><option>Wellbeing services county</option><option>Health centre or clinic</option><option>Dental clinic</option><option>Specialist</option><option>Other</option></select><p class="err" id="e-role">Choose one.</p></div>
+      <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="err" id="e-email">Enter a valid email.</p></div>
+      <div class="field"><label for="f-msg">Message <span class="opt">(optional)</span></label><textarea id="f-msg" name="msg" rows="3"></textarea></div>
+      <button class="btn btn-full" type="submit"><span class="btn-label">Request a call</span></button>
+      <p class="form-ok" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
+    <h2 id="faq-title" class="split">Questions.</h2>
+    <div class="faq-list">
+      <details><summary>Is OncoScan a diagnosis?</summary><p>No. OncoScan resolves the suspicion: a specialist confirms or clears the case within 24 hours. A final cancer diagnosis is still made by biopsy.</p></details>
+      <details><summary>Who is responsible for the verdict?</summary><p>The licensed specialist who signs it, as with any consultation. The AI only sets the order in which cases are reviewed.</p></details>
+      <details><summary>What does it cost?</summary><p>The county pays per case reviewed, or the patient pays by card. No hardware to buy: clinics use a phone or their existing camera.</p></details>
+      <details><summary>How is patient data protected?</summary><p>Cases are processed under GDPR, hosted in the EU, and visible only to the submitting clinician and the reviewing specialist.</p></details>
+      <details><summary>Which cancers are covered today?</summary><p>Oral cancer first, with skin next. Further types follow the roadmap as each is clinically validated.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <a class="brand" href="#top" aria-label="OncoScan home"><img class="logo" src="../assets/logo.png" alt="OncoScan" width="1420" height="330"></a>
+    <p>Cancer suspicion resolved in 24 hours, anywhere in Finland.</p>
+    <p class="fine">Concept built at Junction 2026 for the AstraZeneca “Equal Care Across Finland” challenge. Images supplied by the OncoScan team, for illustration. Product screens are previews.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>

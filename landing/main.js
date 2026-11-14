@@ -1,4 +1,4 @@
-// Oncoscan landing — motion: GSAP + ScrollTrigger, native scrolling, no WebGL.
+// OncoScan landing — motion: GSAP + ScrollTrigger, native scrolling, no WebGL.
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

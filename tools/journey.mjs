@@ -1,4 +1,4 @@
-// Drives the real Oncoscan prototype in headless Chrome: screenshots, recordings, repeated-run check.
+// Drives the real OncoScan prototype in headless Chrome: screenshots, recordings, repeated-run check.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 const BASE = 'http://localhost:4173', OUT = process.argv[2], RUNS = +(process.argv[3] || 5);

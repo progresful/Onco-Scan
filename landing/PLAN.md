@@ -1,4 +1,4 @@
-# Oncoscan landing page — plan
+# OncoScan landing page — plan
 
 Stack: a single `index.html` + `styles.css` + `main.js`. No build step. GSAP, ScrollTrigger, Lenis and Three.js loaded from a CDN.
 Skills used: **build-awwwards-quality-sites**, with **gsap** for motion and **no-ai-design-slop** as the quality gate.
@@ -8,7 +8,7 @@ Skills used: **build-awwwards-quality-sites**, with **gsap** for motion and **no
 ## 1. Art direction
 
 **Visual thesis: "The 24-hour clock."**
-Oncoscan's whole promise is time. The site is built around a timecode running from `T+00:00` (the photo is taken) to `T+24:00` (the specialist answers). Every section is a moment on that clock. The look is calm and clinical-editorial, like a well-designed medical journal, not a startup gradient page.
+OncoScan's whole promise is time. The site is built around a timecode running from `T+00:00` (the photo is taken) to `T+24:00` (the specialist answers). Every section is a moment on that clock. The look is calm and clinical-editorial, like a well-designed medical journal, not a startup gradient page.
 
 | Element | Choice |
 |---|---|
@@ -26,12 +26,12 @@ Oncoscan's whole promise is time. The site is built around a timecode running fr
 ## 2. Page content, section by section
 
 ### 0 · Navigation
-Oncoscan wordmark · How it works · For clinics · For specialists · For counties · **Start a pilot** (button).
+OncoScan wordmark · How it works · For clinics · For specialists · For counties · **Start a pilot** (button).
 On mobile: a full-screen menu.
 
 ### 1 · Hero — `T+00:00`
 - **Headline:** "Is it cancer? Know within 24 hours."
-- **Subline:** "Oncoscan connects every GP and dentist in Finland to a cancer specialist. Take a photo, our AI sorts it, a specialist answers within a day."
+- **Subline:** "OncoScan connects every GP and dentist in Finland to a cancer specialist. Take a photo, our AI sorts it, a specialist answers within a day."
 - **CTAs:** Start a pilot · See how it works
 - **Motion:** headline words rise one by one; the scan line passes over the photo; a timecode ticks from `T+00:00`.
 
@@ -51,7 +51,7 @@ The section pins while the timecode advances through 4 steps. Each step shows a 
 | `T+≤24:00` | Specialist verdict | A licensed specialist from the national pool confirms or clears the case. |
 | `T+days` | Fast-track | Cleared: patient reassured. Suspicious: urgent referral and biopsy, the same week. |
 
-Note under the timeline: "Oncoscan resolves the suspicion. Final diagnosis is still made by biopsy."
+Note under the timeline: "OncoScan resolves the suspicion. Final diagnosis is still made by biopsy."
 
 ### 4 · Who it's for — three rows
 | Audience | Headline | Points |
@@ -84,7 +84,7 @@ Horizontal scroll of three waves:
 - **Form:** name, organisation, role (county / clinic / specialist), email, message. Full states: focus, error, sending, success. No backend yet: it shows a success state and logs locally (or a `mailto:` link, your choice).
 
 ### 9 · FAQ
-- Is Oncoscan a diagnosis? (No: it resolves the suspicion; biopsy confirms.)
+- Is OncoScan a diagnosis? (No: it resolves the suspicion; biopsy confirms.)
 - Who is responsible for the verdict?
 - What does it cost?
 - How is patient data protected?

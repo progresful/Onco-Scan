@@ -460,3 +460,8 @@ h2{letter-spacing:-.035em;line-height:1.02;font-size:clamp(38px,4.6vw,72px)}
 @media (prefers-reduced-motion:reduce){.role:hover,.role:focus-visible{transform:none}}
 
 @media (max-width:960px){.hero-veil{background:linear-gradient(180deg,rgba(251,250,247,.72) 0%,rgba(251,250,247,.9) 30%,rgba(251,250,247,.97) 100%)}}
+
+/* brand logo */
+.logo{height:30px;width:auto;display:block}
+.nav .logo{height:32px}
+.foot .logo{height:34px}

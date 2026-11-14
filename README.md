@@ -1,4 +1,4 @@
-# Oncoscan
+# OncoScan
 
 A working prototype of photo-first cancer triage. A patient sends photos of a worrying skin or mouth spot, a specialist reviews them, and the patient gets a result with a next step. Built at Junction 2026 for AstraZeneca's "Equal Care Across Finland" challenge.
 

@@ -1,6 +1,6 @@
 # Demo journey
 
-> A person far from a university hospital finds **a spot that worries them**. They provide **1–4 photos and a short description**. Oncoscan **checks the photos, opens a case with a 24-hour clock and puts it first in a specialist's queue**. The specialist signs a verdict and note, and the person receives **one of three results with a next step**. We demonstrate it through **a live run, plus 5 of 5 automated runs and a recorded backup**.
+> A person far from a university hospital finds **a spot that worries them**. They provide **1–4 photos and a short description**. OncoScan **checks the photos, opens a case with a 24-hour clock and puts it first in a specialist's queue**. The specialist signs a verdict and note, and the person receives **one of three results with a next step**. We demonstrate it through **a live run, plus 5 of 5 automated runs and a recorded backup**.
 
 ## Live script (about 60 seconds, one laptop, two tabs)
 1. Patient tab `/patient/`: sign in with any email → Skin → "Left forearm" → add a photo → description → Rovaniemi (shows €0) → Send. The case clock starts.

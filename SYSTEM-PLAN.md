@@ -1,4 +1,4 @@
-# Oncoscan — system plan
+# OncoScan — system plan
 
 Two apps on one backend: a **patient app** (submit photos, get an answer in 24 h) and a **reviewer app** (doctors swipe through cases and get paid). An AI pre-read sits between them.
 
@@ -25,7 +25,7 @@ Doctor:  register → licence check → approved → review queue (swipe + / −
 | **Photo check** | Instant check for blur and darkness; ask for a retake before submitting. Bad photos are the main cause of useless reviews. |
 | **Coverage / paywall** | "Covered by your wellbeing county" if the home municipality is in a contracted county (or a clinic referral code is entered): pay €0. Otherwise pay by card. |
 | **Submitted** | Case clock starts: "Answer by [time], at the latest." Status: received → pre-sorted → with specialist → answered. |
-| **Email** | "Your Oncoscan result is ready" with a link only. No medical content in the email itself. |
+| **Email** | "Your OncoScan result is ready" with a link only. No medical content in the email itself. |
 | **Result** | One of three outcomes, the specialist's short note, and the next step. |
 
 **Result wording (never "you have cancer"):**

@@ -1,8 +1,8 @@
-# Oncoscan — Cancer suspicion resolved in 24 hours, anywhere in Finland
+# OncoScan — Cancer suspicion resolved in 24 hours, anywhere in Finland
 
-> **One-liner:** Oncoscan turns every GP and dentist visit into an early cancer check. The clinician photographs the finding, our AI pre-sorts it, and a cancer specialist from a nationwide pool gives a verdict within 24 hours. Urgent cases skip the queue.
+> **One-liner:** OncoScan turns every GP and dentist visit into an early cancer check. The clinician photographs the finding, our AI pre-sorts it, and a cancer specialist from a nationwide pool gives a verdict within 24 hours. Urgent cases skip the queue.
 
-> **Placeholders:** every `[__]` is a figure to fill from Oncoscan's own data or a cited public source before pitching. Never present a number without its source.
+> **Placeholders:** every `[__]` is a figure to fill from OncoScan's own data or a cited public source before pitching. Never present a number without its source.
 
 ---
 
@@ -21,16 +21,16 @@
 
 ## 2. The solution
 
-**Oncoscan: a 24-hour expert second opinion, built into primary care.**
+**OncoScan: a 24-hour expert second opinion, built into primary care.**
 
 | Step | Who | What happens | Time |
 |---|---|---|---|
 | 1. Capture | GP / dentist | Photo + short symptom description in the app | 3 min |
-| 2. Pre-sort | Oncoscan AI | Model trained on `[__]` thousand labelled images estimates likelihood and flags urgency | Seconds |
+| 2. Pre-sort | OncoScan AI | Model trained on `[__]` thousand labelled images estimates likelihood and flags urgency | Seconds |
 | 3. Verdict | Specialist from the national pool | Reviews AI estimate + case, writes verdict and next step | Within 24 h |
 | 4. Action | Clinician + patient | Cleared → reassured. Suspicion confirmed → fast-track referral and biopsy | Same week |
 
-**Important:** Oncoscan resolves the *suspicion* in 24 hours. Final diagnosis still comes from biopsy/histology. Oncoscan makes sure the right patients get there weeks earlier.
+**Important:** OncoScan resolves the *suspicion* in 24 hours. Final diagnosis still comes from biopsy/histology. OncoScan makes sure the right patients get there weeks earlier.
 
 ---
 
@@ -85,7 +85,7 @@ Each new type: own dataset, own clinical validation, own EU medical-device (MDR)
 |---|---|
 | Case fee | Payer pays `[€__]` per case: county (public procurement) or private provider / insurer |
 | Specialist fee | Reviewing specialist earns `[€__]` per review |
-| Oncoscan margin | `[€__]` per case covers AI, platform, quality assurance |
+| OncoScan margin | `[€__]` per case covers AI, platform, quality assurance |
 | GP / dentist | Not paid per referral (avoids over-referral incentive); their gain is time and certainty |
 
 **Two entry channels in Finland:**
@@ -110,7 +110,7 @@ Each new type: own dataset, own clinical validation, own EU medical-device (MDR)
 
 ## 8. Competition and our edge
 
-| Alternative | Limitation | Oncoscan's edge |
+| Alternative | Limitation | OncoScan's edge |
 |---|---|---|
 | Standard referral | Weeks of waiting, no prioritisation | 24 h verdict, urgent cases flagged |
 | eConsultation between GP and specialist (already used in Finland) | No AI pre-sorting, no guaranteed turnaround, limited to own region | AI triage + 24 h promise + national pool |
@@ -186,7 +186,7 @@ Each new type: own dataset, own clinical validation, own EU medical-device (MDR)
 |---|---|
 | "70% accuracy isn't good enough." | Give sensitivity/specificity with CI; the specialist makes every final call; AI only sets priority. |
 | "Does a Latvian model work on Finns?" | Local validation is built into the pilot. |
-| "Who is liable for a missed cancer?" | The reviewing licensed specialist, as in any consultation; Oncoscan carries `[insurance]`. |
+| "Who is liable for a missed cancer?" | The reviewing licensed specialist, as in any consultation; OncoScan carries `[insurance]`. |
 | "Won't this pull doctors from hospitals?" | County specialists first; reviews take minutes; capacity shared, not taken. |
 | "Finland already has eConsultation." | We plug into it: add AI triage, a 24 h guarantee and a national pool. |
 | "Isn't it just for one cancer?" | Oral is the proof; skin next; roadmap shows how each type is validated. |

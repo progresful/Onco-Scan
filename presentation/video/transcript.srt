@@ -4,7 +4,7 @@ A worrying spot. A specialist far away.
 
 2
 00:00:02,863 --> 00:00:06,900
-Oncoscan's promise: an answer within twenty-four hours.
+OncoScan's promise: an answer within twenty-four hours.
 
 3
 00:00:07,350 --> 00:00:09,382
@@ -56,4 +56,4 @@ No AI model is connected yet. Scores on demo cases are examples.
 
 15
 00:00:49,379 --> 00:00:52,285
-Oncoscan. Know within twenty-four hours.
+OncoScan. Know within twenty-four hours.

@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Oncoscan Review — case queue</title>
+<title>OncoScan Review — case queue</title>
+<link rel="icon" type="image/png" href="../assets/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..700&display=swap" rel="stylesheet">
@@ -209,6 +210,8 @@ kbd{font-family:var(--fb)}
 .log-row .truth{display:block;font-size:12px;color:var(--muted)}
 .toast{max-width:min(92vw,760px)}
 .btn.btn-quiet{background:transparent;color:var(--ink)}.btn.btn-quiet:hover{background:#fff}
+.logo{height:30px;width:auto;display:block}
+.brand .logo{height:26px}
 /* signal check: always shown */
 .ai .reveal,.ai .toggle{display:none}
 .ai .ai-body{display:flex}
@@ -229,7 +232,7 @@ kbd{font-family:var(--fb)}
 </head>
 <body>
 <header class="top">
-  <div class="brand"><i aria-hidden="true"></i>Oncoscan <span>Review</span></div>
+  <div class="brand"><img class="logo" src="../assets/logo-light.png" alt="OncoScan" width="1420" height="330"><span>Review</span></div>
   <div class="vsw" role="group" aria-label="Layout version"><span>Layout</span>
     <button data-v="0" title="Original"><b>0</b></button><button data-v="1" title="Theatre"><b>1</b></button><button data-v="2" title="Split"><b>2</b></button><button data-v="3" title="Chart"><b>3</b></button><button data-v="4" title="Zen"><b>4</b></button><button data-v="5" title="Blocks"><b>5</b></button>
     <span class="vname" id="vname"></span></div>

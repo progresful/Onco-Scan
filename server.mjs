@@ -1,4 +1,4 @@
-// Oncoscan server: serves the prototype, stores submitted cases and their photos under data/cases, and, when GEMINI_API_KEY is set,
+// OncoScan server: serves the prototype, stores submitted cases and their photos under data/cases, and, when GEMINI_API_KEY is set,
 // analyses a case photo with Google's Gemini API (only the photo, area and body site are sent). No dependencies. Node 18+.
 //
 //   node server.mjs            → http://localhost:4173
@@ -99,8 +99,17 @@ async function analyse({ image, area, site }) {
 }
 
 const send = (res, status, obj) => { res.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); };
+// Optional password for the doctor panel: set REVIEW_PASSWORD (any user name works). It covers the panel,
+// the case queue, the photos, verdicts and the analysis call. The patient's own routes stay open.
+const REVIEW_PW = process.env.REVIEW_PASSWORD || '';
+const sha = v => crypto.createHash('sha256').update(String(v)).digest();
+const doctorOnly = (p, method) => p === '/review' || p.startsWith('/review/') || p === '/api/analyse' || (p === '/api/cases' && method === 'GET') || /^\/api\/cases\/FI-\d{4}\/(image|verdict)/.test(p);
+const signedIn = req => { const h = req.headers.authorization || ''; if (!h.startsWith('Basic ')) return false;
+  const raw = Buffer.from(h.slice(6), 'base64').toString(), pw = raw.slice(raw.indexOf(':') + 1); return crypto.timingSafeEqual(sha(pw), sha(REVIEW_PW)); };
+
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
+  if (REVIEW_PW && doctorOnly(url.pathname, req.method) && !signedIn(req)) { res.writeHead(401, { 'www-authenticate': 'Basic realm="OncoScan doctor panel", charset="UTF-8"', 'content-type': 'text/plain' }); return res.end('Doctor panel: password required'); }
   if (url.pathname === '/api/status') return send(res, 200, { ai: !!KEY, model: KEY ? MODEL : null });
   if (url.pathname === '/api/analyse' && req.method === 'POST') {
     if (!KEY) return send(res, 503, { error: 'No GEMINI_API_KEY set' });
@@ -140,4 +149,4 @@ http.createServer(async (req, res) => {
     const buf = fs.readFileSync(file);
     res.writeHead(200, { 'content-type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream', 'cache-control': 'no-store' }); res.end(buf);
   } catch { res.writeHead(404, { 'content-type': 'text/plain' }); res.end('Not found'); }
-}).listen(PORT, () => console.log(`Oncoscan on http://localhost:${PORT}  ·  AI analysis: ${KEY ? 'on (' + MODEL + ')' : 'off (no GEMINI_API_KEY)'}`));
+}).listen(PORT, process.env.HOST || undefined, () => console.log(`OncoScan on http://localhost:${PORT}  ·  AI analysis: ${KEY ? 'on (' + MODEL + ')' : 'off (no GEMINI_API_KEY)'}  ·  doctor panel password: ${REVIEW_PW ? 'on' : 'off'}`));
