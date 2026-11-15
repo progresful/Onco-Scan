@@ -1,2 +1,2 @@
-// Spoken length of each line in seconds (written by voice.mjs; voice: Lily - Velvety Actress).
-window.VO = [5.99,5.94,3.07,2.41,3.02,1.49,2.51,3.62,1.86,2.69];
+// Spoken length of each line in seconds (voice: Carin - Calm & Friendly, sped up 12% with pitch kept).
+window.VO = [6.65,6.63,3.04,3.37,3.12,1.46,3.70,4.33,1.84,3.78];
