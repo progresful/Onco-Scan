@@ -123,9 +123,11 @@ const HOLD = { 4: .7, 6: .4, 7: .4, 8: 1.3 };   // extra seconds after a line, w
 D.reduce((t, d, i) => (S[i] = t, t + d + GAP + (HOLD[i] || 0)), .3);
 const END = S[9] + D[9] + 1.3, at = (i, f = 0) => S[i] - .25 + D[i] * f;
 const CUT = [['a1', 0], ['a2', at(0, .33)], ['a3', at(0, .61)], ['b1', at(1)], ['b2', at(1, .5)], ['c', at(2)], ['d', at(3)], ['e', at(4)], ['f', at(5)], ['g', at(6)], ['h', at(7)], ['i', at(8)], ['j', at(9)]];
+const SFX = [], fx = (t, type) => SFX.push({ t: +t.toFixed(3), type });
 const tl = gsap.timeline({ paused: true }), $ = (s, r = document) => [...r.querySelectorAll(s)], T = {}, LEN = {};
 CUT.forEach(([id, t], k) => { const el = document.getElementById(id), next = CUT[k + 1] ? CUT[k + 1][1] : END; T[id] = t; LEN[id] = next - t; el.style.zIndex = k + 1;
   tl.set(el, { autoAlpha: 1 }, t).set(el, { autoAlpha: 0 }, next + .5);
+  if (k) fx(t - .06, 'whoosh');
   if (k) tl.fromTo(el, k % 2 ? { clipPath: 'inset(0 0 100% 0)' } : { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: .38, ease: 'power4.inOut' }, t);
   $('.bg', el).forEach(x => tl.fromTo(x, { scale: 1.2 }, { scale: 1.02, duration: next - t + .5, ease: 'power2.out' }, t));
   $('h1,h2', el).forEach((x, n) => tl.from(x, { y: 90, autoAlpha: 0, duration: .5, ease: 'power4.out' }, t + .16 + n * .1));
@@ -136,12 +138,14 @@ const p2 = n => String(n).padStart(2, '0'), tick = '<svg viewBox="0 0 24 24" fil
 // story + impact
 count(document.getElementById('km'), 500, T.a3 + .15, Math.min(1.6, LEN.a3 * .7)); tl.from('#a3 .big', { scale: 1.6, autoAlpha: 0, duration: .5, ease: 'power4.out' }, T.a3 + .1);
 count(document.getElementById('q'), 126200, T.b1 + .2, Math.min(2, LEN.b1 * .7), v => Math.round(v).toLocaleString('en-US')); tl.from('#q', { scale: 1.5, autoAlpha: 0, duration: .5, ease: 'power4.out' }, T.b1 + .12);
+fx(T.b2 + .5, 'pop'); fx(T.a3 + .1, 'thud'); fx(T.b1 + .12, 'thud'); fx(T.c + .9, 'thud');
 tl.from('#scard', { y: 160, rotation: 8, autoAlpha: 0, duration: .6, ease: 'back.out(1.8)' }, T.b2 + .5).to('#scard', { x: -12, duration: .07, repeat: 7, yoyo: true, ease: 'none' }, T.b2 + 1.5);
 // promise
 tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }, T.c + .9).fromTo('#clock', { backgroundPosition: '35% 30%' }, { backgroundPosition: '65% 65%', duration: LEN.c, ease: 'none' }, T.c).from('#c .logo', { y: -40, autoAlpha: 0, duration: .5 }, T.c + .2);
 // 1 · chat: bubbles arrive one by one, the message types itself
 { const t = T.d, L = LEN.d, bubs = $('#chat .bub'), msg = 'A mole on my left forearm has grown. I live in Inari.', o = { n: 0 }, typed = document.getElementById('typed');
   const when = [.25, .5, .5 * L, .66 * L, .82 * L];
+  when.forEach(w => fx(t + w, 'pop'));
   bubs.forEach((b, k) => tl.from(b, { autoAlpha: 0, duration: .2 }, t + when[k]).from(b, { scale: .6, y: 40, transformOrigin: k === 1 || k === 2 ? '100% 100%' : '0 100%', duration: .4, ease: 'back.out(2)' }, t + when[k]));
   tl.to(o, { n: msg.length, duration: Math.max(.5, .5 * L - .9), ease: 'none', onUpdate: () => typed.textContent = msg.slice(0, Math.round(o.n)) }, t + .9).set('#chat .caret', { autoAlpha: 0 }, t + .5 * L)
     .from('#chat', { x: 300, rotation: 4, autoAlpha: 0, duration: .6, ease: 'power4.out' }, t + .15).to('#chat', { scale: 1.08, duration: L, ease: 'none' }, t); }
@@ -152,6 +156,8 @@ tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }
     .to(o, { s: 42, duration: L * .82, ease: 'none', onUpdate: () => rt.textContent = '00:' + p2(Math.round(o.s)) }, t + .1)
     .from('#hl', { autoAlpha: 0, duration: .2 }, t + .2 * L).to('#hl', { autoAlpha: 0, duration: .2 }, t + .6 * L)
     .from('#e .plate', { x: -200, autoAlpha: 0, duration: .5, ease: 'power4.out' }, t + .15).from('#e .hud span', { y: -60, autoAlpha: 0, duration: .4, stagger: .08, ease: 'power3.out' }, t + .2);
+  for (let k = 1; k < rows; k++) fx(t + (.2 + .38 * k / rows) * L, 'tick');
+  fx(t + .62 * L + .72, 'click'); fx(t + Math.min(L - .9, .62 * L + 1.05) + .38, 'thud');
   for (let k = 1; k < rows; k++) tl.to('#hl', { y: k * 47.5, duration: .12, ease: 'power2.inOut' }, t + (.2 + .38 * k / rows) * L);
   tl.fromTo('#cur', { x: 0, y: 0 }, { x: 186, y: 195, duration: .7, ease: 'power3.inOut' }, t + .62 * L).fromTo('#cur', { autoAlpha: 0 }, { autoAlpha: 1, duration: .15 }, t + .6 * L)
     .to('#cur', { scale: .7, duration: .1, yoyo: true, repeat: 1 }, t + .62 * L + .72)
@@ -160,7 +166,7 @@ tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }
 // live status
 { const t = T.f, L = LEN.f, o = { s: 0 }, tc = document.getElementById('tc');
   tl.to(o, { s: 8049, duration: L, ease: 'power1.in', onUpdate: () => { const s = Math.round(o.s); tc.textContent = `T+${p2(Math.floor(s / 3600))}:${p2(Math.floor(s / 60) % 60)}:${p2(s % 60)}`; } }, t).from('#tc', { scale: 1.5, autoAlpha: 0, duration: .45, ease: 'power4.out' }, t + .1);
-  $('#live div').forEach((d, k) => { const i = d.querySelector('i'), a = t + .3 + (L - .7) * k / 4; i.innerHTML = tick;
+  $('#live div').forEach((d, k) => { const i = d.querySelector('i'), a = t + .3 + (L - .7) * k / 4; i.innerHTML = tick; fx(a, 'tick');
     tl.from(d, { x: -80, autoAlpha: 0, duration: .3, ease: 'power3.out' }, t + .15 + k * .06).to(d, { color: '#fff', duration: .2 }, a)
       .to(i, { backgroundColor: '#B6F0C8', boxShadow: 'inset 0 0 0 4px #B6F0C8', duration: .15 }, a).fromTo(i, { scale: 1.5 }, { scale: 1, duration: .3, ease: 'back.out(3)', immediateRender: false }, a).to(i.querySelector('path'), { strokeDashoffset: 0, duration: .25 }, a + .05); }); }
 // specialists wall
@@ -173,6 +179,7 @@ tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }
   tl.from('#wall .doc', { scale: .6, autoAlpha: 0, duration: .35, ease: 'back.out(2)', stagger: { each: .02, from: 'random' } }, T.g + .1); }
 // 3 · booking
 { const t = T.h, L = LEN.h;
+  fx(t + .45 * L + .82, 'click'); fx(t + .45 * L + .92, 'pop');
   tl.from('#h .rowb', { x: 300, autoAlpha: 0, duration: .45, ease: 'power4.out', stagger: .1 }, t + .2)
     .fromTo('#cur2', { x: 0, y: 0, autoAlpha: 0 }, { x: 205, y: -502, autoAlpha: 1, duration: .8, ease: 'power3.inOut' }, t + .45 * L)
     .to('#cur2', { scale: .7, duration: .1, yoyo: true, repeat: 1 }, t + .45 * L + .82)
@@ -180,6 +187,7 @@ tl.from('#clock', { scale: 2.2, autoAlpha: 0, duration: .7, ease: 'power4.out' }
     .to('#r1', { backgroundColor: '#B6F0C8', scale: 1.04, duration: .3, ease: 'back.out(2)' }, t + .45 * L + .9)
     .to('#h .rowb:not(#r1)', { opacity: .45, duration: .3 }, t + .45 * L + .9); }
 // result
+fx(T.i + .05, 'chime'); [0, 1, 2].forEach(k => fx(T.i + .85 + k * .13, 'pop')); fx(T.j + .15, 'pop'); fx(T.j + 1.6, 'click');
 tl.fromTo('#flash', { autoAlpha: 1 }, { autoAlpha: 0, duration: .5, ease: 'power2.out' }, T.i + .05)
   .from('#i .res', { x: -200, autoAlpha: 0, scale: .9, duration: .5, ease: 'back.out(1.8)' }, T.i + .5)
   .from('#i .tiles div', { y: 120, autoAlpha: 0, scale: .8, duration: .45, ease: 'back.out(2)', stagger: .13 }, T.i + .85)
@@ -188,7 +196,7 @@ tl.fromTo('#flash', { autoAlpha: 1 }, { autoAlpha: 0, duration: .5, ease: 'power
 tl.from('#j img', { scale: .5, autoAlpha: 0, duration: .6, ease: 'back.out(2)' }, T.j + .15).from('#j .url', { y: 40, autoAlpha: 0, duration: .5, ease: 'power3.out' }, T.j + 1.6);
 // captions: the current spoken line, in chunks of up to 8 words
 const cap = document.getElementById('cap'), CH = LINES.map(l => { const w = l.split(' '), out = []; for (let i = 0; i < w.length; i += 8) out.push(w.slice(i, i + 8)); if (out.length > 1 && out[out.length - 1].length < 3) out[out.length - 2].push(...out.pop()); return out; });
-window.DURATION = END; window.STARTS = S;
+window.DURATION = END; window.STARTS = S; window.SFX = SFX;
 window.seek = t => { tl.time(t, false); let text = '';
   for (let i = 0; i < LINES.length; i++) if (t >= S[i] - .05 && t < S[i] + D[i] + .1) { const f = Math.min(.999, Math.max(0, (t - S[i]) / D[i])), total = LINES[i].split(' ').length; let acc = 0;
     for (const c of CH[i]) { acc += c.length; if (f * total < acc) { text = c.join(' '); break; } } }

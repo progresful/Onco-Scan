@@ -1,40 +1,40 @@
 1
-00:00:00,300 --> 00:00:06,950
+00:00:00,300 --> 00:00:08,280
 Anna finds a dark spot. Her GP can't say for sure. The specialist is five hundred kilometres away.
 
 2
-00:00:07,090 --> 00:00:13,720
+00:00:08,420 --> 00:00:15,180
 She joins a queue of a hundred and twenty-six thousand. Weeks pass. No one can say where her case is.
 
 3
-00:00:13,860 --> 00:00:16,900
+00:00:15,320 --> 00:00:18,570
 OncoScan. A specialist's answer in twenty-four hours.
 
 4
-00:00:17,040 --> 00:00:20,410
+00:00:18,710 --> 00:00:21,940
 One. Send a photo and your story, from home.
 
 5
-00:00:20,550 --> 00:00:23,670
+00:00:22,080 --> 00:00:25,530
 Two. A specialist reviews it, and signs one decision.
 
 6
-00:00:24,510 --> 00:00:25,970
+00:00:26,370 --> 00:00:28,270
 You follow every stage, live.
 
 7
-00:00:26,110 --> 00:00:29,810
+00:00:28,410 --> 00:00:30,630
 Any verified specialist can join the shared queue.
 
 8
-00:00:30,350 --> 00:00:34,680
+00:00:31,170 --> 00:00:35,480
 Three. If you need a visit, book the nearest specialist in one tap.
 
 9
-00:00:35,220 --> 00:00:37,060
+00:00:36,020 --> 00:00:38,080
 The next day, Anna has her answer.
 
 10
-00:00:38,500 --> 00:00:42,280
+00:00:39,520 --> 00:00:43,500
 OncoScan. In use in Latvia. Next, Finland.
 

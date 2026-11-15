@@ -67,7 +67,7 @@ A 6-month pilot in one wellbeing services county: agree one indicator with the c
 |---|---|
 | Demo | https://oncoscan.pgf.lv |
 | Source | https://github.com/progresful/Onco-Scan (**private**: make it public or invite the judges before submitting) |
-| Video | `presentation/video/v3/video.mp4` (44 s, with voiceover). Upload as unlisted and paste the link here |
+| Video | `presentation/video/v3/video.mp4` (45 s, with voiceover and sound effects). Upload as unlisted and paste the link here |
 | Other | — |
 
 ## Before you submit
