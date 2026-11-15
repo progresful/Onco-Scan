@@ -1,40 +1,40 @@
 1
-00:00:00,500 --> 00:00:07,470
-Anna finds a dark spot on her arm. Her GP can't say for sure. The specialist is five hundred kilometres away.
+00:00:00,300 --> 00:00:06,290
+Anna finds a dark spot. Her GP can't say for sure. The specialist is five hundred kilometres away.
 
 2
-00:00:07,790 --> 00:00:14,710
-So she joins a queue of a hundred and twenty-six thousand people. Weeks pass, and nobody can tell her where her case is.
+00:00:06,430 --> 00:00:12,370
+She joins a queue of a hundred and twenty-six thousand. Weeks pass. No one can say where her case is.
 
 3
-00:00:15,030 --> 00:00:19,490
-OncoScan changes that. A specialist's answer, in twenty-four hours.
+00:00:12,510 --> 00:00:15,580
+OncoScan. A specialist's answer in twenty-four hours.
 
 4
-00:00:19,810 --> 00:00:24,500
-Step one. Anna sends a photo and her story, in a short chat, from home.
+00:00:15,720 --> 00:00:18,130
+One. Send a photo and your story, from home.
 
 5
-00:00:24,820 --> 00:00:32,760
-Step two. A specialist reviews it. The photo, her history, the warning signs. One decision, signed.
+00:00:18,270 --> 00:00:21,290
+Two. A specialist reviews it, and signs one decision.
 
 6
-00:00:33,080 --> 00:00:35,630
-Anna follows every stage, live.
+00:00:22,130 --> 00:00:23,620
+You follow every stage, live.
 
 7
-00:00:35,950 --> 00:00:40,690
-And the queue is shared. Any verified specialist can join, anywhere in the country.
+00:00:23,760 --> 00:00:26,270
+Any verified specialist can join the shared queue.
 
 8
-00:00:41,010 --> 00:00:47,790
-Step three. If the answer is, see someone in person, she books the nearest specialist in one tap.
+00:00:26,810 --> 00:00:30,430
+Three. If you need a visit, book the nearest specialist in one tap.
 
 9
-00:00:48,110 --> 00:00:51,360
-The next day, Anna has her answer, and an appointment.
+00:00:30,970 --> 00:00:32,830
+The next day, Anna has her answer.
 
 10
-00:00:51,680 --> 00:00:55,670
-OncoScan. Already in use in Latvia. Next, Finland.
+00:00:34,270 --> 00:00:36,960
+OncoScan. In use in Latvia. Next, Finland.
 

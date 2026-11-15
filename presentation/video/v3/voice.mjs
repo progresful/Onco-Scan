@@ -14,7 +14,7 @@ if (!pick) { console.error('No voices on this account'); process.exit(1); }
 console.log('Voice:', pick.name, '|', L(pick).trim().slice(0, 120));
 fs.mkdirSync(path.join(here, 'vo'), { recursive: true }); const dur = [];
 for (let i = 0; i < LINES.length; i++) { const f = path.join(here, 'vo', `line-${i + 1}.mp3`);
-  const t = await api(`/v1/text-to-speech/${pick.voice_id}?output_format=mp3_44100_128`, { method: 'POST', body: JSON.stringify({ text: LINES[i], model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.5, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true } }) });
+  const t = await api(`/v1/text-to-speech/${pick.voice_id}?output_format=mp3_44100_128`, { method: 'POST', body: JSON.stringify({ text: LINES[i], model_id: 'eleven_multilingual_v2', voice_settings: { stability: 0.5, similarity_boost: 0.8, style: 0.3, use_speaker_boost: true, speed: +(process.env.VOICE_SPEED || 1.15) } }) });
   if (!t.ok) { console.error('Speech failed on line', i + 1, t.status, (await t.text()).slice(0, 200)); process.exit(1); }
   fs.writeFileSync(f, Buffer.from(await t.arrayBuffer()));
   dur.push(+execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString().trim()); console.log(`line ${i + 1}: ${dur[i].toFixed(2)} s`); }
