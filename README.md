@@ -106,3 +106,7 @@ The skin images are a 42-image sample of **HAM10000** (Tschandl, Rosendahl and K
 | `tools/` | `journey.mjs` (end-to-end test), `eval.mjs` (model test), `set-key.sh` |
 | `presentation/` | Submission text, deck, video and the evidence ledger |
 | `docs/screenshots/` | The images on this page |
+
+---
+
+Made by Progresful (Emils Plavenieks, Jurgis Kacens, Krisjanis Mezulis) 2026
