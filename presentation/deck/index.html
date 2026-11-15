@@ -55,6 +55,17 @@ p{font-size:44px;line-height:1.25;letter-spacing:-.01em}
 .hosp{fill:var(--teal);stroke:#fff;stroke-width:3}
 .hub{fill:var(--lime)}.hubt{fill:var(--night);font:800 27px 'Hanken Grotesk',sans-serif;letter-spacing:-.03em}
 .lbl{font:700 22px 'Hanken Grotesk',sans-serif;fill:var(--ink)}
+/* numbers and problem tiles */
+.st2{display:grid;grid-template-columns:1fr 1fr;gap:44px 60px;margin-top:auto;padding-bottom:26px}
+.st2 b{display:block;font-size:132px;font-weight:800;letter-spacing:-.055em;line-height:.9;color:var(--teal);white-space:nowrap}
+.st2 b small{font-size:.42em;letter-spacing:-.02em;margin-left:.05em}
+.st2 span{display:block;font-size:34px;font-weight:600;line-height:1.2;margin-top:12px}
+.st2 cite{display:block;font-style:normal;font-size:24px;color:var(--muted);margin-top:4px}
+.pt{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;margin-top:44px}
+.pt i{display:grid;place-items:center;height:380px;border-radius:26px;background:var(--ink) center/cover;font-style:normal;font-size:60px;font-weight:800;letter-spacing:-.04em;color:#fff}
+.pt b{display:block;font-size:104px;font-weight:800;letter-spacing:-.06em;line-height:.9;color:var(--teal);margin-top:24px}
+.pt h3{font-size:50px;font-weight:800;letter-spacing:-.035em;line-height:1.05;margin-top:6px}
+.pt p{font-size:32px;color:var(--ink2);margin-top:10px;line-height:1.2}
 /* screenshots */
 .shot{border-radius:18px;overflow:hidden;box-shadow:0 50px 90px -40px rgba(3,17,15,.75),0 0 0 1.5px var(--line);background:#fff}
 .shot img{display:block;width:100%}
@@ -96,21 +107,23 @@ html.print .clock{animation:none}
 
 <!-- 1 -->
 <section class="slide night cover on">
-  <div class="top"><img src="assets/logo-light.png" alt="OncoScan"><h1>A specialist's answer<br><em>before the clock runs out.</em></h1></div>
+  <div class="top"><img src="assets/logo-light.png" alt="OncoScan"><h1>Send a photo.<br><em>A specialist answers in 24 hours.</em></h1></div>
   <div class="clock" id="clock">24:00:00</div>
-  <div class="base"><span>Photo-first cancer triage for Finland</span><span class="url">oncoscan.pgf.lv</span></div>
+  <div class="base"><span>Where you live shouldn't decide how fast cancer is caught.</span><span class="url">oncoscan.pgf.lv</span></div>
 </section>
 
 <!-- 2 -->
 <section class="slide paper withmap">
   <p class="k a">The problem in Finland</p>
-  <h1 class="a">The first question <em>waits behind a referral.</em></h1>
+  <h1 class="a">Far from a specialist. <em>Stuck in a queue.</em></h1>
   <div class="row a">
     <div class="col">
-      <p class="sub" style="max-width:19em">"Does a specialist need to see this?" Far from a university hospital, that first step takes longest.</p>
-      <div style="margin-top:auto"><div class="big" style="font-size:210px">550<small>km</small></div>
-      <p style="margin-top:14px;max-width:17em">from the farthest town to its nearest university hospital</p>
-      <p class="src" style="margin-top:18px">Straight line, 47 towns, approximate coordinates: our estimate. The challenge brief names late detection and referral as bottlenecks.</p></div>
+      <div class="st2">
+        <div><b>308</b><span>municipalities, 5 university hospitals</span><cite>Statistics Finland, 2026</cite></div>
+        <div><b>550<small>km</small></b><span>farthest town to its university hospital</span><cite>Our straight-line estimate</cite></div>
+        <div><b>126,200</b><span>waiting for non-urgent specialist care</span><cite>THL, end of August 2026</cite></div>
+        <div><b>3<small>wk</small> + 6<small>mo</small></b><span>the law allows: assessment, then treatment</span><cite>Care guarantee, specialised care</cite></div>
+      </div>
     </div>
     <div class="map"><svg viewBox="0 0 560 1090" data-map="hospitals" role="img" aria-label="Finland: towns linked to their nearest of five university hospitals"></svg></div>
   </div>
@@ -118,27 +131,26 @@ html.print .clock{animation:none}
 </section>
 
 <!-- 3 -->
-<section class="slide night withmap">
-  <p class="k a">The solution</p>
-  <h1 class="a">Send a photo. <em>A specialist answers in 24 hours.</em></h1>
-  <div class="row a">
-    <div class="col">
-      <p class="sub" style="max-width:17em">One shared queue for the whole country. The photo travels, not the patient.</p>
-      <div class="pair"><div class="big">52<small>towns</small></div><div class="big">1<small>queue</small></div></div>
-    </div>
-    <div class="map"><svg viewBox="-40 0 640 1090" data-map="hub" role="img" aria-label="Finland: every town linked to one OncoScan queue"></svg></div>
+<section class="slide paper">
+  <p class="k a">Today</p>
+  <h1 class="a" style="max-width:none">Four problems <em>we solve.</em></h1>
+  <div class="pt a">
+    <div><i style="background-image:url(../../landing/assets/prob-detect.jpg);background-position:50% 20%"></i><b>1</b><h3>Late detection</h3><p>A worrying spot waits for an appointment.</p></div>
+    <div><i style="background-image:url(../../landing/assets/prob-queue.jpg);background-position:25% 50%"></i><b>2</b><h3>Referral queue</h3><p>The specialist sits behind a referral.</p></div>
+    <div><i style="background-image:url(../../landing/assets/prob-book.jpg);background-position:30% 40%"></i><b>3</b><h3>Treatment start</h3><p>You still have to find and book a specialist.</p></div>
+    <div><i class="q">Status: ?</i><b>4</b><h3>No transparency</h3><p>You can't see where your case is.</p></div>
   </div>
-  <div class="foot"><img src="assets/logo-light.png" alt=""><span>3</span></div>
+  <div class="foot"><img src="assets/logo.png" alt=""><span>Bottlenecks 1 to 3 are named in the challenge brief · photos are illustrations · 3</span></div>
 </section>
 
 <!-- 4 -->
 <section class="slide paper">
   <p class="k a">How it works for patients</p>
-  <h1 class="a" style="max-width:none">Three steps. <em>No appointment.</em></h1>
+  <h1 class="a" style="max-width:none">Three steps. <em>24 hours.</em></h1>
   <div class="steps a">
-    <div class="step"><div class="shot"><img src="assets/now-chat.jpg" alt="Chat: the patient describes the spot and adds a photo"></div><div class="n">1</div><h3>Tell us and add a photo.</h3><p>In your own words, in a chat.</p></div>
-    <div class="step"><div class="shot"><img src="assets/now-case.jpg" alt="Case page with a running 24-hour clock"></div><div class="n">2</div><h3>The clock starts.</h3><p>A specialist has 24 hours.</p></div>
-    <div class="step"><div class="shot"><img src="assets/now-book.jpg" alt="Result page with a table of specialists and times"></div><div class="n">3</div><h3>Know what's next.</h3><p>A result, and a booking if needed.</p></div>
+    <div class="step"><div class="shot"><img src="assets/now-chat.jpg" alt="Chat: the patient describes the spot and adds a photo"></div><div class="n">1</div><h3>Send a photo.</h3><p>And your story, in a short chat.</p></div>
+    <div class="step"><div class="shot"><img src="assets/now-case.jpg" alt="Case page with a running 24-hour clock"></div><div class="n">2</div><h3>A specialist reviews it.</h3><p>Answer in 24 hours. Status is live.</p></div>
+    <div class="step"><div class="shot"><img src="assets/now-book.jpg" alt="Result page with a table of specialists and times"></div><div class="n">3</div><h3>Book the nearest.</h3><p>Closest specialists first, with free times.</p></div>
   </div>
   <div class="foot"><img src="assets/logo.png" alt=""><span>Real screens from the live demo · example data · 4</span></div>
 </section>
@@ -178,7 +190,7 @@ html.print .clock{animation:none}
   <ul class="proof a">
     <li><b>Live</b><p>Patient to doctor to result, working today.<span>oncoscan.pgf.lv</span></p></li>
     <li><b>13/18</b><p>cancers flagged by a general AI model from the photo alone.<span>It cleared only 5 of 24 benign lesions. 42 labelled HAM10000 images.</span></p></li>
-    <li><b>So</b><p>AI helps patients describe. It never judges.<span>It reads free text, including Finnish. The verdict is always a doctor's.</span></p></li>
+    <li><b>So</b><p>AI may describe. It never judges.<span>The warning-sign checklist comes from the patient's own answers. The answer is always a doctor's.</span></p></li>
   </ul>
   <div class="foot"><img src="assets/logo.png" alt=""><span>7</span></div>
 </section>
@@ -190,9 +202,9 @@ html.print .clock{animation:none}
   <ul class="next a">
     <li>Pick one Goal 3 indicator with the county</li>
     <li>Test with 5 clinicians and their patients</li>
-    <li>Measure days from first suspicion to verdict</li>
+    <li>Measure days from first suspicion to a specialist's answer</li>
   </ul>
-  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-bottom:36px"><p class="sub">Try it now</p><span class="url" style="font-size:56px;padding:20px 40px">oncoscan.pgf.lv</span></div>
+  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;padding-bottom:36px"><p class="sub">Builds on Oriscan, used by dentists in Latvia</p><span class="url" style="font-size:56px;padding:20px 40px">oncoscan.pgf.lv</span></div>
   <div class="foot"><img src="assets/logo-light.png" alt=""><span>8</span></div>
 </section>
 

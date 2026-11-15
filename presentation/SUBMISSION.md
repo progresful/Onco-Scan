@@ -7,9 +7,9 @@ Updated 15 November 2026 to match the live site and the final video.
 OncoScan
 ```
 
-## Punchline (115 / 200)
+## Punchline (106 / 200)
 ```
-Send a photo of a worrying skin or mouth spot. Get a specialist's answer in 24 hours, wherever you live in Finland.
+Where you live shouldn't decide how fast cancer is caught. Send a photo. A specialist answers in 24 hours.
 ```
 
 ## Challenge
@@ -83,8 +83,8 @@ The idea builds on Oriscan, the team's existing photo-review service used by den
 |---|---|
 | Demo | https://oncoscan.pgf.lv |
 | Source | https://github.com/progresful/Onco-Scan (**private**: make it public or invite the judges) |
-| Video | `presentation/video/v3/video.mp4` (45 s, voiceover, sound effects, captions). Upload as unlisted and paste the link here |
-| Slides | `presentation/deck/deck.pdf` (older wording: says "2 of 3" bottlenecks; update or leave out) |
+| Video | https://youtu.be/jBnBLPOL8io (45 s, voiceover, captions) |
+| Slides | `presentation/deck/deck.pdf` (8 slides, 3 MB, updated 15 Nov) |
 
 ## How the description maps to the judging criteria
 | Criterion | Weight | Where it is answered |
@@ -101,5 +101,4 @@ The idea builds on Oriscan, the team's existing photo-review service used by den
 - [ ] **Pre-existing work.** Confirm with the organizers that building on Oriscan is allowed, and that "built during Junction 2026" is true for everything in the repository.
 - [ ] **THL figure.** 126,200 was read from Terveystalo's investor page quoting THL, not from THL's own table. Replace the source link with THL's if you can find it.
 - [ ] Make the repository public, or share access.
-- [ ] Upload the video and paste its link.
 - [ ] Open all links in an incognito window on a phone.

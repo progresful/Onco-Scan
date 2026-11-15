@@ -2,6 +2,8 @@
 
 A working prototype of photo-first cancer triage. A patient sends photos of a worrying skin or mouth spot, a specialist reviews them, and the patient gets a result with a next step. Built at Junction 2026 for AstraZeneca's "Equal Care Across Finland" challenge.
 
+**Live demo:** https://oncoscan.pgf.lv · **Video (45 s):** https://youtu.be/jBnBLPOL8io
+
 ![Specialist screen: a patient's case with a real dermoscopy image and the signal check](docs/screenshots/5-specialist-patient-case.jpg)
 
 Every screenshot on this page is a capture of the running product. The lesion images are real dermoscopy photos from the public HAM10000 dataset; nothing is mocked up or drawn.
